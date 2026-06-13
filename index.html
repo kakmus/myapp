@@ -2,9 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>ServisHP Pro - Manajemen Servis Handphone</title>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -14,48 +13,65 @@
         }
 
         :root {
-            --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --color-text-primary: #1C1E24;
-            --color-text-secondary: #5B5F6E;
-            --color-text-tertiary: #8E92A2;
-            --color-background-primary: #FFFFFF;
-            --color-background-secondary: #F8F9FC;
-            --color-background-tertiary: #F2F4F8;
-            --color-background-danger: #E24B4A;
-            --color-border-primary: #E1E4E8;
-            --color-border-secondary: #E9ECEF;
-            --color-border-tertiary: #EDF0F4;
-            --border-radius-md: 8px;
-            --border-radius-lg: 14px;
+            --primary: #185FA5;
+            --success: #25D366;
+            --danger: #E24B4A;
+            --warning: #BA7517;
+            --text: #1C1E24;
+            --text-sec: #5B5F6E;
+            --bg: #FFFFFF;
+            --bg-sec: #F8F9FC;
+            --bg-ter: #F2F4F8;
+            --border: #EDF0F4;
+            --radius: 14px;
+            --sidebar: 260px;
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             font-size: 14px;
-            color: var(--color-text-primary);
-            background: var(--color-background-tertiary);
+            color: var(--text);
+            background: var(--bg-ter);
         }
 
         .app {
             display: flex;
-            height: 100vh;
-            min-height: 700px;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         .sidebar {
-            width: 260px;
-            min-width: 260px;
-            background: var(--color-background-primary);
-            border-right: 1px solid var(--color-border-tertiary);
-            display: flex;
-            flex-direction: column;
+            width: var(--sidebar);
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            height: 100vh;
             overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            align-items: center;
+            justify-content: center;
         }
 
         .sidebar-logo {
-            padding: 1.25rem 1.25rem;
-            border-bottom: 1px solid var(--color-border-tertiary);
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .sidebar-logo h1 {
@@ -67,12 +83,6 @@
             color: transparent;
         }
 
-        .sidebar-logo p {
-            font-size: 11px;
-            color: var(--color-text-secondary);
-            margin-top: 4px;
-        }
-
         .nav-section {
             padding: 0.75rem 0;
         }
@@ -80,11 +90,10 @@
         .nav-label {
             font-size: 10px;
             font-weight: 600;
-            color: var(--color-text-tertiary);
+            color: var(--text-sec);
             padding: 0 1.25rem;
             margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
         }
 
         .nav-item {
@@ -94,47 +103,39 @@
             padding: 9px 1.25rem;
             cursor: pointer;
             font-size: 13px;
-            color: var(--color-text-secondary);
-            transition: all 0.15s;
-            border-radius: 0px;
+            color: var(--text-sec);
+            transition: 0.15s;
         }
 
-        .nav-item:hover {
-            background: var(--color-background-secondary);
-            color: var(--color-text-primary);
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--bg-sec);
+            color: var(--primary);
         }
 
         .nav-item.active {
-            background: var(--color-background-secondary);
-            color: #185FA5;
             font-weight: 500;
-            border-right: 3px solid #185FA5;
+            border-right: 3px solid var(--primary);
         }
 
         .nav-item i {
             width: 20px;
-            font-size: 16px;
-            text-align: center;
         }
 
         .badge-count {
             margin-left: auto;
-            background: #E24B4A;
-            color: white;
+            background: var(--danger);
+            color: #fff;
             font-size: 10px;
             font-weight: 600;
             padding: 2px 7px;
             border-radius: 20px;
-            min-width: 22px;
-            text-align: center;
         }
 
         .main {
             flex: 1;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            background: var(--color-background-tertiary);
+            background: var(--bg-ter);
         }
 
         .topbar {
@@ -142,11 +143,13 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.75rem 1.5rem;
-            background: var(--color-background-primary);
-            border-bottom: 1px solid var(--color-border-tertiary);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .topbar-title {
@@ -159,39 +162,28 @@
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
-            border-radius: var(--border-radius-md);
+            border-radius: 8px;
             font-size: 13px;
             cursor: pointer;
-            border: 1px solid var(--color-border-secondary);
+            border: 1px solid #E9ECEF;
             background: transparent;
-            color: var(--color-text-primary);
-            transition: all 0.15s;
-            font-weight: 500;
-        }
-
-        .btn:hover {
-            background: var(--color-background-secondary);
-            transform: translateY(-1px);
+            transition: 0.15s;
         }
 
         .btn-primary {
-            background: #185FA5;
+            background: var(--primary);
             color: #fff;
-            border-color: #185FA5;
-        }
-
-        .btn-primary:hover {
-            background: #0C447C;
+            border-color: var(--primary);
         }
 
         .btn-success {
-            background: #25D366;
-            color: white;
-            border-color: #25D366;
+            background: var(--success);
+            color: #fff;
         }
 
-        .btn-success:hover {
-            background: #128C7E;
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
         }
 
         .btn-sm {
@@ -199,51 +191,32 @@
             font-size: 12px;
         }
 
-        .btn-danger {
-            background: #E24B4A;
-            color: white;
-            border-color: #E24B4A;
-        }
-
-        .btn-warning {
-            background: #BA7517;
-            color: white;
-            border-color: #BA7517;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #185FA5;
-            color: #185FA5;
-        }
-
-        .btn-outline:hover {
-            background: #185FA5;
-            color: white;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .content {
             padding: 1.5rem;
-            flex: 1;
         }
 
         .grid-4 {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
             margin-bottom: 1.5rem;
         }
 
         .metric {
-            background: var(--color-background-primary);
-            border-radius: var(--border-radius-lg);
+            background: var(--bg);
+            border-radius: var(--radius);
             padding: 1.2rem;
-            border: 1px solid var(--color-border-tertiary);
+            border: 1px solid var(--border);
         }
 
         .metric-label {
             font-size: 12px;
-            color: var(--color-text-secondary);
+            color: var(--text-sec);
             margin-bottom: 6px;
         }
 
@@ -257,13 +230,17 @@
         }
 
         .metric-val.amber {
-            color: #BA7517;
+            color: var(--warning);
+        }
+
+        .metric-val.red {
+            color: var(--danger);
         }
 
         .card {
-            background: var(--color-background-primary);
-            border: 1px solid var(--color-border-tertiary);
-            border-radius: var(--border-radius-lg);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 1rem 1.25rem;
             margin-bottom: 1rem;
         }
@@ -273,6 +250,8 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .card-title {
@@ -280,39 +259,33 @@
             font-weight: 600;
         }
 
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
         }
 
         th {
-            text-align: left;
-            padding: 10px 8px;
             font-weight: 600;
             font-size: 12px;
-            color: var(--color-text-secondary);
-            border-bottom: 1px solid var(--color-border-tertiary);
-        }
-
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid var(--color-border-tertiary);
-            vertical-align: middle;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: var(--color-background-secondary);
+            color: var(--text-sec);
         }
 
         .status-badge {
             display: inline-flex;
-            align-items: center;
-            gap: 6px;
             padding: 4px 10px;
             border-radius: 30px;
             font-size: 11px;
@@ -329,6 +302,34 @@
         .s-taken { background: #F0EFEA; color: #5E5C57; }
         .s-cancel { background: #FDE8E8; color: #C23D3D; }
 
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #E9ECEF;
+        }
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -337,17 +338,19 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            backdrop-filter: blur(2px);
+            padding: 16px;
         }
+
         .modal {
-            background: white;
+            background: #fff;
             border-radius: 20px;
-            width: 600px;
-            max-height: 85vh;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
             overflow-y: auto;
             padding: 1.5rem;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -356,30 +359,54 @@
             padding-bottom: 0.75rem;
             border-bottom: 1px solid #E9ECEF;
         }
+
         .close-btn {
             background: none;
             border: none;
             font-size: 20px;
             cursor: pointer;
-            color: #8E92A2;
         }
-        .form-group { margin-bottom: 1rem; }
-        .form-label { font-size: 12px; font-weight: 600; margin-bottom: 6px; display: block; }
-        input, select, textarea {
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .required:after {
+            content: " *";
+            color: red;
+        }
+
+        input,
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #CED4DA;
             border-radius: 10px;
             font-size: 13px;
         }
+
+        .error-border {
+            border-color: var(--danger) !important;
+            background: #FFF0F0 !important;
+        }
+
         .cost-summary {
-            background: #F8F9FC;
+            background: var(--bg-sec);
             padding: 12px;
             border-radius: 10px;
             margin-top: 12px;
             text-align: right;
             font-weight: 600;
         }
+
         .template-preview {
             background: #F0FDF4;
             border: 1px solid #DCFCE7;
@@ -387,16 +414,9 @@
             border-radius: 10px;
             margin-top: 12px;
         }
-        .template-preview h4 {
-            font-size: 12px;
-            margin-bottom: 8px;
-            color: #166534;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .template-preview .preview-content {
-            background: white;
+
+        .preview-content {
+            background: #fff;
             padding: 10px;
             border-radius: 8px;
             font-family: monospace;
@@ -405,123 +425,275 @@
             max-height: 250px;
             overflow-y: auto;
         }
-        .template-edit {
-            margin-top: 12px;
-        }
-        .template-edit textarea {
-            font-family: monospace;
-            font-size: 11px;
-            height: 150px;
-        }
+
         .payment-detail {
             background: #E8F0FE;
             padding: 12px;
             border-radius: 10px;
             margin: 12px 0;
         }
-        .payment-detail .total-large {
-            font-size: 18px;
-            font-weight: bold;
-            color: #185FA5;
-        }
 
-        .settings-group {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--color-border-tertiary);
-        }
-        .settings-group h3 {
-            font-size: 16px;
-            margin-bottom: 1rem;
-            color: var(--color-text-primary);
-        }
-        .settings-row {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
         .info-text {
             background: #E8F0FE;
             padding: 12px;
             border-radius: 10px;
             font-size: 12px;
-            color: #185FA5;
+            color: var(--primary);
             margin-top: 10px;
         }
 
-        .filter-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .filter-group label {
+        .warning-text {
+            background: #FFF0E0;
+            padding: 12px;
+            border-radius: 10px;
             font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            display: block;
-            color: var(--color-text-secondary);
-        }
-        
-        .filter-group select {
-            width: 100%;
-            padding: 8px;
-            border-radius: var(--border-radius-md);
-            border: 1px solid var(--color-border-secondary);
-            font-size: 13px;
-            background: white;
-        }
-        
-        .filter-stats {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: auto;
-            font-size: 12px;
-            color: var(--color-text-secondary);
-        }
-        
-        .filter-stats .count {
-            font-weight: 600;
-            color: #185FA5;
-            font-size: 14px;
+            color: #B45A0A;
+            margin-top: 10px;
+            border-left: 3px solid var(--warning);
         }
 
-        @media (max-width: 1000px) {
-            .grid-4 { grid-template-columns: 1fr; gap: 12px; }
-            .sidebar { width: 200px; min-width: 200px; }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #8E92A2;
         }
+
+        .stock-low {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .stock-ok {
+            color: #1D9E75;
+        }
+
+        /* Customer Search Styles */
+        .customer-search {
+            position: relative;
+        }
+
+        .customer-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .customer-item:hover {
+            background: var(--bg-sec);
+        }
+
+        .customer-item .name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .customer-item .wa {
+            font-size: 12px;
+            color: var(--text-sec);
+        }
+
+        .customer-item .count {
+            font-size: 11px;
+            background: var(--bg-ter);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        /* Sparepart Search Styles */
+        .sparepart-search {
+            position: relative;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-item:hover {
+            background: var(--bg-sec);
+        }
+
+        .search-item .name {
+            font-weight: 500;
+        }
+
+        .search-item .price {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* Selected Spareparts */
+        .sparepart-list-item {
+            background: var(--bg-sec);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sparepart-list-item .info {
+            flex: 1;
+        }
+
+        .sparepart-list-item .name {
+            font-weight: 500;
+        }
+
+        .sparepart-list-item .price {
+            font-size: 12px;
+            color: var(--text-sec);
+        }
+
+        .sparepart-list-item .qty {
+            width: 80px;
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .booking-badge {
+            background: var(--warning);
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+
+        /* Log Styles */
+        .log-entry {
+            background: var(--bg-sec);
+            border-left: 3px solid var(--primary);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .log-time {
+            color: var(--text-sec);
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .log-action {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .log-user {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .success-highlight {
+            border-color: var(--success) !important;
+            background: #E8F5E9 !important;
+            transition: all 0.3s;
+        }
+
         @media (max-width: 768px) {
-            .app { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 0; }
-            .sidebar-logo { display: none; }
-            .nav-section { display: flex; gap: 5px; padding: 8px; }
-            .nav-item { white-space: nowrap; }
-            .filter-section { flex-direction: column; }
-            .filter-group { width: 100%; }
-            .modal { width: 95%; margin: 10px; }
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(-100%);
+                z-index: 150;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 140;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .filter-section {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .customer-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
         }
-        i, .fas, .far { margin-right: 4px; }
-        .empty-state { text-align: center; padding: 3rem; color: #8E92A2; }
-        .stock-low { color: #E24B4A; font-weight: 600; }
-        .stock-ok { color: #1D9E75; }
-        .whatsapp-icon { color: #25D366; }
-        .edit-icon { cursor: pointer; color: #185FA5; margin-left: 8px; font-size: 12px; }
-        .edit-icon:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-<div class="app" id="root">
-    <div class="sidebar">
+
+<button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <h1><i class="fas fa-tools"></i> ServisHP Pro</h1>
             <p>MANAJEMEN SERVIS</p>
@@ -534,7 +706,7 @@
         </div>
         <div class="nav-section">
             <div class="nav-label">Operasional</div>
-            <div class="nav-item" data-page="teknisi"><i class="fas fa-mobile-screen-button"></i> Teknisi</div>
+            <div class="nav-item" data-page="teknisi"><i class="fas fa-user-cog"></i> Teknisi</div>
             <div class="nav-item" data-page="qc"><i class="fas fa-clipboard-list"></i> Quality Control</div>
             <div class="nav-item" data-page="kasir"><i class="fas fa-cash-register"></i> Kasir</div>
         </div>
@@ -545,9 +717,9 @@
             <div class="nav-item" data-page="laporan"><i class="fas fa-chart-line"></i> Laporan</div>
             <div class="nav-item" data-page="pelanggan"><i class="fas fa-users"></i> Pelanggan</div>
             <div class="nav-item" data-page="pengaturan"><i class="fas fa-cog"></i> Pengaturan</div>
+            <div class="nav-item" data-page="logaktivitas"><i class="fas fa-history"></i> Log Aktivitas</div>
         </div>
     </div>
-
     <div class="main" id="main-content">
         <div id="page-dashboard" class="page-content"></div>
         <div id="page-antrian" class="page-content" style="display:none"></div>
@@ -560,1252 +732,1405 @@
         <div id="page-laporan" class="page-content" style="display:none"></div>
         <div id="page-pelanggan" class="page-content" style="display:none"></div>
         <div id="page-pengaturan" class="page-content" style="display:none"></div>
+        <div id="page-logaktivitas" class="page-content" style="display:none"></div>
     </div>
+</div>
 
-    <!-- Modal Tambah Servis -->
-    <div id="modal-new-servis" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header"><span class="modal-title"><i class="fas fa-plus-circle"></i> Servis Baru</span><button class="close-btn" onclick="closeModal('modal-new-servis')">&times;</button></div>
-            <div class="form-group"><label class="form-label">Nama Pelanggan</label><input type="text" id="new-nama" placeholder="Nama lengkap"></div>
-            <div class="form-group"><label class="form-label">No. WhatsApp</label><input type="text" id="new-wa" placeholder="0812xxxx"></div>
-            <div class="form-group"><label class="form-label">Perangkat</label><input type="text" id="new-device" placeholder="Contoh: iPhone 14 Pro"></div>
-            <div class="form-group"><label class="form-label">Keluhan</label><textarea id="new-keluhan" rows="2" placeholder="Deskripsikan keluhan"></textarea></div>
-            <div class="form-group"><label class="form-label">Estimasi Biaya</label><input type="number" id="new-biaya" placeholder="Estimasi biaya"></div>
-            <div style="display:flex; gap:10px; justify-content:flex-end"><button class="btn" onclick="closeModal('modal-new-servis')">Batal</button><button class="btn btn-primary" onclick="tambahServisBaru()">Simpan</button></div>
+<!-- Modal Servis Baru -->
+<div id="modal-new-servis" class="modal-overlay" style="display:none">
+    <div class="modal">
+        <div class="modal-header">
+            <span><i class="fas fa-plus-circle"></i> Servis Baru</span>
+            <button class="close-btn" onclick="closeModal('modal-new-servis')">&times;</button>
         </div>
-    </div>
 
-    <!-- Modal Biaya Servis untuk Approval dengan WhatsApp -->
-    <div id="modal-biaya-servis" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-calculator"></i> Detail Biaya Servis</span>
-                <button class="close-btn" onclick="closeModal('modal-biaya-servis')">&times;</button>
+        <div class="form-group">
+            <label class="form-label required"><i class="fas fa-search"></i> Nama Pelanggan</label>
+            <div class="customer-search">
+                <input type="text" id="search-customer" placeholder="Ketik nama pelanggan..." autocomplete="off" oninput="searchCustomer()">
+                <div id="customer-results" class="customer-results" style="display:none"></div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Biaya Servis/Jasa <span style="color: red;">*</span></label>
-                <input type="number" id="biaya-jasa" placeholder="Biaya jasa servis" value="0">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Biaya Sparepart <span style="color: red;">*</span></label>
-                <input type="number" id="biaya-sparepart" placeholder="Biaya sparepart" value="0">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Biaya Lainnya</label>
-                <input type="number" id="biaya-lain" placeholder="Biaya lainnya (jika ada)" value="0">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Keterangan Biaya Lainnya</label>
-                <textarea id="keterangan-lain" rows="2" placeholder="Contoh: biaya pengiriman, biaya tambahan, dll."></textarea>
-            </div>
-            <div class="cost-summary" id="cost-summary">
-                Total Biaya: Rp 0
-            </div>
-            
-            <div class="template-preview">
-                <h4>
-                    <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan WhatsApp (Persetujuan)
-                    <span class="edit-icon" onclick="toggleEditTemplate('approval')">
-                        <i class="fas fa-pen"></i> Edit Pesan
-                    </span>
-                </h4>
-                <div id="template-display-approval" class="preview-content">
-                    Memuat template...
-                </div>
-                <div id="template-edit-area-approval" class="template-edit" style="display: none;">
-                    <textarea id="template-edit-text-approval" rows="8" class="preview-content" style="width: 100%;"></textarea>
-                    <div style="display: flex; gap: 8px; margin-top: 8px; justify-content: flex-end;">
-                        <button class="btn btn-sm btn-outline" onclick="cancelEditTemplate('approval')">Batal</button>
-                        <button class="btn btn-sm btn-primary" onclick="saveEditTemplate('approval')">Simpan Perubahan</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="info-text">
-                <i class="fas fa-info-circle"></i> Setelah menyimpan, WhatsApp akan terbuka di tab baru.
-            </div>
-            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top: 16px;">
-                <button class="btn" onclick="closeModal('modal-biaya-servis')">Batal</button>
-                <button class="btn btn-success" onclick="simpanDanKirimWA('approval')">
-                    <i class="fab fa-whatsapp"></i> Simpan & Kirim ke WhatsApp
-                </button>
+            <div class="info-text" style="margin-top:8px; font-size:11px; padding:8px">
+                <i class="fas fa-info-circle"></i> Ketik nama pelanggan, pilih dari saran. Untuk pelanggan baru, langsung ketik nama dan lanjut.
             </div>
         </div>
-    </div>
 
-    <!-- Modal Konfirmasi Selesai (QC -> Done) -->
-    <div id="modal-selesai-servis" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-check-circle"></i> Konfirmasi Penyelesaian Servis</span>
-                <button class="close-btn" onclick="closeModal('modal-selesai-servis')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Catatan Penyelesaian (Opsional)</label>
-                <textarea id="catatan-selesai" rows="3" placeholder="Contoh: Servis selesai, perangkat berfungsi normal, garansi 90 hari"></textarea>
-            </div>
-            <div class="payment-detail">
-                <strong>Total Biaya: </strong><span id="total-biaya-display" class="total-large">Rp 0</span>
-            </div>
-            
-            <div class="template-preview">
-                <h4>
-                    <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan WhatsApp (Servis Selesai)
-                    <span class="edit-icon" onclick="toggleEditTemplate('done')">
-                        <i class="fas fa-pen"></i> Edit Pesan
-                    </span>
-                </h4>
-                <div id="template-display-done" class="preview-content">
-                    Memuat template...
-                </div>
-                <div id="template-edit-area-done" class="template-edit" style="display: none;">
-                    <textarea id="template-edit-text-done" rows="8" class="preview-content" style="width: 100%;"></textarea>
-                    <div style="display: flex; gap: 8px; margin-top: 8px; justify-content: flex-end;">
-                        <button class="btn btn-sm btn-outline" onclick="cancelEditTemplate('done')">Batal</button>
-                        <button class="btn btn-sm btn-primary" onclick="saveEditTemplate('done')">Simpan Perubahan</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top: 16px;">
-                <button class="btn" onclick="closeModal('modal-selesai-servis')">Batal</button>
-                <button class="btn btn-success" onclick="konfirmasiSelesaiDanKirimWA()">
-                    <i class="fab fa-whatsapp"></i> Selesai & Kirim WhatsApp
-                </button>
+        <div class="form-group">
+            <label class="form-label required">No. WhatsApp</label>
+            <input type="text" id="new-wa" placeholder="0812xxxx" onblur="checkDuplicateWA()">
+            <div id="wa-warning" class="warning-text" style="display:none; margin-top:5px; font-size:11px; padding:6px">
+                <i class="fas fa-exclamation-triangle"></i> Nomor WhatsApp sudah terdaftar atas nama <span id="existing-name"></span>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Pembayaran dan Pengambilan -->
-    <div id="modal-pembayaran" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-money-bill-wave"></i> Konfirmasi Pembayaran & Pengambilan</span>
-                <button class="close-btn" onclick="closeModal('modal-pembayaran')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Metode Pembayaran</label>
-                <select id="metode-pembayaran">
-                    <option value="Tunai">Tunai</option>
-                    <option value="Transfer Bank">Transfer Bank</option>
-                    <option value="QRIS">QRIS</option>
-                    <option value="E-Wallet">E-Wallet</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Nominal Dibayar</label>
-                <input type="number" id="nominal-dibayar" placeholder="Nominal yang dibayar">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Kembalian (jika tunai)</label>
-                <input type="number" id="kembalian" readonly style="background: #f5f5f5;">
-            </div>
-            <div class="payment-detail">
-                <strong>Total Tagihan: </strong><span id="total-tagihan-display" class="total-large">Rp 0</span>
-            </div>
-            
-            <div class="template-preview">
-                <h4>
-                    <i class="fab fa-whatsapp whatsapp-icon"></i> Pesan WhatsApp (Bukti Pengambilan)
-                    <span class="edit-icon" onclick="toggleEditTemplate('taken')">
-                        <i class="fas fa-pen"></i> Edit Pesan
-                    </span>
-                </h4>
-                <div id="template-display-taken" class="preview-content">
-                    Memuat template...
-                </div>
-                <div id="template-edit-area-taken" class="template-edit" style="display: none;">
-                    <textarea id="template-edit-text-taken" rows="8" class="preview-content" style="width: 100%;"></textarea>
-                    <div style="display: flex; gap: 8px; margin-top: 8px; justify-content: flex-end;">
-                        <button class="btn btn-sm btn-outline" onclick="cancelEditTemplate('taken')">Batal</button>
-                        <button class="btn btn-sm btn-primary" onclick="saveEditTemplate('taken')">Simpan Perubahan</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top: 16px;">
-                <button class="btn" onclick="closeModal('modal-pembayaran')">Batal</button>
-                <button class="btn btn-success" onclick="prosesPembayaranDanKirimWA()">
-                    <i class="fab fa-whatsapp"></i> Bayar & Kirim Bukti WhatsApp
-                </button>
-            </div>
+        <div class="form-group">
+            <label class="form-label required">Perangkat</label>
+            <input type="text" id="new-device" placeholder="Contoh: iPhone 14 Pro" list="device-history">
+            <datalist id="device-history"></datalist>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Keluhan</label>
+            <textarea id="new-keluhan" rows="2" placeholder="Deskripsikan keluhan"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Estimasi Biaya</label>
+            <input type="number" id="new-biaya" placeholder="Estimasi biaya">
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end">
+            <button class="btn" onclick="closeModal('modal-new-servis')">Batal</button>
+            <button class="btn btn-primary" onclick="tambahServisBaru()">Simpan Servis</button>
         </div>
     </div>
+</div>
 
-    <!-- Modal Import -->
-    <div id="modal-import" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header"><span class="modal-title"><i class="fas fa-database"></i> Import Database</span><button class="close-btn" onclick="closeModal('modal-import')">&times;</button></div>
-            <div class="form-group"><label class="form-label">Pilih file JSON</label><input type="file" id="import-file" accept=".json"></div>
-            <div class="info-text"><i class="fas fa-info-circle"></i> File harus berformat JSON dari hasil export ServisHP Pro.</div>
-            <div style="display:flex; gap:10px; justify-content:flex-end"><button class="btn" onclick="closeModal('modal-import')">Batal</button><button class="btn btn-primary" onclick="importDatabase()">Import</button></div>
+<!-- Modal Biaya Servis -->
+<div id="modal-biaya-servis" class="modal-overlay" style="display:none">
+    <div class="modal">
+        <div class="modal-header">
+            <span><i class="fas fa-calculator"></i> Input Biaya & Sparepart</span>
+            <button class="close-btn" onclick="closeModalBiaya()">&times;</button>
+        </div>
+        <div class="warning-text" style="margin-bottom:16px">
+            <i class="fas fa-info-circle"></i> <strong>Sistem Booking Stok</strong><br>Sparepart yang dipilih akan di-booking dan baru dikurangi setelah servis selesai.
+        </div>
+        <div class="form-group">
+            <label class="form-label">Biaya Servis/Jasa</label>
+            <input type="number" id="biaya-jasa" value="0" oninput="updateTotal()">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Cari Sparepart <i class="fas fa-search"></i></label>
+            <div class="sparepart-search">
+                <input type="text" id="search-sparepart" placeholder="Ketik nama sparepart..." oninput="searchSparepart()">
+                <div id="search-results" class="search-results" style="display:none"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Sparepart Terpilih <span class="booking-badge"><i class="fas fa-clock"></i> Booking</span></label>
+            <div id="selected-spareparts"></div>
+        </div>
+        <div class="cost-summary" id="cost-summary">Total Biaya: Rp 0</div>
+        <div id="biaya-warning" class="warning-text" style="display:none"><i class="fas fa-info-circle"></i> Minimal isi biaya jasa atau pilih sparepart!</div>
+        <div class="template-preview">
+            <h4><i class="fab fa-whatsapp"></i> Pesan WhatsApp</h4>
+            <div id="preview-wa" class="preview-content"></div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px">
+            <button class="btn" onclick="closeModalBiaya()">Batal</button>
+            <button class="btn btn-success" id="btn-simpan" onclick="simpanApproval()" disabled><i class="fab fa-whatsapp"></i> Simpan & Kirim WA</button>
         </div>
     </div>
-    
-    <!-- Modal Edit Template Global -->
-    <div id="modal-edit-template" class="modal-overlay" style="display:none">
-        <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fab fa-whatsapp"></i> Edit Template WhatsApp Global</span>
-                <button class="close-btn" onclick="closeModal('modal-edit-template')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Pilih Tipe Template</label>
-                <select id="template-type-select" onchange="loadTemplateForEdit()">
-                    <option value="approval">Template Persetujuan (Diagnosa -> Approval)</option>
-                    <option value="done">Template Selesai (QC -> Done)</option>
-                    <option value="taken">Template Pengambilan (Done -> Taken)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Template Pesan</label>
-                <textarea id="global-template" rows="12" style="font-family: monospace; font-size: 12px;"></textarea>
-            </div>
-            <div class="info-text">
-                <i class="fas fa-info-circle"></i> Gunakan variabel: {nama}, {device}, {keluhan}, {id}, {tanggal}, {jasa}, {sparepart}, {lain}, {total}, {keteranganLain}, {nama_toko}, {catatan}, {metode_pembayaran}, {nominal_dibayar}, {kembalian}
-            </div>
-            <div style="display:flex; gap:10px; justify-content:flex-end">
-                <button class="btn" onclick="closeModal('modal-edit-template')">Batal</button>
-                <button class="btn btn-primary" onclick="saveGlobalTemplate()">Simpan Template</button>
-            </div>
+</div>
+
+<div id="modal-selesai" class="modal-overlay" style="display:none">
+    <div class="modal">
+        <div class="modal-header">
+            <span><i class="fas fa-check-circle"></i> Konfirmasi Selesai</span>
+            <button class="close-btn" onclick="closeModal('modal-selesai')">&times;</button>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Catatan</label>
+            <textarea id="catatan-selesai" rows="3" placeholder="Catatan penyelesaian"></textarea>
+        </div>
+        <div class="payment-detail"><strong>Total: </strong><span id="total-display">Rp 0</span></div>
+        <div class="template-preview">
+            <h4><i class="fab fa-whatsapp"></i> Pesan WhatsApp</h4>
+            <div id="preview-done" class="preview-content"></div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end">
+            <button class="btn" onclick="closeModal('modal-selesai')">Batal</button>
+            <button class="btn btn-success" onclick="konfirmasiSelesai()"><i class="fab fa-whatsapp"></i> Selesai & Kurangi Stok</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-bayar" class="modal-overlay" style="display:none">
+    <div class="modal">
+        <div class="modal-header">
+            <span><i class="fas fa-money-bill-wave"></i> Pembayaran</span>
+            <button class="close-btn" onclick="closeModal('modal-bayar')">&times;</button>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Metode</label>
+            <select id="metode">
+                <option>Tunai</option>
+                <option>Transfer Bank</option>
+                <option>QRIS</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Nominal Dibayar</label>
+            <input type="number" id="dibayar" oninput="hitungKembalian()">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Kembalian</label>
+            <input type="number" id="kembalian" readonly style="background:#f5f5f5">
+        </div>
+        <div class="payment-detail"><strong>Tagihan: </strong><span id="tagihan">Rp 0</span></div>
+        <div class="template-preview">
+            <h4><i class="fab fa-whatsapp"></i> Pesan WhatsApp</h4>
+            <div id="preview-bayar" class="preview-content"></div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end">
+            <button class="btn" onclick="closeModal('modal-bayar')">Batal</button>
+            <button class="btn btn-success" onclick="prosesBayar()"><i class="fab fa-whatsapp"></i> Bayar & Kirim WA</button>
         </div>
     </div>
 </div>
 
 <script>
-    // ==================== DATA STRUCTURE ====================
-    let dataServis = [];
-    let dataSparepart = [];
-    let dataPelanggan = [];
-    let dataPembayaran = [];
-    let currentServisFilter = 'semua';
-    let selectedServisId = null;
-    let currentTemplateType = 'approval';
-    let isEditingTemplate = false;
-    let editingTemplateType = null;
-    
-    // Template defaults
-    const DEFAULT_TEMPLATES = {
-        approval: `*ServisHP Pro - Notifikasi Persetujuan Servis*
+// ==================== DATA ====================
+const STATUS = { waiting:"Menunggu", diag:"Diagnosa", approval:"Persetujuan", repair:"Perbaikan", qc:"Quality Control", done:"Siap Diambil", taken:"Sudah Diambil", cancel:"Batal" };
+const STATUS_ORDER = ["waiting","diag","approval","repair","qc","done","taken","cancel"];
+const STATUS_COLOR = { waiting:"s-waiting", diag:"s-diag", approval:"s-approval", repair:"s-repair", qc:"s-qc", done:"s-done", taken:"s-taken", cancel:"s-cancel" };
 
-Kepada Yth. Bapak/Ibu *{nama}*
+let dataServis = [
+    { id:"SRV001", nama:"Andi N.", wa:"08123456789", device:"iPhone 14 Pro", keluhan:"Layar retak", status:"repair", estimasi:850000, tglMasuk:"2026-06-11", teknisi:"Budi", biaya:{ jasa:350000, spareparts:[], total:850000 }, bookedSpareparts:[], createdAt:"2026-06-11 08:00:00", createdBy:"admin", updatedAt:"2026-06-11 11:00:00", updatedBy:"teknisi" },
+    { id:"SRV002", nama:"Sari R.", wa:"08134567890", device:"Samsung S23", keluhan:"Batre cepat habis", status:"diag", estimasi:350000, tglMasuk:"2026-06-11", teknisi:"Andre", biaya:{ jasa:0, spareparts:[], total:0 }, bookedSpareparts:[], createdAt:"2026-06-11 08:00:00", createdBy:"admin", updatedAt:"2026-06-11 10:00:00", updatedBy:"teknisi" },
+    { id:"SRV003", nama:"Dwi W.", wa:"08145678901", device:"Redmi Note 12", keluhan:"Tidak bisa nyala", status:"done", estimasi:180000, tglMasuk:"2026-06-10", teknisi:"Budi", biaya:{ jasa:180000, spareparts:[], total:180000 }, bookedSpareparts:[], createdAt:"2026-06-10 09:00:00", createdBy:"admin", updatedAt:"2026-06-11 09:00:00", updatedBy:"qc" },
+    { id:"SRV004", nama:"Rina T.", wa:"08156789012", device:"Xiaomi 12", keluhan:"Camera error", status:"waiting", estimasi:250000, tglMasuk:"2026-06-12", teknisi:"-", biaya:{ jasa:0, spareparts:[], total:0 }, bookedSpareparts:[], createdAt:"2026-06-12 08:00:00", createdBy:"admin", updatedAt:"2026-06-12 08:00:00", updatedBy:"admin" },
+    { id:"SRV005", nama:"Budi S.", wa:"08167890123", device:"Oppo Reno 8", keluhan:"LCD pecah", status:"qc", estimasi:650000, tglMasuk:"2026-06-11", teknisi:"Citra", biaya:{ jasa:200000, spareparts:[{id:4,nama:"LCD Redmi Note 12",harga:650000,qty:1}], total:850000 }, bookedSpareparts:[{id:4,nama:"LCD Redmi Note 12",qty:1}], createdAt:"2026-06-11 08:00:00", createdBy:"admin", updatedAt:"2026-06-11 15:00:00", updatedBy:"teknisi" }
+];
 
-Terima kasih telah mempercayakan perangkat Anda kepada kami. Berikut adalah hasil diagnosa dan rincian biaya untuk perangkat *{device}*:
+let dataSparepart = [
+    { id:1, nama:"LCD iPhone 14 Pro", stok:5, minStok:2, harga:1800000, booked:0, updatedAt:"2026-06-10 10:00:00", updatedBy:"admin" },
+    { id:2, nama:"Baterai Samsung S23", stok:3, minStok:2, harga:450000, booked:0, updatedAt:"2026-06-10 10:00:00", updatedBy:"admin" },
+    { id:3, nama:"Charging Port Type C", stok:8, minStok:3, harga:120000, booked:0, updatedAt:"2026-06-10 10:00:00", updatedBy:"admin" },
+    { id:4, nama:"LCD Redmi Note 12", stok:2, minStok:3, harga:650000, booked:1, updatedAt:"2026-06-11 14:00:00", updatedBy:"teknisi" }
+];
 
-━━━━━━━━━━━━━━━━━━━━
-📋 *DETAIL SERVIS*
-━━━━━━━━━━━━━━━━━━━━
-🆔 ID Servis: {id}
-📱 Perangkat: {device}
-📝 Keluhan: {keluhan}
-📅 Tanggal: {tanggal}
+let dataTeknisi = [
+    { id:1, nama:"Budi", skill:"iPhone Specialist", active:true, createdAt:"2026-06-01 09:00:00", createdBy:"admin" },
+    { id:2, nama:"Andre", skill:"Samsung Expert", active:true, createdAt:"2026-06-01 09:00:00", createdBy:"admin" },
+    { id:3, nama:"Citra", skill:"Android Specialist", active:true, createdAt:"2026-06-01 09:00:00", createdBy:"admin" }
+];
 
-━━━━━━━━━━━━━━━━━━━━
-💰 *RINCIAN BIAYA*
-━━━━━━━━━━━━━━━━━━━━
-{rincian_biaya}
-━━━━━━━━━━━━━━━━━━━━
-*TOTAL BIAYA: {total_formatted}*
-━━━━━━━━━━━━━━━━━━━━
+let dataPembayaran = [
+    { id:"SRV003", tanggal:"2026-06-11", nominal:180000, metode:"Tunai", createdAt:"2026-06-11 10:00:00", createdBy:"kasir" }
+];
 
-📌 *Status Saat Ini: MENUNGGU PERSETUJUAN*
+let dataLog = [
+    { id:1, timestamp:"2026-06-11 08:00:00", user:"admin", action:"CREATE_SERVIS", target:"SRV001", details:"Membuat servis baru untuk Andi N. (iPhone 14 Pro)", ip:"local" }
+];
 
-Silakan konfirmasi persetujuan Anda dengan membalas pesan ini atau menghubungi kami.
+// Auto-complete history
+let deviceHistory = [];
 
-Terima kasih atas kepercayaan Anda.
-
-*ServisHP Pro*
-*Solusi Cepat & Profesional untuk Perangkat Anda*`,
-
-        done: `*ServisHP Pro - Servis Telah Selesai* ✅
-
-Kepada Yth. Bapak/Ibu *{nama}*
-
-Dengan hormat, kami informasikan bahwa perangkat *{device}* Anda telah selesai kami perbaiki.
-
-━━━━━━━━━━━━━━━━━━━━
-📋 *DETAIL SERVIS*
-━━━━━━━━━━━━━━━━━━━━
-🆔 ID Servis: {id}
-📱 Perangkat: {device}
-📅 Tanggal Selesai: {tanggal}
-
-━━━━━━━━━━━━━━━━━━━━
-💰 *TOTAL BIAYA: {total_formatted}*
-━━━━━━━━━━━━━━━━━━━━
-
-📝 *Catatan:* {catatan}
-
-━━━━━━━━━━━━━━━━━━━━
-📌 *Informasi Penting:*
-✓ Servis dilengkapi garansi 90 hari
-✓ Harap melakukan pembayaran sebelum mengambil perangkat
-✓ Bawa nota ini saat mengambil perangkat
-
-Silakan datang ke toko kami untuk melakukan pembayaran dan mengambil perangkat.
-
-Terima kasih atas kepercayaan Anda.
-
-*ServisHP Pro*
-*Solusi Cepat & Profesional untuk Perangkat Anda*`,
-
-        taken: `*ServisHP Pro - Bukti Pengambilan Servis* 🎉
-
-Kepada Yth. Bapak/Ibu *{nama}*
-
-Terima kasih telah menggunakan jasa ServisHP Pro. Berikut adalah bukti pengambilan perangkat Anda:
-
-━━━━━━━━━━━━━━━━━━━━
-📋 *DETAIL TRANSAKSI*
-━━━━━━━━━━━━━━━━━━━━
-🆔 ID Servis: {id}
-📱 Perangkat: {device}
-💰 Total Biaya: {total_formatted}
-💳 Metode Bayar: {metode_pembayaran}
-💵 Nominal Dibayar: {nominal_dibayar_formatted}
-🔄 Kembalian: {kembalian_formatted}
-📅 Tanggal: {tanggal}
-
-━━━━━━━━━━━━━━━━━━━━
-📌 *Informasi Garansi:*
-✓ Garansi servis 90 hari terhitung dari tanggal di atas
-✓ Simpan bukti ini untuk klaim garansi
-
-Terima kasih atas kepercayaan Anda. Kami siap melayani Anda kembali!
-
-*ServisHP Pro*
-*Solusi Cepat & Profesional untuk Perangkat Anda*`
-    };
-
-    // ==================== INITIAL DATA ====================
-    function initDefaultData() {
-        dataServis = [
-            { id: "SRV001", nama: "Andi N.", wa: "081234567", device: "iPhone 14 Pro", keluhan: "Layar retak", status: "repair", estimasi: 850000, tglMasuk: "2026-06-11", teknisi: "Budi", biayaServis: { jasa: 0, sparepart: 0, lain: 0, total: 0 } },
-            { id: "SRV002", nama: "Sari R.", wa: "081345678", device: "Samsung S23", keluhan: "Batre cepat habis", status: "approval", estimasi: 350000, tglMasuk: "2026-06-11", teknisi: "Andre", biayaServis: { jasa: 200000, sparepart: 450000, lain: 0, total: 650000 } },
-            { id: "SRV003", nama: "Dwi W.", wa: "081456789", device: "Redmi Note 12", keluhan: "Tidak bisa nyala", status: "done", estimasi: 180000, tglMasuk: "2026-06-10", teknisi: "Budi", biayaServis: { jasa: 150000, sparepart: 0, lain: 0, total: 150000 } }
-        ];
-        dataSparepart = [
-            { id: 1, nama: "LCD iPhone 14 Pro", stok: 5, minStok: 2, harga: 1800000 },
-            { id: 2, nama: "Baterai Samsung S23", stok: 3, minStok: 2, harga: 450000 },
-            { id: 3, nama: "Charging Port", stok: 8, minStok: 3, harga: 120000 }
-        ];
-        dataPembayaran = [];
-        dataPelanggan = dataServis.map(s => ({ nama: s.nama, wa: s.wa, device: s.device, totalServis: 1 }));
-    }
-
-    // ==================== LOCALSTORAGE ====================
-    function loadData() {
-        const saved = localStorage.getItem('servishp_full_db');
-        if(saved) {
-            try {
-                const db = JSON.parse(saved);
-                dataServis = db.servis || [];
-                dataSparepart = db.sparepart || [];
-                dataPembayaran = db.pembayaran || [];
-                dataPelanggan = db.pelanggan || [];
-                if(dataServis.length === 0) initDefaultData();
-            } catch(e) { initDefaultData(); }
-        } else {
-            initDefaultData();
-        }
-        updateBadges();
-        saveAllData();
-    }
-
-    function saveAllData() {
-        const db = {
-            servis: dataServis,
-            sparepart: dataSparepart,
-            pembayaran: dataPembayaran,
-            pelanggan: dataPelanggan,
-            lastUpdate: new Date().toISOString()
-        };
-        localStorage.setItem('servishp_full_db', JSON.stringify(db));
-        updateBadges();
-    }
-
-    function updateBadges() {
-        const antrianCount = dataServis.filter(s => ['waiting','diag','approval','repair','qc'].includes(s.status)).length;
-        const badgeAntrian = document.getElementById('badge-antrian');
-        const badgeServis = document.getElementById('badge-servis');
-        if(badgeAntrian) badgeAntrian.innerText = antrianCount;
-        if(badgeServis) badgeServis.innerText = dataServis.length;
-    }
-
-    // ==================== FUNGSI TEMPLATE WHATSAPP ====================
-    function formatRupiah(angka) {
-        return 'Rp ' + angka.toLocaleString('id-ID');
-    }
-
-    function getCustomTemplate(type) {
-        const saved = localStorage.getItem(`wa_template_${type}`);
-        if (saved) return saved;
-        return DEFAULT_TEMPLATES[type];
-    }
-
-    function saveCustomTemplate(type, template) {
-        localStorage.setItem(`wa_template_${type}`, template);
-    }
-
-    function replaceTemplateVariables(template, servis, biaya, extraData = {}) {
-        const tgl = new Date().toLocaleDateString('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-        
-        let rincianBiaya = '';
-        if (biaya && biaya.jasa > 0) {
-            rincianBiaya += `🔧 Biaya Servis/Jasa: ${formatRupiah(biaya.jasa)}\n`;
-        }
-        if (biaya && biaya.sparepart > 0) {
-            rincianBiaya += `🔩 Biaya Sparepart: ${formatRupiah(biaya.sparepart)}\n`;
-        }
-        if (biaya && biaya.lain > 0) {
-            rincianBiaya += `📝 Biaya Lainnya: ${formatRupiah(biaya.lain)}\n`;
-            if (biaya.keteranganLain) {
-                rincianBiaya += `   *${biaya.keteranganLain}*\n`;
+// Load history dari localStorage
+function loadHistory() {
+    const saved = localStorage.getItem('deviceHistory');
+    if(saved) {
+        try {
+            deviceHistory = JSON.parse(saved);
+            const datalist = document.getElementById('device-history');
+            if(datalist) {
+                datalist.innerHTML = deviceHistory.map(d => `<option value="${d}">`).join('');
             }
-        }
-        
-        const totalBiaya = biaya?.total || servis.biayaServis?.total || servis.estimasi || 0;
-        
-        const replacements = {
-            '{nama}': servis.nama,
-            '{device}': servis.device,
-            '{keluhan}': servis.keluhan || '-',
-            '{id}': servis.id,
-            '{tanggal}': tgl,
-            '{jasa}': formatRupiah(biaya?.jasa || 0),
-            '{jasa_raw}': (biaya?.jasa || 0).toString(),
-            '{sparepart}': formatRupiah(biaya?.sparepart || 0),
-            '{sparepart_raw}': (biaya?.sparepart || 0).toString(),
-            '{lain}': formatRupiah(biaya?.lain || 0),
-            '{lain_raw}': (biaya?.lain || 0).toString(),
-            '{total}': formatRupiah(totalBiaya),
-            '{total_raw}': totalBiaya.toString(),
-            '{total_formatted}': formatRupiah(totalBiaya),
-            '{keteranganLain}': biaya?.keteranganLain || '',
-            '{nama_toko}': 'ServisHP Pro',
-            '{rincian_biaya}': rincianBiaya || 'Tidak ada rincian biaya',
-            '{catatan}': extraData.catatan || '-',
-            '{metode_pembayaran}': extraData.metodePembayaran || '-',
-            '{nominal_dibayar}': formatRupiah(extraData.nominalDibayar || 0),
-            '{nominal_dibayar_formatted}': formatRupiah(extraData.nominalDibayar || 0),
-            '{kembalian}': formatRupiah(extraData.kembalian || 0),
-            '{kembalian_formatted}': formatRupiah(extraData.kembalian || 0)
-        };
-        
-        let result = template;
-        for (const [key, value] of Object.entries(replacements)) {
-            result = result.split(key).join(value);
-        }
-        
-        return result;
+        } catch(e) {}
     }
+}
 
-    function getTemplateWhatsApp(type, servis, biaya, extraData = {}) {
-        const template = getCustomTemplate(type);
-        return replaceTemplateVariables(template, servis, biaya, extraData);
+function saveToDeviceHistory(device) {
+    if(!device || deviceHistory.includes(device)) return;
+    deviceHistory.unshift(device);
+    if(deviceHistory.length > 20) deviceHistory.pop();
+    localStorage.setItem('deviceHistory', JSON.stringify(deviceHistory));
+    const datalist = document.getElementById('device-history');
+    if(datalist) {
+        datalist.innerHTML = deviceHistory.map(d => `<option value="${d}">`).join('');
     }
+}
 
-    // ==================== FUNGSI WHATSAPP ====================
-    function sendWhatsApp(phoneNumber, message) {
-        let cleanNumber = phoneNumber.toString().trim();
-        cleanNumber = cleanNumber.replace(/[^\d+]/g, '');
-        
-        if (cleanNumber.startsWith('0')) {
-            cleanNumber = '62' + cleanNumber.substring(1);
-        }
-        if (!cleanNumber.startsWith('+') && !cleanNumber.startsWith('62')) {
-            cleanNumber = '62' + cleanNumber;
-        }
-        cleanNumber = cleanNumber.replace(/^\+/, '');
-        
-        const encodedMessage = encodeURIComponent(message);
-        const waUrl = `https://api.whatsapp.com/send?phone=${cleanNumber}&text=${encodedMessage}`;
-        
-        window.open(waUrl, '_blank');
-    }
+let currentPage = "dashboard", currentFilter = "semua", selectedId = null;
+let currentSelectedSpareparts = [];
+let currentUser = localStorage.getItem('currentUser') || "admin";
+let selectedCustomerData = null;
 
-    // ==================== FUNGSI TEMPLATE EDIT ====================
-    function toggleEditTemplate(type) {
-        editingTemplateType = type;
-        const displayDiv = document.getElementById(`template-display-${type}`);
-        const editDiv = document.getElementById(`template-edit-area-${type}`);
-        const editTextarea = document.getElementById(`template-edit-text-${type}`);
-        
-        if (displayDiv.style.display !== 'none') {
-            displayDiv.style.display = 'none';
-            editDiv.style.display = 'block';
-            editTextarea.value = displayDiv.textContent;
+// ==================== FUNGSI PELANGGAN ====================
+function searchCustomer() {
+    const query = document.getElementById('search-customer').value.toLowerCase();
+    const resultsDiv = document.getElementById('customer-results');
+    
+    if(query.length < 2) {
+        resultsDiv.style.display = 'none';
+        if(query === "") {
+            selectedCustomerData = null;
+            document.getElementById('new-wa').value = '';
+            document.getElementById('wa-warning').style.display = 'none';
         }
-    }
-
-    function cancelEditTemplate(type) {
-        const displayDiv = document.getElementById(`template-display-${type}`);
-        const editDiv = document.getElementById(`template-edit-area-${type}`);
-        displayDiv.style.display = 'block';
-        editDiv.style.display = 'none';
-        if (type === 'approval') updateApprovalPreview();
-        else if (type === 'done') updateDonePreview();
-        else if (type === 'taken') updateTakenPreview();
-    }
-
-    function saveEditTemplate(type) {
-        const editedMessage = document.getElementById(`template-edit-text-${type}`).value;
-        const displayDiv = document.getElementById(`template-display-${type}`);
-        displayDiv.textContent = editedMessage;
-        cancelEditTemplate(type);
-    }
-
-    function getCurrentTemplateMessage(type) {
-        const displayDiv = document.getElementById(`template-display-${type}`);
-        if (displayDiv && displayDiv.style.display !== 'none') {
-            return displayDiv.textContent;
-        }
-        const editTextarea = document.getElementById(`template-edit-text-${type}`);
-        if (editTextarea) {
-            return editTextarea.value;
-        }
-        return '';
-    }
-
-    // ==================== APPROVAL (DIAGNOSA -> APPROVAL) ====================
-    function prepareUbahStatusKeApproval(id) {
-        const servis = dataServis.find(s => s.id === id);
-        if (!servis) return;
-        
-        if (servis.status === 'approval') {
-            ubahStatusServis(id, 'approval');
-            return;
-        }
-        
-        selectedServisId = id;
-        
-        document.getElementById('biaya-jasa').value = servis.biayaServis?.jasa || 0;
-        document.getElementById('biaya-sparepart').value = servis.biayaServis?.sparepart || 0;
-        document.getElementById('biaya-lain').value = servis.biayaServis?.lain || 0;
-        document.getElementById('keterangan-lain').value = servis.biayaServis?.keteranganLain || '';
-        
-        updateBiayaSummary();
-        updateApprovalPreview();
-        
-        openModal('modal-biaya-servis');
+        return;
     }
     
-    function updateBiayaSummary() {
-        const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
-        const sparepart = parseInt(document.getElementById('biaya-sparepart').value) || 0;
-        const lain = parseInt(document.getElementById('biaya-lain').value) || 0;
-        const total = jasa + sparepart + lain;
-        document.getElementById('cost-summary').innerHTML = `Total Biaya: Rp ${total.toLocaleString()}`;
-        updateApprovalPreview();
-    }
-    
-    function updateApprovalPreview() {
-        if (!selectedServisId) return;
-        
-        const servis = dataServis.find(s => s.id === selectedServisId);
-        if (!servis) return;
-        
-        const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
-        const sparepart = parseInt(document.getElementById('biaya-sparepart').value) || 0;
-        const lain = parseInt(document.getElementById('biaya-lain').value) || 0;
-        const keterangan = document.getElementById('keterangan-lain').value;
-        const total = jasa + sparepart + lain;
-        
-        const biayaPreview = { jasa, sparepart, lain, total, keteranganLain: keterangan };
-        const template = getTemplateWhatsApp('approval', servis, biayaPreview);
-        
-        const displayElement = document.getElementById('template-display-approval');
-        const editElement = document.getElementById('template-edit-text-approval');
-        
-        if (displayElement) displayElement.textContent = template;
-        if (editElement) editElement.value = template;
-    }
-    
-    function simpanDanKirimWA(type) {
-        if (!selectedServisId) return;
-        
-        if (type === 'approval') {
-            const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
-            const sparepart = parseInt(document.getElementById('biaya-sparepart').value) || 0;
-            const lain = parseInt(document.getElementById('biaya-lain').value) || 0;
-            const keterangan = document.getElementById('keterangan-lain').value;
-            
-            if (jasa === 0 && sparepart === 0) {
-                alert("⚠️ Harap isi minimal salah satu: Biaya Servis/Jasa ATAU Biaya Sparepart!");
-                return;
-            }
-            
-            const totalBiaya = jasa + sparepart + lain;
-            const servis = dataServis.find(s => s.id === selectedServisId);
-            if (!servis) return;
-            
-            if (!confirm(`Total biaya: Rp ${totalBiaya.toLocaleString()}\nNo. WA: ${servis.wa}\nKirim notifikasi ke ${servis.nama}?`)) return;
-            
-            servis.biayaServis = { jasa, sparepart, lain, total: totalBiaya, keteranganLain: keterangan };
-            servis.estimasi = totalBiaya;
-            servis.status = 'approval';
-            
-            saveAllData();
-            
-            const message = getCurrentTemplateMessage('approval');
-            sendWhatsApp(servis.wa, message);
-            
-            closeModal('modal-biaya-servis');
-            renderCurrentPage();
-            alert(`✅ Data tersimpan! Status: PERSETUJUAN\n💬 WhatsApp telah terbuka.`);
+    const uniqueCustomers = [];
+    const seen = new Set();
+    for(const s of dataServis) {
+        if(!seen.has(s.wa)) {
+            seen.add(s.wa);
+            uniqueCustomers.push({
+                nama: s.nama,
+                wa: s.wa,
+                totalServis: dataServis.filter(x=>x.wa===s.wa).length,
+                lastDevice: s.device,
+                lastDate: s.updatedAt
+            });
         }
-        
-        selectedServisId = null;
     }
+    
+    const results = uniqueCustomers.filter(c => 
+        c.nama.toLowerCase().includes(query) || c.wa.includes(query)
+    ).slice(0, 10);
+    
+    if(results.length === 0) {
+        resultsDiv.style.display = 'none';
+        selectedCustomerData = null;
+        return;
+    }
+    
+    resultsDiv.innerHTML = results.map(c => `
+        <div class="customer-item" onclick="selectCustomer('${c.nama.replace(/'/g, "\\'")}', '${c.wa}')">
+            <div>
+                <div class="name"><i class="fas fa-user"></i> ${escapeHtml(c.nama)}</div>
+                <div class="wa"><i class="fab fa-whatsapp"></i> ${c.wa}</div>
+                <div style="font-size:10px; color:var(--text-sec); margin-top:2px">Terakhir: ${c.lastDevice || '-'}</div>
+            </div>
+            <div class="count">${c.totalServis} servis</div>
+        </div>
+    `).join('');
+    
+    resultsDiv.style.display = 'block';
+}
 
-    // ==================== SELESAI (QC -> DONE) ====================
-    function prepareUbahStatusKeDone(id) {
-        const servis = dataServis.find(s => s.id === id);
-        if (!servis) return;
-        
-        selectedServisId = id;
-        
-        const totalBiaya = servis.biayaServis?.total || servis.estimasi || 0;
-        document.getElementById('total-biaya-display').innerHTML = `Rp ${totalBiaya.toLocaleString()}`;
-        document.getElementById('catatan-selesai').value = '';
-        
-        updateDonePreview();
-        
-        openModal('modal-selesai-servis');
-    }
-    
-    function updateDonePreview() {
-        if (!selectedServisId) return;
-        
-        const servis = dataServis.find(s => s.id === selectedServisId);
-        if (!servis) return;
-        
-        const catatan = document.getElementById('catatan-selesai').value;
-        const totalBiaya = servis.biayaServis?.total || servis.estimasi || 0;
-        const biaya = servis.biayaServis || { jasa: 0, sparepart: 0, lain: 0, total: totalBiaya };
-        
-        const template = getTemplateWhatsApp('done', servis, biaya, { catatan: catatan });
-        
-        const displayElement = document.getElementById('template-display-done');
-        const editElement = document.getElementById('template-edit-text-done');
-        
-        if (displayElement) displayElement.textContent = template;
-        if (editElement) editElement.value = template;
-    }
-    
-    function konfirmasiSelesaiDanKirimWA() {
-        if (!selectedServisId) return;
-        
-        const servis = dataServis.find(s => s.id === selectedServisId);
-        if (!servis) return;
-        
-        const catatan = document.getElementById('catatan-selesai').value;
-        const totalBiaya = servis.biayaServis?.total || servis.estimasi || 0;
-        
-        if (!confirm(`Servis ${servis.device} - ${servis.nama} telah selesai.\nTotal: Rp ${totalBiaya.toLocaleString()}\n\nKirim notifikasi ke WhatsApp?`)) return;
-        
-        servis.status = 'done';
-        saveAllData();
-        
-        const message = getCurrentTemplateMessage('done');
-        sendWhatsApp(servis.wa, message);
-        
-        closeModal('modal-selesai-servis');
-        renderCurrentPage();
-        alert(`✅ Servis selesai!\nStatus: SIAP DIAMBIL\n💬 WhatsApp telah terbuka.`);
-        
-        selectedServisId = null;
-    }
+function escapeHtml(str) {
+    if(!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if(m === '&') return '&amp;';
+        if(m === '<') return '&lt;';
+        if(m === '>') return '&gt;';
+        return m;
+    });
+}
 
-    // ==================== PEMBAYARAN & PENGAMBILAN (DONE -> TAKEN) ====================
-    function preparePembayaran(id) {
-        const servis = dataServis.find(s => s.id === id);
-        if (!servis) return;
-        
-        selectedServisId = id;
-        
-        const totalTagihan = servis.biayaServis?.total || servis.estimasi || 0;
-        document.getElementById('total-tagihan-display').innerHTML = `Rp ${totalTagihan.toLocaleString()}`;
-        document.getElementById('metode-pembayaran').value = 'Tunai';
-        document.getElementById('nominal-dibayar').value = totalTagihan;
-        document.getElementById('kembalian').value = 0;
-        
-        updateTakenPreview(totalTagihan, totalTagihan);
-        
-        openModal('modal-pembayaran');
-    }
+function selectCustomer(nama, wa) {
+    selectedCustomerData = { nama, wa };
     
-    function hitungKembalian() {
-        const totalTagihanElem = document.getElementById('total-tagihan-display');
-        const totalTagihan = parseInt(totalTagihanElem.textContent.replace(/[^0-9]/g, '')) || 0;
-        const nominalDibayar = parseInt(document.getElementById('nominal-dibayar').value) || 0;
-        const kembalian = nominalDibayar - totalTagihan;
-        document.getElementById('kembalian').value = kembalian > 0 ? kembalian : 0;
-        updateTakenPreview(totalTagihan, nominalDibayar);
-    }
+    document.getElementById('search-customer').value = nama;
+    document.getElementById('new-wa').value = wa;
+    document.getElementById('customer-results').style.display = 'none';
+    document.getElementById('wa-warning').style.display = 'none';
     
-    function updateTakenPreview(totalTagihan, nominalDibayar) {
-        if (!selectedServisId) return;
-        
-        const servis = dataServis.find(s => s.id === selectedServisId);
-        if (!servis) return;
-        
-        const metodePembayaran = document.getElementById('metode-pembayaran').value;
-        const nominalDibayarVal = nominalDibayar || 0;
-        const kembalian = nominalDibayarVal - totalTagihan;
-        const totalBiaya = servis.biayaServis?.total || servis.estimasi || 0;
-        const biaya = servis.biayaServis || { jasa: 0, sparepart: 0, lain: 0, total: totalBiaya };
-        
-        const template = getTemplateWhatsApp('taken', servis, biaya, {
-            metodePembayaran: metodePembayaran,
-            nominalDibayar: nominalDibayarVal,
-            kembalian: kembalian > 0 ? kembalian : 0
-        });
-        
-        const displayElement = document.getElementById('template-display-taken');
-        const editElement = document.getElementById('template-edit-text-taken');
-        
-        if (displayElement) displayElement.textContent = template;
-        if (editElement) editElement.value = template;
-    }
+    // Highlight feedback
+    const searchInput = document.getElementById('search-customer');
+    searchInput.classList.add('success-highlight');
+    document.getElementById('new-wa').classList.add('success-highlight');
+    setTimeout(() => {
+        searchInput.classList.remove('success-highlight');
+        document.getElementById('new-wa').classList.remove('success-highlight');
+    }, 500);
     
-    function prosesPembayaranDanKirimWA() {
-        if (!selectedServisId) return;
-        
-        const servis = dataServis.find(s => s.id === selectedServisId);
-        if (!servis) return;
-        
-        const metodePembayaran = document.getElementById('metode-pembayaran').value;
-        const nominalDibayar = parseInt(document.getElementById('nominal-dibayar').value) || 0;
-        const totalTagihan = servis.biayaServis?.total || servis.estimasi || 0;
-        
-        if (nominalDibayar < totalTagihan) {
-            alert(`⚠️ Nominal dibayar (Rp ${nominalDibayar.toLocaleString()}) kurang dari total tagihan (Rp ${totalTagihan.toLocaleString()})!`);
-            return;
+    // Fokus ke field WA
+    document.getElementById('new-wa').focus();
+}
+
+function checkDuplicateWA() {
+    const wa = document.getElementById('new-wa').value.trim();
+    if(wa.length < 8) return;
+    
+    const existing = dataServis.find(s => s.wa === wa);
+    if(existing && (!selectedCustomerData || selectedCustomerData.wa !== wa)) {
+        document.getElementById('wa-warning').style.display = 'block';
+        document.getElementById('existing-name').innerText = existing.nama;
+        if(!selectedCustomerData) {
+            document.getElementById('search-customer').value = existing.nama;
+            selectedCustomerData = { nama: existing.nama, wa: existing.wa };
         }
-        
-        const kembalian = nominalDibayar - totalTagihan;
-        
-        if (!confirm(`Pembayaran servis ${servis.device} - ${servis.nama}\nTotal: Rp ${totalTagihan.toLocaleString()}\nDibayar: Rp ${nominalDibayar.toLocaleString()}\nKembalian: Rp ${kembalian.toLocaleString()}\nMetode: ${metodePembayaran}\n\nKirim bukti ke WhatsApp?`)) return;
-        
-        dataPembayaran.push({ 
-            id: servis.id, 
-            tanggal: new Date().toISOString(), 
-            nominal: totalTagihan, 
-            metode: metodePembayaran,
-            nominalDibayar: nominalDibayar,
-            kembalian: kembalian
-        });
-        
-        servis.status = 'taken';
-        saveAllData();
-        
-        const message = getCurrentTemplateMessage('taken');
-        sendWhatsApp(servis.wa, message);
-        
-        closeModal('modal-pembayaran');
-        renderCurrentPage();
-        alert(`✅ Pembayaran berhasil! Status: SUDAH DIAMBIL\n💬 WhatsApp bukti telah terbuka.`);
-        
-        selectedServisId = null;
+    } else {
+        document.getElementById('wa-warning').style.display = 'none';
     }
+}
 
-    // ==================== CRUD SERVIS LAINNYA ====================
-    function tambahServisBaru() {
-        const nama = document.getElementById('new-nama').value;
-        const wa = document.getElementById('new-wa').value;
-        const device = document.getElementById('new-device').value;
-        const keluhan = document.getElementById('new-keluhan').value;
-        const biaya = parseInt(document.getElementById('new-biaya').value) || 0;
-        if(!nama || !device) { alert("Isi nama dan perangkat"); return; }
-        const newId = "SRV" + (dataServis.length + 1001);
-        const newServis = {
-            id: newId, nama, wa, device, keluhan, status: "waiting", estimasi: biaya, tglMasuk: new Date().toISOString().slice(0,10), teknisi: "-",
-            biayaServis: { jasa: 0, sparepart: 0, lain: 0, total: 0 }
-        };
-        dataServis.push(newServis);
-        saveAllData();
-        closeModal('modal-new-servis');
-        document.getElementById('new-nama').value = '';
+// ==================== FUNGSI LOG ====================
+function addLog(action, target, details, targetType) {
+    dataLog.unshift({ 
+        id: Date.now(), 
+        timestamp: new Date().toLocaleString('id-ID'), 
+        user: currentUser, 
+        action, 
+        target, 
+        details, 
+        ip: "local" 
+    });
+    if(dataLog.length > 500) dataLog.pop();
+    saveData();
+}
+
+function updateTimestamps(entity, type, userId) {
+    const now = new Date().toLocaleString('id-ID');
+    const user = userId || currentUser;
+    if(type === 'servis') {
+        if(!entity.createdAt) entity.createdAt = now;
+        if(!entity.createdBy) entity.createdBy = user;
+        entity.updatedAt = now;
+        entity.updatedBy = user;
+    } else if(type === 'sparepart') {
+        entity.updatedAt = now;
+        entity.updatedBy = user;
+    }
+}
+
+// ==================== UTILITY ====================
+const rupiah = (n) => `Rp ${(n||0).toLocaleString('id-ID')}`;
+
+const saveData = () => localStorage.setItem('servishp', JSON.stringify({ 
+    servis: dataServis, 
+    sparepart: dataSparepart, 
+    teknisi: dataTeknisi, 
+    bayar: dataPembayaran, 
+    log: dataLog, 
+    currentUser 
+}));
+
+const loadData = () => { 
+    const d = localStorage.getItem('servishp'); 
+    if(d) { 
+        const p = JSON.parse(d); 
+        if(p.servis) dataServis = p.servis; 
+        if(p.sparepart) dataSparepart = p.sparepart; 
+        if(p.teknisi) dataTeknisi = p.teknisi; 
+        if(p.bayar) dataPembayaran = p.bayar;
+        if(p.log) dataLog = p.log;
+        if(p.currentUser) currentUser = p.currentUser;
+    } 
+    updateBadges(); 
+    loadHistory();
+};
+
+const canChange = (curr, next) => STATUS_ORDER.indexOf(next) >= STATUS_ORDER.indexOf(curr);
+const getNextStatus = (curr) => STATUS_ORDER.slice(STATUS_ORDER.indexOf(curr) + 1);
+const getStatusBadge = (s) => `<span class="status-badge ${STATUS_COLOR[s]}">${STATUS[s]}</span>`;
+
+const openModal = (id) => document.getElementById(id).style.display = 'flex';
+
+const closeModal = (id) => { 
+    document.getElementById(id).style.display = 'none'; 
+    if(id !== 'modal-biaya-servis') selectedId = null;
+    if(id === 'modal-new-servis') {
+        document.getElementById('search-customer').value = '';
+        document.getElementById('customer-results').style.display = 'none';
         document.getElementById('new-wa').value = '';
         document.getElementById('new-device').value = '';
         document.getElementById('new-keluhan').value = '';
         document.getElementById('new-biaya').value = '';
-        renderCurrentPage();
-        alert("Servis baru ditambahkan!");
+        document.getElementById('wa-warning').style.display = 'none';
+        selectedCustomerData = null;
+    }
+};
+
+const closeModalBiaya = () => { 
+    selectedId = null; 
+    currentSelectedSpareparts = []; 
+    document.getElementById('modal-biaya-servis').style.display = 'none'; 
+    if(typeof renderSelectedSpareparts === 'function') renderSelectedSpareparts(); 
+};
+
+const setUser = () => { 
+    const newUser = prompt("Masukkan nama user (admin/teknisi/kasir/qc):", currentUser); 
+    if(newUser && newUser.trim()) { 
+        currentUser = newUser.trim(); 
+        saveData(); 
+        alert(`User berubah menjadi: ${currentUser}`); 
+        renderPage(); 
+    } 
+};
+
+// ==================== STOCK BOOKING ====================
+function getAvailableStock(id) { 
+    const sp = dataSparepart.find(x=>x.id===id); 
+    return sp ? sp.stok - (sp.booked||0) : 0; 
+}
+
+function bookSparepart(id, qty) {
+    const sp = dataSparepart.find(x=>x.id===id);
+    if(!sp) return false;
+    if(getAvailableStock(id) < qty) return false;
+    sp.booked = (sp.booked||0) + qty;
+    updateTimestamps(sp, 'sparepart');
+    addLog("BOOK_SPAREPART", sp.nama, `Booking ${qty} ${sp.nama}`, "sparepart");
+    saveData();
+    return true;
+}
+
+function releaseBooking(id, qty) { 
+    const sp = dataSparepart.find(x=>x.id===id); 
+    if(sp) { 
+        sp.booked = Math.max(0, (sp.booked||0) - qty); 
+        updateTimestamps(sp, 'sparepart'); 
+        addLog("RELEASE_BOOKING", sp.nama, `Melepas booking ${qty} ${sp.nama}`, "sparepart"); 
+        saveData(); 
+    } 
+}
+
+function confirmStockReduction(servis) {
+    if(!servis.bookedSpareparts?.length) return true;
+    for(const item of servis.bookedSpareparts) {
+        const sp = dataSparepart.find(x=>x.id===item.id);
+        if(sp && sp.stok >= item.qty) {
+            sp.stok -= item.qty;
+            sp.booked = Math.max(0, (sp.booked||0) - item.qty);
+            updateTimestamps(sp, 'sparepart');
+            addLog("REDUCE_STOCK", sp.nama, `Mengurangi stok ${item.qty} ${sp.nama} (servis selesai)`, "sparepart");
+        }
+    }
+    saveData();
+    return true;
+}
+
+// ==================== SEARCH SPAREPART ====================
+function searchSparepart() {
+    const query = document.getElementById('search-sparepart').value.toLowerCase();
+    const resultsDiv = document.getElementById('search-results');
+    if(query.length < 2) { resultsDiv.style.display = 'none'; return; }
+    const results = dataSparepart.filter(sp => sp.nama.toLowerCase().includes(query) && getAvailableStock(sp.id) > 0);
+    if(results.length === 0) { resultsDiv.style.display = 'none'; return; }
+    resultsDiv.innerHTML = results.map(sp => `<div class="search-item" onclick="addSparepart(${sp.id}, '${sp.nama}', ${sp.harga})"><span class="name">${sp.nama}</span><span class="price">${rupiah(sp.harga)} <small>(Stok: ${getAvailableStock(sp.id)})</small></span></div>`).join('');
+    resultsDiv.style.display = 'block';
+}
+
+function addSparepart(id, nama, harga) {
+    const existing = currentSelectedSpareparts.find(s => s.id === id);
+    if(existing) { 
+        existing.qty++; 
+    } else { 
+        if(bookSparepart(id, 1)) {
+            currentSelectedSpareparts.push({ id, nama, harga, qty: 1 });
+        } else { 
+            alert(`Stok ${nama} tidak mencukupi!`); 
+            return; 
+        } 
+    }
+    document.getElementById('search-sparepart').value = '';
+    document.getElementById('search-results').style.display = 'none';
+    renderSelectedSpareparts();
+    updateTotal();
+}
+
+function removeSparepart(index) {
+    const item = currentSelectedSpareparts[index];
+    releaseBooking(item.id, item.qty);
+    currentSelectedSpareparts.splice(index, 1);
+    renderSelectedSpareparts();
+    updateTotal();
+}
+
+function updateSparepartQty(index, newQty) {
+    const item = currentSelectedSpareparts[index];
+    const diff = newQty - item.qty;
+    if(diff > 0) { 
+        if(bookSparepart(item.id, diff)) {
+            item.qty = newQty;
+        } else { 
+            alert(`Stok ${item.nama} tidak mencukupi!`); 
+            document.getElementById(`qty-${index}`).value = item.qty; 
+        } 
+    } else if(diff < 0) { 
+        releaseBooking(item.id, -diff); 
+        item.qty = newQty; 
+    }
+    updateTotal();
+}
+
+function renderSelectedSpareparts() {
+    const container = document.getElementById('selected-spareparts');
+    if(!container) return;
+    if(currentSelectedSpareparts.length === 0) { 
+        container.innerHTML = '<div class="info-text" style="text-align:center; margin:0">Belum ada sparepart dipilih</div>'; 
+        return; 
+    }
+    container.innerHTML = currentSelectedSpareparts.map((sp, idx) => `
+        <div class="sparepart-list-item">
+            <div class="info">
+                <div class="name">${sp.nama}</div>
+                <div class="price">${rupiah(sp.harga)}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+                <input type="number" id="qty-${idx}" class="qty" value="${sp.qty}" min="1" max="10" onchange="updateSparepartQty(${idx}, parseInt(this.value))">
+                <button class="btn btn-sm btn-danger" onclick="removeSparepart(${idx})"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==================== APPROVAL ====================
+function updateTotal() {
+    const jasa = +document.getElementById('biaya-jasa').value || 0;
+    const sparepartTotal = currentSelectedSpareparts.reduce((s,sp) => s + (sp.harga * sp.qty), 0);
+    const total = jasa + sparepartTotal;
+    document.getElementById('cost-summary').innerHTML = `Total: ${rupiah(total)}`;
+    const valid = jasa > 0 || currentSelectedSpareparts.length > 0;
+    document.getElementById('btn-simpan').disabled = !valid;
+    document.getElementById('biaya-warning').style.display = valid ? 'none' : 'block';
+    if(selectedId) {
+        const s = dataServis.find(x=>x.id===selectedId);
+        if(s) {
+            let rincian = '';
+            if(jasa>0) rincian += `🔧 Jasa: ${rupiah(jasa)}\n`;
+            currentSelectedSpareparts.forEach(sp => { rincian += `🔩 ${sp.nama} x${sp.qty}: ${rupiah(sp.harga * sp.qty)}\n`; });
+            document.getElementById('preview-wa').textContent = `*ServisHP Pro - Persetujuan*\n\nYth. ${s.nama}\nDevice: ${s.device}\nKeluhan: ${s.keluhan}\n\n💰 RINCIAN BIAYA\n${rincian}\n*TOTAL: ${rupiah(total)}*\n\nSilakan konfirmasi persetujuan.`;
+        }
+    }
+}
+
+function simpanApproval() {
+    if(!selectedId) return;
+    const jasa = +document.getElementById('biaya-jasa').value || 0;
+    if(jasa===0 && currentSelectedSpareparts.length===0) { alert("Isi biaya jasa atau pilih sparepart!"); return; }
+    const s = dataServis.find(x=>x.id===selectedId);
+    if(s) {
+        const sparepartTotal = currentSelectedSpareparts.reduce((s,sp) => s + (sp.harga * sp.qty), 0);
+        s.biaya = { jasa, spareparts: [...currentSelectedSpareparts], total: jasa + sparepartTotal };
+        s.estimasi = jasa + sparepartTotal;
+        s.bookedSpareparts = currentSelectedSpareparts.map(sp => ({ id:sp.id, nama:sp.nama, qty:sp.qty }));
+        s.status = 'approval';
+        updateTimestamps(s, 'servis');
+        addLog("STATUS_CHANGE", s.id, `Status berubah: diag → approval | Total: ${rupiah(s.estimasi)}`, "servis");
+        saveData();
+        let rincian = '';
+        if(jasa>0) rincian += `🔧 Jasa: ${rupiah(jasa)}\n`;
+        currentSelectedSpareparts.forEach(sp => { rincian += `🔩 ${sp.nama} x${sp.qty}: ${rupiah(sp.harga * sp.qty)}\n`; });
+        sendWA(s.wa, `*ServisHP Pro - Persetujuan*\n\nYth. ${s.nama}\nDevice: ${s.device}\n\n💰 RINCIAN BIAYA\n${rincian}\n*TOTAL: ${rupiah(s.estimasi)}*\n\nSilakan konfirmasi persetujuan.`);
+        closeModalBiaya();
+        renderPage();
+        alert(`✅ Status: PERSETUJUAN, WA terkirim! Total: ${rupiah(s.estimasi)}`);
+    }
+    selectedId = null;
+}
+
+// ==================== STATUS CHANGE ====================
+function ubahStatus(id, newStatus) {
+    const s = dataServis.find(x=>x.id===id);
+    if(!s) return;
+    if(!canChange(s.status, newStatus)) { alert(`❌ Tidak bisa rollback!`); return; }
+    if(newStatus === 'approval') { 
+        selectedId = id; 
+        currentSelectedSpareparts = s.bookedSpareparts ? [...s.bookedSpareparts] : [];
+        document.getElementById('biaya-jasa').value = s.biaya?.jasa || 0;
+        renderSelectedSpareparts();
+        updateTotal(); 
+        openModal('modal-biaya-servis'); 
+        return; 
+    }
+    if(newStatus === 'done') {
+        if((!s.biaya || (!s.biaya.jasa && (!s.biaya.spareparts?.length)))) { alert("❌ Input biaya dulu di tahap Persetujuan!"); return; }
+        selectedId = id;
+        document.getElementById('total-display').innerHTML = rupiah(s.biaya?.total || s.estimasi);
+        document.getElementById('preview-done').textContent = `*ServisHP Pro - Selesai* ✅\n\nYth. ${s.nama}\nDevice: ${s.device}\nTotal: ${rupiah(s.biaya?.total || s.estimasi)}\n\nSilakan ambil perangkat.`;
+        openModal('modal-selesai');
+        return;
+    }
+    if(newStatus === 'taken' && s.status === 'done') {
+        selectedId = id;
+        const total = s.biaya?.total || s.estimasi;
+        document.getElementById('tagihan').innerHTML = rupiah(total);
+        document.getElementById('dibayar').value = total;
+        document.getElementById('kembalian').value = 0;
+        document.getElementById('preview-bayar').textContent = `*ServisHP Pro - Pengambilan* 🎉\n\nYth. ${s.nama}\nDevice: ${s.device}\nTotal: ${rupiah(total)}\nMetode: Tunai\nDibayar: ${rupiah(total)}\nKembalian: Rp 0\n\nTerima kasih!`;
+        openModal('modal-bayar');
+        return;
+    }
+    const oldStatus = s.status;
+    s.status = newStatus;
+    updateTimestamps(s, 'servis');
+    addLog("STATUS_CHANGE", s.id, `Status berubah: ${oldStatus} → ${newStatus}`, "servis");
+    saveData();
+    renderPage();
+    alert(`✅ Status berhasil diubah menjadi ${STATUS[newStatus]}`);
+}
+
+function konfirmasiSelesai() {
+    if(!selectedId) return;
+    const s = dataServis.find(x=>x.id===selectedId);
+    if(s) {
+        const catatan = document.getElementById('catatan-selesai').value;
+        if(s.bookedSpareparts?.length) confirmStockReduction(s);
+        s.status = 'done';
+        updateTimestamps(s, 'servis');
+        addLog("STATUS_CHANGE", s.id, `Status berubah: qc → done | Stok sparepart dikurangi`, "servis");
+        saveData();
+        sendWA(s.wa, `*ServisHP Pro - Selesai* ✅\n\nYth. ${s.nama}\nDevice: ${s.device}\nTotal: ${rupiah(s.biaya?.total || s.estimasi)}\nCatatan: ${catatan||'-'}\n\nSilakan ambil perangkat.`);
+        closeModal('modal-selesai');
+        renderPage();
+        alert(`✅ Servis selesai, stok sparepart telah dikurangi!`);
+    }
+    selectedId = null;
+}
+
+function prosesBayar() {
+    if(!selectedId) return;
+    const s = dataServis.find(x=>x.id===selectedId);
+    if(s) {
+        const metode = document.getElementById('metode').value;
+        const dibayar = +document.getElementById('dibayar').value || 0;
+        const total = s.biaya?.total || s.estimasi;
+        if(dibayar < total) { alert(`Kurang! Tagihan ${rupiah(total)}`); return; }
+        const kembali = dibayar - total;
+        dataPembayaran.push({ id:s.id, tanggal:new Date().toISOString().slice(0,10), nominal:total, metode, createdAt:new Date().toLocaleString('id-ID'), createdBy:currentUser });
+        s.status = 'taken';
+        updateTimestamps(s, 'servis');
+        addLog("PAYMENT", s.id, `Pembayaran | Metode: ${metode} | Total: ${rupiah(total)} | Dibayar: ${rupiah(dibayar)} | Kembali: ${rupiah(kembali)}`, "servis");
+        saveData();
+        sendWA(s.wa, `*ServisHP Pro - Pengambilan* 🎉\n\nYth. ${s.nama}\nDevice: ${s.device}\nTotal: ${rupiah(total)}\nMetode: ${metode}\nDibayar: ${rupiah(dibayar)}\nKembalian: ${rupiah(kembali)}\n\nTerima kasih!`);
+        closeModal('modal-bayar');
+        renderPage();
+        alert(`✅ Pembayaran berhasil, WA terkirim!`);
+    }
+    selectedId = null;
+}
+
+function hitungKembalian() {
+    const tagihan = +document.getElementById('tagihan').innerText.replace(/[^0-9]/g,'') || 0;
+    const dibayar = +document.getElementById('dibayar').value || 0;
+    const kembali = Math.max(0, dibayar - tagihan);
+    document.getElementById('kembalian').value = kembali;
+    if(selectedId) {
+        const s = dataServis.find(x=>x.id===selectedId);
+        if(s) document.getElementById('preview-bayar').textContent = `*ServisHP Pro - Pengambilan* 🎉\n\nYth. ${s.nama}\nDevice: ${s.device}\nTotal: ${rupiah(tagihan)}\nMetode: ${document.getElementById('metode').value}\nDibayar: ${rupiah(dibayar)}\nKembalian: ${rupiah(kembalian)}\n\nTerima kasih!`;
+    }
+}
+
+// ==================== CRUD ====================
+function tambahServisBaru() {
+    let nama = document.getElementById('search-customer').value.trim();
+    let wa = document.getElementById('new-wa').value.trim();
+    const device = document.getElementById('new-device').value.trim();
+    const keluhan = document.getElementById('new-keluhan').value;
+    const biaya = +document.getElementById('new-biaya').value || 0;
+    
+    if(!nama) { alert("Isi nama pelanggan!"); document.getElementById('search-customer').focus(); return; }
+    if(!wa) { alert("Isi nomor WhatsApp!"); document.getElementById('new-wa').focus(); return; }
+    if(!device) { alert("Isi perangkat!"); document.getElementById('new-device').focus(); return; }
+    
+    wa = wa.replace(/[^0-9]/g, '');
+    if(!wa.match(/^[0-9]{10,13}$/)) { alert("Nomor WhatsApp tidak valid! Minimal 10 digit."); return; }
+    
+    // Simpan ke history device
+    saveToDeviceHistory(device);
+    
+    const now = new Date().toLocaleString('id-ID');
+    const newId = `SRV${dataServis.length + 1001}`;
+    
+    const existingCustomer = dataServis.find(s => s.wa === wa);
+    if(existingCustomer && existingCustomer.nama !== nama) {
+        dataServis.forEach(s => {
+            if(s.wa === wa) {
+                s.nama = nama;
+                updateTimestamps(s, 'servis');
+            }
+        });
+        addLog("UPDATE_CUSTOMER", wa, `Memperbarui nama pelanggan dari ${existingCustomer.nama} menjadi ${nama}`, "pelanggan");
     }
     
-    function ubahStatusServis(id, statusBaru) {
-        const servis = dataServis.find(s => s.id === id);
-        if(!servis) return;
-        
-        // Approval dari Diagnosa
-        if (statusBaru === 'approval' && servis.status !== 'approval') {
-            prepareUbahStatusKeApproval(id);
-            return;
-        }
-        
-        // Done dari QC
-        if (statusBaru === 'done' && servis.status === 'qc') {
-            prepareUbahStatusKeDone(id);
-            return;
-        }
-        
-        // Taken dari Done (pembayaran)
-        if (statusBaru === 'taken' && servis.status === 'done') {
-            preparePembayaran(id);
-            return;
-        }
-        
-        servis.status = statusBaru;
-        saveAllData();
-        renderCurrentPage();
-        
-        if (statusBaru === 'repair') {
-            alert("🔧 Servis telah masuk ke tahap PERBAIKAN");
-        } else if (statusBaru === 'qc') {
-            alert("🔍 Servis telah masuk ke tahap QUALITY CONTROL");
-        } else if (statusBaru === 'done') {
-            alert("✅ Servis telah selesai dan siap diambil pelanggan");
-        } else if (statusBaru === 'taken') {
-            alert("💰 Servis telah diambil dan pembayaran telah diterima");
-        }
-    }
+    dataServis.push({
+        id:newId, nama, wa, device, keluhan, estimasi:biaya, status:'waiting',
+        tglMasuk:new Date().toISOString().slice(0,10), teknisi:'-',
+        biaya:{ jasa:0, spareparts:[], total:0 }, bookedSpareparts:[],
+        createdAt:now, createdBy:currentUser, updatedAt:now, updatedBy:currentUser
+    });
+    
+    addLog("CREATE_SERVIS", newId, `Membuat servis baru untuk ${nama} (${device}) | Estimasi: ${rupiah(biaya)}`, "servis");
+    saveData();
+    closeModal('modal-new-servis');
+    renderPage();
+    alert(`✅ Servis baru ditambahkan! ID: ${newId}`);
+}
 
-    function getStatusLabel(status) {
-        const map = { waiting: "Menunggu", diag: "Diagnosa", approval: "Persetujuan", repair: "Perbaikan", qc: "Quality Control", done: "Siap Diambil", taken: "Sudah Diambil", cancel: "Batal" };
-        const kelas = { waiting: "s-waiting", diag: "s-diag", approval: "s-approval", repair: "s-repair", qc: "s-qc", done: "s-done", taken: "s-taken", cancel: "s-cancel" };
-        return `<span class="status-badge ${kelas[status] || 's-waiting'}">${map[status] || status}</span>`;
-    }
+function updateTeknisi(id, teknisiNama) { 
+    const s = dataServis.find(x=>x.id===id); 
+    if(s && teknisiNama) { 
+        const old = s.teknisi;
+        s.teknisi = teknisiNama; 
+        updateTimestamps(s, 'servis');
+        addLog("ASSIGN_TEKNISI", s.id, `Teknisi berubah: ${old||'-'} → ${teknisiNama}`, "servis");
+        saveData(); 
+        renderPage(); 
+    } 
+}
 
-    function getFilteredServis() {
-        if (currentServisFilter === 'semua') return dataServis;
-        return dataServis.filter(servis => servis.status === currentServisFilter);
-    }
+function lulusQC(id) { 
+    const s = dataServis.find(x=>x.id===id); 
+    if(s && s.status==='qc') ubahStatus(id, 'done'); 
+    else alert("Servis tidak dalam status QC!"); 
+}
 
-    function updateServisFilter(status) {
-        currentServisFilter = status;
-        renderCurrentPage();
-    }
+function tambahSparepart() { 
+    const nama = prompt("Nama sparepart"); 
+    if(nama){ 
+        const harga = +prompt("Harga")||0; 
+        const stok = +prompt("Stok")||0;
+        dataSparepart.push({ 
+            id:dataSparepart.length+1, 
+            nama, 
+            stok, 
+            minStok:2, 
+            harga, 
+            booked:0, 
+            updatedAt:new Date().toLocaleString('id-ID'), 
+            updatedBy:currentUser 
+        }); 
+        addLog("CREATE_SPAREPART", nama, `Menambah sparepart: ${nama} | Stok: ${stok} | Harga: ${rupiah(harga)}`, "sparepart");
+        saveData(); 
+        renderPage(); 
+    } 
+}
 
-    // ==================== TEMPLATE GLOBAL ====================
-    function openGlobalTemplateEditor() {
-        const select = document.getElementById('template-type-select');
-        currentTemplateType = select.value;
-        loadTemplateForEdit();
-        openModal('modal-edit-template');
-    }
+function hapusSparepart(id) { 
+    if(confirm("Hapus sparepart ini?")){ 
+        const sp = dataSparepart.find(x=>x.id===id); 
+        if(sp && sp.booked>0) alert(`Tidak bisa hapus, sedang di-booking untuk ${sp.booked} servis!`); 
+        else { 
+            addLog("DELETE_SPAREPART", sp.nama, `Menghapus sparepart ${sp.nama}`, "sparepart");
+            dataSparepart = dataSparepart.filter(x=>x.id!==id); 
+            saveData(); 
+            renderPage(); 
+        } 
+    } 
+}
 
-    function loadTemplateForEdit() {
-        const type = document.getElementById('template-type-select').value;
-        const template = getCustomTemplate(type);
-        document.getElementById('global-template').value = template;
-    }
+function tambahTeknisi() { 
+    const nama = prompt("Nama teknisi"); 
+    if(nama){ 
+        dataTeknisi.push({ 
+            id:dataTeknisi.length+1, 
+            nama, 
+            skill:prompt("Keahlian")||"-", 
+            active:true, 
+            createdAt:new Date().toLocaleString('id-ID'), 
+            createdBy:currentUser 
+        }); 
+        addLog("CREATE_TEKNISI", nama, `Menambah teknisi: ${nama}`, "teknisi");
+        saveData(); 
+        renderPage(); 
+    } 
+}
 
-    function saveGlobalTemplate() {
-        const type = document.getElementById('template-type-select').value;
-        const newTemplate = document.getElementById('global-template').value;
-        if (newTemplate.trim()) {
-            saveCustomTemplate(type, newTemplate);
-            alert(`Template ${type} telah disimpan!`);
-            closeModal('modal-edit-template');
-        } else {
-            alert("Template tidak boleh kosong!");
-        }
-    }
+function hapusTeknisi(id) { 
+    if(confirm("Hapus teknisi ini?")){ 
+        const t = dataTeknisi.find(x=>x.id===id);
+        addLog("DELETE_TEKNISI", t.nama, `Menghapus teknisi ${t.nama}`, "teknisi");
+        dataTeknisi = dataTeknisi.filter(x=>x.id!==id); 
+        saveData(); 
+        renderPage(); 
+    } 
+}
 
-    function resetToDefaultTemplate(type) {
-        if (confirm(`Reset template ${type} ke default?`)) {
-            localStorage.removeItem(`wa_template_${type}`);
-            alert(`Template ${type} telah direset ke default!`);
-        }
-    }
+function resetData() { 
+    if(confirm("Reset semua data? Data tidak dapat dikembalikan!")){ 
+        addLog("RESET_DATA", "ALL", "Reset semua data sistem", "system");
+        localStorage.clear(); 
+        location.reload(); 
+    } 
+}
 
-    // ==================== EXPORT IMPORT ====================
-    function exportDatabase() {
-        const db = {
-            servis: dataServis,
-            sparepart: dataSparepart,
-            pembayaran: dataPembayaran,
-            pelanggan: dataPelanggan,
-            exportDate: new Date().toISOString(),
-            version: "1.0"
-        };
-        const jsonStr = JSON.stringify(db, null, 2);
-        const blob = new Blob([jsonStr], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `servishp_backup_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        alert("Database berhasil diekspor!");
-    }
+function exportData() { 
+    addLog("EXPORT_DATA", "ALL", "Ekspor data ke file JSON", "system");
+    const a = document.createElement('a'); 
+    a.href = URL.createObjectURL(new Blob([JSON.stringify({
+        servis: dataServis,
+        sparepart: dataSparepart,
+        teknisi: dataTeknisi,
+        bayar: dataPembayaran,
+        log: dataLog
+    })])); 
+    a.download = `servishp_${Date.now()}.json`; 
+    a.click(); 
+}
 
-    function importDatabase() {
-        const fileInput = document.getElementById('import-file');
-        if(!fileInput.files || fileInput.files.length === 0) {
-            alert("Pilih file JSON terlebih dahulu!");
-            return;
-        }
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
+function importData() { 
+    const i = document.createElement('input'); 
+    i.type = 'file'; 
+    i.accept = '.json'; 
+    i.onchange = e => { 
+        const r = new FileReader(); 
+        r.onload = ev => { 
             try {
-                const imported = JSON.parse(e.target.result);
-                if(imported.servis) dataServis = imported.servis;
-                if(imported.sparepart) dataSparepart = imported.sparepart;
-                if(imported.pembayaran) dataPembayaran = imported.pembayaran;
-                if(imported.pelanggan) dataPelanggan = imported.pelanggan;
-                saveAllData();
-                closeModal('modal-import');
-                fileInput.value = '';
-                renderCurrentPage();
-                alert("Import berhasil! Data telah diperbarui.");
-            } catch(err) {
-                alert("File tidak valid! Pastikan file adalah hasil export dari ServisHP Pro.");
-            }
-        };
-        reader.readAsText(file);
-    }
+                const d = JSON.parse(ev.target.result); 
+                if(d.servis) dataServis = d.servis; 
+                if(d.sparepart) dataSparepart = d.sparepart; 
+                if(d.teknisi) dataTeknisi = d.teknisi; 
+                if(d.bayar) dataPembayaran = d.bayar;
+                if(d.log) dataLog = d.log;
+                addLog("IMPORT_DATA", "ALL", "Import data dari file backup", "system");
+                saveData(); 
+                renderPage(); 
+                alert("Import berhasil!"); 
+            } catch(err){ alert("File tidak valid!"); }
+        }; 
+        r.readAsText(e.target.files[0]); 
+    }; 
+    i.click(); 
+}
 
-    function resetDatabase() {
-        if(confirm("PERINGATAN! Ini akan menghapus SEMUA data dan mengembalikan ke data awal. Lanjutkan?")) {
-            initDefaultData();
-            saveAllData();
-            renderCurrentPage();
-            alert("Database telah direset ke data awal.");
-        }
-    }
+function exportLog() { 
+    const a = document.createElement('a'); 
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(dataLog, null, 2)])); 
+    a.download = `servishp_log_${Date.now()}.json`; 
+    a.click(); 
+    alert("Log berhasil diekspor!"); 
+}
 
-        // ==================== RENDER PAGES ====================
-    function renderDashboard() {
-        const masukHariIni = dataServis.filter(s => s.tglMasuk === new Date().toISOString().slice(0,10)).length;
-        const dalamPengerjaan = dataServis.filter(s => ['waiting','diag','approval','repair','qc'].includes(s.status)).length;
-        const siapDiambil = dataServis.filter(s => s.status === 'done').length;
-        const totalOmzet = dataPembayaran.reduce((sum, p) => sum + (p.nominal || 0), 0);
-        return `
-            <div class="topbar"><span class="topbar-title"><i class="fas fa-tachometer-alt"></i> Dashboard</span><div><button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button></div></div>
-            <div class="content">
-                <div class="grid-4">
-                    <div class="metric"><div class="metric-label"><i class="fas fa-inbox"></i> Servis masuk hari ini</div><div class="metric-val">${masukHariIni}</div></div>
-                    <div class="metric"><div class="metric-label"><i class="fas fa-spinner"></i> Dalam pengerjaan</div><div class="metric-val amber">${dalamPengerjaan}</div></div>
-                    <div class="metric"><div class="metric-label"><i class="fas fa-box-open"></i> Siap diambil</div><div class="metric-val green">${siapDiambil}</div></div>
-                    <div class="metric"><div class="metric-label"><i class="fas fa-money-bill-wave"></i> Total Omzet</div><div class="metric-val">Rp ${totalOmzet.toLocaleString()}</div></div>
-                </div>
-                <div class="card"><div class="card-header"><span class="card-title">Servis Terbaru</span><button class="btn btn-sm" onclick="navigateTo('servis')">Lihat semua</button></div>
-                <table><thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
-                    ${dataServis.slice(0,5).map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td></tr>`).join('')}
-                    ${dataServis.length === 0 ? '<tr><td colspan="5" class="empty-state">Belum ada data servis</td></tr>' : ''}
-                </tbody></table></div>
+// ==================== RENDER FUNCTIONS ====================
+function renderDashboard() {
+    const hariIni = new Date().toISOString().slice(0,10);
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-tachometer-alt"></i> Dashboard</span>
+        <div>
+            <button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button>
+            <button class="btn btn-sm" onclick="setUser()" style="margin-left:8px"><i class="fas fa-user"></i> ${currentUser}</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="grid-4">
+            <div class="metric"><div class="metric-label">Masuk hari ini</div><div class="metric-val">${dataServis.filter(s=>s.tglMasuk===hariIni).length}</div></div>
+            <div class="metric"><div class="metric-label">Dalam pengerjaan</div><div class="metric-val amber">${dataServis.filter(s=>['waiting','diag','approval','repair','qc'].includes(s.status)).length}</div></div>
+            <div class="metric"><div class="metric-label">Siap diambil</div><div class="metric-val green">${dataServis.filter(s=>s.status==='done').length}</div></div>
+            <div class="metric"><div class="metric-label">Omzet</div><div class="metric-val">${rupiah(dataPembayaran.reduce((a,b)=>a+b.nominal,0))}</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Servis Terbaru</span>
+                <button class="btn btn-sm" onclick="navigateTo('servis')">Lihat semua</button>
             </div>
-        `;
-    }
-
-    function renderServis() {
-        const filteredServis = getFilteredServis();
-        
-        const statusOptions = [
-            { value: 'semua', label: 'Semua Status' },
-            { value: 'waiting', label: 'Menunggu' },
-            { value: 'diag', label: 'Diagnosa' },
-            { value: 'approval', label: 'Persetujuan' },
-            { value: 'repair', label: 'Perbaikan' },
-            { value: 'qc', label: 'Quality Control' },
-            { value: 'done', label: 'Siap Diambil' },
-            { value: 'taken', label: 'Sudah Diambil' },
-            { value: 'cancel', label: 'Batal' }
-        ];
-        
-        const statusStats = {
-            semua: dataServis.length,
-            waiting: dataServis.filter(s => s.status === 'waiting').length,
-            diag: dataServis.filter(s => s.status === 'diag').length,
-            approval: dataServis.filter(s => s.status === 'approval').length,
-            repair: dataServis.filter(s => s.status === 'repair').length,
-            qc: dataServis.filter(s => s.status === 'qc').length,
-            done: dataServis.filter(s => s.status === 'done').length,
-            taken: dataServis.filter(s => s.status === 'taken').length,
-            cancel: dataServis.filter(s => s.status === 'cancel').length
-        };
-        
-        return `
-            <div class="topbar">
-                <span class="topbar-title"><i class="fas fa-screwdriver-wrench"></i> Data Servis</span>
-                <button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Biaya</th><th>Diubah</th></tr></thead>
+                    <tbody>
+                        ${dataServis.slice(0,5).map(s=>`<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusBadge(s.status)}</td><td>${rupiah(s.biaya?.total||s.estimasi)}</td><td><small>${s.updatedBy}<br>${s.updatedAt?.slice(0,16)||'-'}</small></td></tr>`).join('')}
+                    </tbody>
+                </table>
             </div>
-            <div class="content">
-                <div class="card">
-                    <div class="filter-section">
-                        <div class="filter-group">
-                            <label><i class="fas fa-filter"></i> Filter berdasarkan status:</label>
-                            <select id="statusFilter" onchange="updateServisFilter(this.value)">
-                                ${statusOptions.map(opt => `
-                                    <option value="${opt.value}" ${currentServisFilter === opt.value ? 'selected' : ''}>
-                                        ${opt.label} (${statusStats[opt.value]})
-                                    </option>
-                                `).join('')}
-                            </select>
-                        </div>
-                        <div class="filter-stats">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Menampilkan: <strong class="count">${filteredServis.length}</strong> dari <strong>${dataServis.length}</strong> servis</span>
-                            ${currentServisFilter !== 'semua' ? `
-                                <button class="btn btn-sm" onclick="updateServisFilter('semua')" style="margin-left: 8px;">
-                                    <i class="fas fa-times"></i> Reset
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                    
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead>
-                                <tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Keluhan</th><th>Status</th><th>Biaya Total</th><th>Aksi</th></tr>
-                            </thead>
-                            <tbody>
-                                ${filteredServis.map(s => `
-                                    <tr>
-                                        <td>${s.id}</td>
-                                        <td>${s.nama}</td>
-                                        <td>${s.device}</td>
-                                        <td>${s.keluhan || '-'}</td>
-                                        <td>${getStatusLabel(s.status)}</td>
-                                        <td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td>
-                                        <td>
-                                            <select onchange="ubahStatusServis('${s.id}', this.value)" style="padding:4px;font-size:12px">
-                                                <option value="waiting" ${s.status==='waiting'?'selected':''}>Menunggu</option>
-                                                <option value="diag" ${s.status==='diag'?'selected':''}>Diagnosa</option>
-                                                <option value="approval" ${s.status==='approval'?'selected':''}>Persetujuan</option>
-                                                <option value="repair" ${s.status==='repair'?'selected':''}>Perbaikan</option>
-                                                <option value="qc" ${s.status==='qc'?'selected':''}>QC</option>
-                                                <option value="done" ${s.status==='done'?'selected':''}>Siap Diambil</option>
-                                                <option value="taken" ${s.status==='taken'?'selected':''}>Sudah Diambil</option>
-                                                <option value="cancel" ${s.status==='cancel'?'selected':''}>Batal</option>
-                                            </select>
-                                            ${s.biayaServis?.total > 0 ? `<span style="font-size:10px; margin-left:5px; color:#185FA5;"><i class="fas fa-receipt"></i></span>` : ''}
-                                        </td>
-                                    </tr>
-                                `).join('')}
-                                ${filteredServis.length === 0 ? '<tr><td colspan="7" class="empty-state">Tidak ada data servis dengan status ini</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
+        </div>
+    </div>`;
+}
+
+function renderServis() {
+    let filtered = currentFilter==='semua' ? dataServis : dataServis.filter(s=>s.status===currentFilter);
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-screwdriver-wrench"></i> Data Servis</span>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>Filter Status:</label>
+                    <select id="filterSelect" onchange="currentFilter=this.value;renderPage()">
+                        <option value="semua">Semua</option>
+                        ${STATUS_ORDER.map(s=>`<option value="${s}" ${currentFilter===s?'selected':''}>${STATUS[s]}</option>`).join('')}
+                    </select>
                 </div>
             </div>
-        `;
-    }
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Status</th><th>Jasa</th><th>Sparepart</th><th>Total</th><th>Teknisi</th><th>Diubah</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                        ${filtered.map(s=>`<tr>
+                            <td>${s.id}</td>
+                            <td>${s.nama}</td>
+                            <td>${s.device}</td>
+                            <td>${getStatusBadge(s.status)}</td
+                            <td>${rupiah(s.biaya?.jasa)}</td
+                            <td>${s.biaya?.spareparts?.reduce((a,b)=>a+b.qty,0)||0} item</td
+                            <td><strong>${rupiah(s.biaya?.total||s.estimasi)}</strong></td
+                            <td>${s.teknisi||'-'}</td
+                            <td><small>${s.updatedBy}<br>${s.updatedAt?.slice(0,16)||'-'}</small></td
+                            <td><select onchange="ubahStatus('${s.id}',this.value)" style="padding:4px">
+                                <option value="">-- Ubah --</option>
+                                ${getNextStatus(s.status).map(st=>`<option value="${st}">→ ${STATUS[st]}</option>`).join('')}
+                                <option value="cancel" style="color:red">Batalkan</option>
+                            </select></td
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`;
+}
 
-    function renderAntrian() {
-        const antrian = dataServis.filter(s => !['done','taken','cancel'].includes(s.status));
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span></div>
-        <div class="content"><div class="card"><table><thead><tr><th>No</th><th>Pelanggan</th><th>Device</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
-            ${antrian.map((s,idx) => `<tr><td>${idx+1}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td></tr>`).join('')}
-            ${antrian.length === 0 ? '<tr><td colspan="5" class="empty-state">Tidak ada antrian</td></tr>' : ''}
-        </tbody></table></div></div>`;
-    }
+function renderAntrian() {
+    const antrian = dataServis.filter(s=>['waiting','diag','approval','repair','qc'].includes(s.status));
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Teknisi</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        ${antrian.map(s=>`<tr>
+                            <td>${s.id}</td>
+                            <td>${s.nama}</td>
+                            <td>${s.device}</td>
+                            <td>${getStatusBadge(s.status)}</td
+                            <td><select onchange="updateTeknisi('${s.id}',this.value)" style="padding:4px">
+                                <option value="">Pilih Teknisi</option>
+                                ${dataTeknisi.map(t=>`<option value="${t.nama}" ${s.teknisi===t.nama?'selected':''}>${t.nama}</option>`).join('')}
+                            </select></td
+                            <td><select onchange="ubahStatus('${s.id}',this.value)" style="padding:4px">
+                                <option value="">-- Ubah Status --</option>
+                                ${getNextStatus(s.status).map(st=>`<option value="${st}">→ ${STATUS[st]}</option>`).join('')}
+                            </select></td
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`;
+}
 
-    function renderTeknisi() {
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-user-cog"></i> Teknisi & Tugas</span></div>
-        <div class="content"><div class="card"><h4><i class="fas fa-tasks"></i> Job List Aktif</h4><ul>${dataServis.filter(s => s.status==='repair').map(s => `<li><strong>${s.device}</strong> - ${s.nama} (ID: ${s.id}) - Biaya: Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</li>`).join('')||'<li>Tidak ada job aktif</li>'}</ul></div></div>`;
-    }
+function renderTeknisi() { 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-user-cog"></i> Manajemen Teknisi</span>
+        <div>
+            <button class="btn btn-primary btn-sm" onclick="tambahTeknisi()"><i class="fas fa-plus"></i> Tambah</button>
+            <button class="btn btn-sm" onclick="setUser()" style="margin-left:8px"><i class="fas fa-user"></i> ${currentUser}</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Nama</th><th>Keahlian</th><th>Servis</th><th>Dibuat</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        ${dataTeknisi.map(t=>`<tr>
+                            <td>${t.nama}</td>
+                            <td>${t.skill}</td>
+                            <td>${dataServis.filter(s=>s.teknisi===t.nama).length}</td>
+                            <td><small>${t.createdBy}<br>${t.createdAt?.slice(0,16)||'-'}</small></td>
+                            <td><button class="btn btn-sm btn-danger" onclick="hapusTeknisi(${t.id})"><i class="fas fa-trash"></i></button></td
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
 
-    function renderQC() {
-        const qcList = dataServis.filter(s => s.status === 'repair');
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-clipboard-list"></i> Quality Control</span></div>
-        <div class="content"><div class="card"><table><thead><tr><th>ID Servis</th><th>Perangkat</th><th>Biaya</th><th>Aksi QC</th></tr></thead><tbody>
-            ${qcList.map(s => `<tr><td>${s.id}</td><td>${s.device}</td><td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td><td><button class="btn btn-sm btn-success" onclick="ubahStatusServis('${s.id}','done')"><i class="fas fa-check"></i> Lulus QC</button></td></tr>`).join('')}
-            ${qcList.length === 0 ? '<tr><td colspan="4" class="empty-state">Tidak ada servis menunggu QC</td></tr>' : ''}
-        </tbody></table></div></div>`;
-    }
+function renderQC() { 
+    const qc = dataServis.filter(s=>s.status==='qc'); 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-clipboard-list"></i> Quality Control</span>
+        <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Biaya</th><th>Teknisi</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        ${qc.map(s=>`<tr>
+                            <td>${s.id}</td>
+                            <td>${s.nama}</td>
+                            <td>${s.device}</td>
+                            <td>${rupiah(s.biaya?.total||s.estimasi)}</td
+                            <td>${s.teknisi}</td
+                            <td><button class="btn btn-success btn-sm" onclick="lulusQC('${s.id}')"><i class="fas fa-check"></i> Lulus QC</button></td
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
 
-    function renderKasir() {
-        const tagihan = dataServis.filter(s => s.status === 'done');
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-cash-register"></i> Kasir & Pembayaran</span></div>
-        <div class="content"><div class="card"></td><thead><tr><th>ID</th><th>Pelanggan</th><th>Total</th><th>Aksi</th></tr></thead><tbody>
-            ${tagihan.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td><td><button class="btn btn-primary btn-sm" onclick="preparePembayaran('${s.id}')"><i class="fas fa-money-bill"></i> Bayar & Ambil</button></td></tr>`).join('')}
-            ${tagihan.length === 0 ? '<tr><td colspan="4" class="empty-state">Tidak ada tagihan</td></tr>' : ''}
-        </tbody></table></div></div>`;
-    }
+function renderKasir() { 
+    const bayar = dataServis.filter(s=>s.status==='done'); 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-cash-register"></i> Kasir</span>
+        <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+    </div>
+    <div class="content">
+        <div class="grid-4">
+            <div class="metric"><div class="metric-label">Menunggu Bayar</div><div class="metric-val amber">${bayar.length}</div></div>
+            <div class="metric"><div class="metric-label">Total Pemasukan</div><div class="metric-val green">${rupiah(dataPembayaran.reduce((a,b)=>a+b.nominal,0))}</div></div>
+        </div>
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Total</th><th>Teknisi</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        ${bayar.map(s=>`<tr>
+                            <td>${s.id}</td>
+                            <td>${s.nama}</td>
+                            <td>${s.device}</td>
+                            <td>${rupiah(s.biaya?.total||s.estimasi)}</td
+                            <td>${s.teknisi}</td
+                            <td><button class="btn btn-success btn-sm" onclick="ubahStatus('${s.id}','taken')"><i class="fas fa-money-bill"></i> Bayar</button></td
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
 
-    function renderStok() {
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-boxes"></i> Stok Sparepart</span></div>
-        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>Stok</th><th>Min Stok</th><th>Status</th></tr></thead><tbody>
-            ${dataSparepart.map(p => `<tr><td>${p.nama}</td><td>${p.stok}</td><td>${p.minStok}</td><td class="${p.stok <= p.minStok ? 'stock-low' : 'stock-ok'}">${p.stok <= p.minStok ? '⚠️ Stok Menipis' : '✓ Aman'}</td></tr>`).join('')}
-        </tbody></table></div></div>`;
-    }
+function renderStok() { 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-boxes"></i> Stok Sparepart</span>
+        <div>
+            <button class="btn btn-primary btn-sm" onclick="tambahSparepart()"><i class="fas fa-plus"></i> Tambah</button>
+            <button class="btn btn-sm" onclick="setUser()" style="margin-left:8px"><i class="fas fa-user"></i> ${currentUser}</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Nama</th><th>Stok</th><th>Booking</th><th>Tersedia</th><th>Minimal</th><th>Harga</th><th>Diubah</th><th>Aksi</th></tr></thead>
+                    <tbody>
+                        ${dataSparepart.map(s=>{ 
+                            const avail = s.stok - (s.booked||0); 
+                            return `<tr>
+                                <td>${s.nama}</td
+                                <td class="${s.stok<=s.minStok?'stock-low':'stock-ok'}">${s.stok}</td
+                                <td class="stock-low">${s.booked||0}</td
+                                <td class="${avail<=s.minStok?'stock-low':'stock-ok'}">${avail}</td
+                                <td>${s.minStok}</td
+                                <td>${rupiah(s.harga)}</td
+                                <td><small>${s.updatedBy}<br>${s.updatedAt?.slice(0,16)||'-'}</small></td
+                                <td><button class="btn btn-sm btn-danger" onclick="hapusSparepart(${s.id})"><i class="fas fa-trash"></i></button></td
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
 
-    function renderGaransi() {
-        const tigaBulanLalu = new Date(Date.now() - 90*86400000);
-        const garansiList = dataServis.filter(s => s.status === 'taken' && new Date(s.tglMasuk) > tigaBulanLalu);
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-shield-alt"></i> Garansi Servis (90 hari)</span></div>
-        <div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Biaya</th><th>Tanggal Servis</th></tr></thead><tbody>
-            ${garansiList.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>Rp ${(s.biayaServis?.total || s.estimasi).toLocaleString()}</td><td>${s.tglMasuk}</td></tr>`).join('')}
-            ${garansiList.length === 0 ? '<tr><td colspan="5" class="empty-state">Tidak ada garansi aktif</td></tr>' : ''}
-        </tbody></table></div></div>`;
-    }
+function renderGaransi() { 
+    const selesai = dataServis.filter(s=>s.status==='taken'||s.status==='done'); 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-shield-alt"></i> Garansi Servis</span>
+        <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="info-text">Garansi berlaku 90 hari sejak servis selesai</div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Tanggal Selesai</th><th>Status Garansi</th></tr></thead>
+                    <tbody>
+                        ${selesai.map(s=>{ 
+                            const tglSelesai = new Date(s.updatedAt || s.tglMasuk); 
+                            tglSelesai.setDate(tglSelesai.getDate() + 90); 
+                            const aktif = new Date() <= tglSelesai; 
+                            return `<tr>
+                                <td>${s.id}</td>
+                                <td>${s.nama}</td>
+                                <td>${s.device}</td>
+                                <td>${s.updatedAt?.slice(0,10)||s.tglMasuk}</td
+                                <td><span class="status-badge ${aktif?'s-done':'s-cancel'}">${aktif?'Aktif':'Kadaluarsa'}</span></td
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
 
-    function renderLaporan() {
-        const totalServis = dataServis.length;
-        const selesai = dataServis.filter(s => s.status === 'taken').length;
-        const pendapatan = dataPembayaran.reduce((sum,p) => sum + p.nominal, 0);
-        const totalBiayaServis = dataServis.reduce((sum, s) => sum + (s.biayaServis?.total || 0), 0);
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-chart-line"></i> Laporan Keuangan</span></div>
-        <div class="content"><div class="card"><div class="settings-group"><h3>Ringkasan</h3><p><strong>Total Servis:</strong> ${totalServis}</p><p><strong>Servis Selesai:</strong> ${selesai}</p><p><strong>Total Pendapatan:</strong> Rp ${pendapatan.toLocaleString()}</p><p><strong>Total Biaya Servis:</strong> Rp ${totalBiayaServis.toLocaleString()}</p><p><strong>Rata-rata per servis:</strong> Rp ${(pendapatan/(selesai||1)).toLocaleString()}</p></div></div></div>`;
-    }
-
-    function renderPelanggan() {
-        const uniqueMap = new Map();
-        dataServis.forEach(s => { if(!uniqueMap.has(s.nama)) uniqueMap.set(s.nama, s); });
-        const unique = Array.from(uniqueMap.values());
-        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-users"></i> Data Pelanggan</span></div>
-        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>No WhatsApp</th><th>Perangkat Terakhir</th><th>Total Biaya</th></tr></thead><tbody>
-            ${unique.map(p => `<tr><td>${p.nama}</td><td>${p.wa || '-'}</td><td>${p.device}</td><td>Rp ${(p.biayaServis?.total || p.estimasi).toLocaleString()}</td></tr>`).join('')}
-            ${unique.length === 0 ? '<tr><td colspan="4" class="empty-state">Belum ada pelanggan</td></tr>' : ''}
-        </tbody></table></div></div>`;
-    }
-
-    function renderPengaturan() {
-        return `
-            <div class="topbar"><span class="topbar-title"><i class="fas fa-cog"></i> Pengaturan & Database</span></div>
-            <div class="content">
-                <div class="card">
-                    <div class="settings-group">
-                        <h3><i class="fab fa-whatsapp"></i> Template WhatsApp</h3>
-                        <div class="settings-row">
-                            <button class="btn btn-primary" onclick="openGlobalTemplateEditor()"><i class="fas fa-edit"></i> Edit Template WhatsApp</button>
-                            <button class="btn btn-outline" onclick="resetToDefaultTemplate(document.getElementById('template-type-select').value)"><i class="fas fa-undo"></i> Reset ke Default</button>
-                        </div>
-                        <div class="info-text">
-                            <i class="fas fa-info-circle"></i> Variabel yang tersedia:<br>
-                            <code>{nama}</code> - Nama pelanggan<br>
-                            <code>{device}</code> - Perangkat<br>
-                            <code>{keluhan}</code> - Keluhan<br>
-                            <code>{id}</code> - ID Servis<br>
-                            <code>{tanggal}</code> - Tanggal<br>
-                            <code>{jasa}</code> - Biaya jasa<br>
-                            <code>{sparepart}</code> - Biaya sparepart<br>
-                            <code>{lain}</code> - Biaya lainnya<br>
-                            <code>{total}</code> - Total biaya<br>
-                            <code>{keteranganLain}</code> - Keterangan biaya lainnya<br>
-                            <code>{rincian_biaya}</code> - Rincian biaya otomatis<br>
-                            <code>{catatan}</code> - Catatan penyelesaian<br>
-                            <code>{metode_pembayaran}</code> - Metode pembayaran<br>
-                            <code>{nominal_dibayar}</code> - Nominal dibayar<br>
-                            <code>{kembalian}</code> - Kembalian
-                        </div>
+function renderLaporan() { 
+    const bulanIni = new Date().getMonth(); 
+    const pendapatan = dataPembayaran.filter(p=>new Date(p.tanggal).getMonth()===bulanIni).reduce((a,b)=>a+b.nominal,0); 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-chart-line"></i> Laporan</span>
+        <div>
+            <button class="btn btn-primary btn-sm" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+            <button class="btn btn-sm" onclick="setUser()" style="margin-left:8px"><i class="fas fa-user"></i> ${currentUser}</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="grid-4">
+            <div class="metric"><div class="metric-label">Total Servis</div><div class="metric-val">${dataServis.length}</div></div>
+            <div class="metric"><div class="metric-label">Pendapatan Bulan Ini</div><div class="metric-val green">${rupiah(pendapatan)}</div></div>
+            <div class="metric"><div class="metric-label">Total Log</div><div class="metric-val">${dataLog.length}</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><span class="card-title">Statistik Status</span></div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Status</th><th>Jumlah</th><th>Persentase</th></tr></thead>
+                    <tbody>
+                        ${STATUS_ORDER.map(s=>{ 
+                            const c = dataServis.filter(x=>x.status===s).length; 
+                            const p = dataServis.length ? Math.round(c/dataServis.length*100) : 0; 
+                            return `<tr>
+                                <td>${STATUS[s]}</td>
+                                <td>${c}</td>
+                                <td>${p}%</td
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Aktivitas Terbaru</span>
+                <button class="btn btn-sm" onclick="navigateTo('logaktivitas')">Lihat semua</button>
+            </div>
+            <div class="log-container">
+                ${dataLog.slice(0,5).map(l=>`
+                    <div class="log-entry">
+                        <div class="log-time">${l.timestamp}</div>
+                        <div class="log-action">${l.action}</div>
+                        <div class="log-detail">${l.details.substring(0,100)}${l.details.length>100?'...':''}</div>
+                        <div class="log-user">${l.user}</div>
                     </div>
-                    <div class="settings-group">
-                        <h3><i class="fas fa-database"></i> Backup & Restore Database</h3>
-                        <div class="settings-row">
-                            <button class="btn btn-primary" onclick="exportDatabase()"><i class="fas fa-download"></i> Export Database (JSON)</button>
-                            <button class="btn btn-success" onclick="openModal('modal-import')"><i class="fas fa-upload"></i> Import Database</button>
-                        </div>
-                        <div class="info-text"><i class="fas fa-info-circle"></i> Export akan menyimpan semua data (servis, sparepart, pembayaran, pelanggan) ke file JSON. Gunakan Import untuk memulihkan data dari file backup.</div>
-                    </div>
-                    <div class="settings-group">
-                        <h3><i class="fas fa-trash-alt"></i> Reset Data</h3>
-                        <div class="settings-row">
-                            <button class="btn btn-danger" onclick="resetDatabase()"><i class="fas fa-exclamation-triangle"></i> Reset ke Data Awal</button>
-                        </div>
-                        <div class="info-text"><i class="fas fa-exclamation-circle"></i> Peringatan: Reset akan menghapus SEMUA data yang tersimpan dan mengembalikan ke data contoh. Tindakan ini tidak dapat dibatalkan!</div>
-                    </div>
-                    <div class="settings-group">
-                        <h3><i class="fas fa-chart-simple"></i> Statistik Database</h3>
-                        <p><strong>Total Servis:</strong> ${dataServis.length}</p>
-                        <p><strong>Total Sparepart:</strong> ${dataSparepart.length}</p>
-                        <p><strong>Total Transaksi:</strong> ${dataPembayaran.length}</p>
-                        <p><strong>Total Pelanggan:</strong> ${new Set(dataServis.map(s=>s.nama)).size}</p>
-                        <p><strong>Terakhir Update:</strong> ${new Date().toLocaleString()}</p>
-                    </div>
+                `).join('')}
+                ${dataLog.length === 0 ? '<div class="empty-state">Belum ada aktivitas</div>' : ''}
+            </div>
+        </div>
+    </div>`; 
+}
+
+function renderPelanggan() { 
+    const unik = [...new Map(dataServis.map(s=>[s.wa, {
+        nama:s.nama, 
+        wa:s.wa, 
+        totalServis:dataServis.filter(x=>x.wa===s.wa).length, 
+        lastDevice:s.device, 
+        lastDate:s.updatedAt
+    }])).values()];
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-users"></i> Data Pelanggan</span>
+        <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Nama</th><th>WhatsApp</th><th>Perangkat Terakhir</th><th>Total Servis</th><th>Servis Terakhir</th></tr></thead>
+                    <tbody>
+                        ${unik.map(p=>`<tr>
+                            <td>${p.nama}</td>
+                            <td>${p.wa}</td>
+                            <td>${p.lastDevice}</td>
+                            <td>${p.totalServis}</td>
+                            <td><small>${p.lastDate?.slice(0,16)||'-'}</small></td
+                        </table>`).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>`; 
+}
+
+function renderPengaturan() { 
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-cog"></i> Pengaturan</span>
+        <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="card-header"><span class="card-title">Manajemen User</span></div>
+            <div class="info-text">User saat ini: <strong>${currentUser}</strong><br>Klik tombol "Ganti User" untuk mengganti identitas user.</div>
+            <button class="btn btn-primary" onclick="setUser()" style="margin-top:10px"><i class="fas fa-exchange-alt"></i> Ganti User</button>
+        </div>
+        <div class="card">
+            <div class="card-header"><span class="card-title">Data & Backup</span></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <button class="btn btn-primary" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
+                <button class="btn btn-warning" onclick="importData()"><i class="fas fa-upload"></i> Import Data</button>
+                <button class="btn btn-danger" onclick="resetData()"><i class="fas fa-trash"></i> Reset Data</button>
+                <button class="btn btn-secondary" onclick="exportLog()"><i class="fas fa-file-alt"></i> Export Log</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><span class="card-title">Sistem Search Pelanggan</span></div>
+            <div class="info-text">
+                <strong>Cara Kerja Search Pelanggan:</strong><br>
+                ✓ Cukup ketik nama pelanggan di field "Nama Pelanggan"<br>
+                ✓ Sistem akan menampilkan saran pelanggan yang mirip<br>
+                ✓ Klik pilihan, maka nama dan nomor WA otomatis terisi<br>
+                ✓ Jika pelanggan baru, langsung ketik nama dan lanjut ke nomor WA<br>
+                ✓ Sistem akan mendeteksi duplikat nomor WA dan mengupdate data<br>
+                ✓ Perangkat yang pernah diinput akan tersimpan di auto-complete
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><span class="card-title">Sistem Booking Stok</span></div>
+            <div class="info-text">
+                <strong>Cara Kerja Booking Stok:</strong><br>
+                1. Sparepart yang dipilih saat input biaya akan di-BOOKING<br>
+                2. Booking ditandai dengan badge <span class="booking-badge"><i class="fas fa-clock"></i> Booking</span><br>
+                3. Stok yang sudah di-booking akan berkurang dari stok tersedia<br>
+                4. Stok baru benar-benar dikurangi saat servis SELESAI (QC → Selesai)<br>
+                5. Jika servis dibatalkan, booking akan otomatis dilepas
+            </div>
+        </div>
+    </div>`; 
+}
+
+function renderLogAktivitas() {
+    const filterUser = document.getElementById('logUserFilter')?.value || 'all';
+    const filterAction = document.getElementById('logActionFilter')?.value || 'all';
+    let filtered = [...dataLog];
+    if(filterUser !== 'all') filtered = filtered.filter(l => l.user === filterUser);
+    if(filterAction !== 'all') filtered = filtered.filter(l => l.action === filterAction);
+    const users = [...new Set(dataLog.map(l=>l.user))];
+    const actions = [...new Set(dataLog.map(l=>l.action))];
+    return `<div class="topbar">
+        <span class="topbar-title"><i class="fas fa-history"></i> Log Aktivitas</span>
+        <div>
+            <button class="btn btn-sm" onclick="setUser()"><i class="fas fa-user"></i> ${currentUser}</button>
+            <button class="btn btn-sm" onclick="exportLog()" style="margin-left:8px"><i class="fas fa-download"></i> Export Log</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>Filter User:</label>
+                    <select id="logUserFilter" onchange="renderPage()">
+                        <option value="all">Semua</option>
+                        ${users.map(u=>`<option value="${u}" ${filterUser===u?'selected':''}>${u}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Filter Aksi:</label>
+                    <select id="logActionFilter" onchange="renderPage()">
+                        <option value="all">Semua</option>
+                        ${actions.map(a=>`<option value="${a}" ${filterAction===a?'selected':''}>${a}</option>`).join('')}
+                    </select>
                 </div>
             </div>
-        `;
-    }
+            <div class="log-container" style="max-height:600px;overflow-y:auto">
+                ${filtered.length===0?'<div class="empty-state">Tidak ada log</div>':filtered.map(l=>`
+                    <div class="log-entry">
+                        <div class="log-time">${l.timestamp}</div>
+                        <div class="log-action">${l.action}</div>
+                        <div class="log-detail">
+                            <strong>Target:</strong> ${l.target}<br>
+                            <strong>Detail:</strong> ${l.details}
+                        </div>
+                        <div class="log-user">${l.user}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    </div>`;
+}
 
-    // ==================== ROUTING ====================
-    let currentPage = 'dashboard';
-    function renderCurrentPage() {
-        const pageMap = {
-            dashboard: renderDashboard, antrian: renderAntrian, servis: renderServis, teknisi: renderTeknisi,
-            qc: renderQC, kasir: renderKasir, stok: renderStok, garansi: renderGaransi, 
-            laporan: renderLaporan, pelanggan: renderPelanggan, pengaturan: renderPengaturan
-        };
-        const container = document.getElementById(`page-${currentPage}`);
-        if(container && pageMap[currentPage]) container.innerHTML = pageMap[currentPage]();
-    }
+// ==================== NAVIGASI ====================
+const pages = { 
+    dashboard: renderDashboard, 
+    antrian: renderAntrian, 
+    servis: renderServis, 
+    teknisi: renderTeknisi, 
+    qc: renderQC, 
+    kasir: renderKasir, 
+    stok: renderStok, 
+    garansi: renderGaransi, 
+    laporan: renderLaporan, 
+    pelanggan: renderPelanggan, 
+    pengaturan: renderPengaturan, 
+    logaktivitas: renderLogAktivitas 
+};
 
-    function navigateTo(pageId) {
-        document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
-        const target = document.getElementById(`page-${pageId}`);
-        if(target) target.style.display = 'block';
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('data-page') === pageId) item.classList.add('active');
-        });
-        currentPage = pageId;
-        renderCurrentPage();
-    }
+function navigateTo(page) { 
+    currentPage = page; 
+    renderPage(); 
+    document.querySelectorAll('.nav-item').forEach(el=>{ 
+        el.classList.remove('active'); 
+        if(el.dataset.page===page) el.classList.add('active'); 
+    }); 
+    if(window.innerWidth<=768){ 
+        document.getElementById('sidebar').classList.remove('open'); 
+        document.getElementById('sidebarOverlay').classList.remove('active'); 
+    } 
+}
 
-    // ==================== GLOBAL FUNCTIONS & INIT ====================
-    window.navigateTo = navigateTo;
-    window.openModal = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'flex'; };
-    window.closeModal = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
-    window.tambahServisBaru = tambahServisBaru;
-    window.ubahStatusServis = ubahStatusServis;
-    window.exportDatabase = exportDatabase;
-    window.importDatabase = importDatabase;
-    window.resetDatabase = resetDatabase;
-    window.updateServisFilter = updateServisFilter;
-    window.updateBiayaSummary = updateBiayaSummary;
-    window.simpanDanKirimWA = simpanDanKirimWA;
-    window.konfirmasiSelesaiDanKirimWA = konfirmasiSelesaiDanKirimWA;
-    window.prosesPembayaranDanKirimWA = prosesPembayaranDanKirimWA;
-    window.preparePembayaran = preparePembayaran;
-    window.hitungKembalian = hitungKembalian;
-    window.toggleEditTemplate = toggleEditTemplate;
-    window.cancelEditTemplate = cancelEditTemplate;
-    window.saveEditTemplate = saveEditTemplate;
-    window.openGlobalTemplateEditor = openGlobalTemplateEditor;
-    window.saveGlobalTemplate = saveGlobalTemplate;
-    window.resetToDefaultTemplate = resetToDefaultTemplate;
-    window.loadTemplateForEdit = loadTemplateForEdit;
+function renderPage() { 
+    document.querySelectorAll('.page-content').forEach(el=>el.style.display='none'); 
+    document.getElementById(`page-${currentPage}`).style.display='block'; 
+    if(pages[currentPage]) { 
+        const content = pages[currentPage](); 
+        if(content) document.getElementById(`page-${currentPage}`).innerHTML = content; 
+    } 
+    updateBadges(); 
+}
 
-    // Event listeners untuk update summary dan preview
-    document.addEventListener('DOMContentLoaded', function() {
-        const jasaInput = document.getElementById('biaya-jasa');
-        const sparepartInput = document.getElementById('biaya-sparepart');
-        const lainInput = document.getElementById('biaya-lain');
-        const keteranganInput = document.getElementById('keterangan-lain');
-        const catatanInput = document.getElementById('catatan-selesai');
-        const nominalDibayarInput = document.getElementById('nominal-dibayar');
-        const metodeBayarSelect = document.getElementById('metode-pembayaran');
-        
-        if(jasaInput) jasaInput.addEventListener('input', updateBiayaSummary);
-        if(sparepartInput) sparepartInput.addEventListener('input', updateBiayaSummary);
-        if(lainInput) lainInput.addEventListener('input', updateBiayaSummary);
-        if(keteranganInput) keteranganInput.addEventListener('input', updateApprovalPreview);
-        if(catatanInput) catatanInput.addEventListener('input', updateDonePreview);
-        if(nominalDibayarInput) nominalDibayarInput.addEventListener('input', hitungKembalian);
-        if(metodeBayarSelect) metodeBayarSelect.addEventListener('change', () => {
-            const totalTagihan = parseInt(document.getElementById('total-tagihan-display').textContent.replace(/[^0-9]/g, '')) || 0;
-            const nominalDibayar = parseInt(document.getElementById('nominal-dibayar').value) || 0;
-            updateTakenPreview(totalTagihan, nominalDibayar);
-        });
-    });
+function updateBadges() { 
+    document.getElementById('badge-antrian').innerText = dataServis.filter(s=>['waiting','diag','approval','repair','qc'].includes(s.status)).length; 
+    document.getElementById('badge-servis').innerText = dataServis.length; 
+}
 
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', () => navigateTo(item.getAttribute('data-page')));
-    });
+function sendWA(wa, msg) { 
+    let n = wa.replace(/^0/,'62').replace(/[^0-9]/g,''); 
+    window.open(`https://wa.me/${n}?text=${encodeURIComponent(msg)}`,'_blank'); 
+}
 
+// ==================== INIT ====================
+function init() {
     loadData();
+    const toggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if(toggle) toggle.onclick = () => { 
+        sidebar.classList.toggle('open'); 
+        overlay.classList.toggle('active'); 
+    };
+    if(overlay) overlay.onclick = () => { 
+        sidebar.classList.remove('open'); 
+        overlay.classList.remove('active'); 
+    };
+    
+    document.querySelectorAll('.nav-item').forEach(el => { 
+        el.onclick = () => navigateTo(el.dataset.page); 
+    });
+    
     navigateTo('dashboard');
+}
+
+// Ekspor fungsi ke global
+window.tambahServisBaru = tambahServisBaru;
+window.ubahStatus = ubahStatus;
+window.updateTeknisi = updateTeknisi;
+window.lulusQC = lulusQC;
+window.tambahSparepart = tambahSparepart;
+window.hapusSparepart = hapusSparepart;
+window.tambahTeknisi = tambahTeknisi;
+window.hapusTeknisi = hapusTeknisi;
+window.resetData = resetData;
+window.exportData = exportData;
+window.importData = importData;
+window.exportLog = exportLog;
+window.setUser = setUser;
+window.navigateTo = navigateTo;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.closeModalBiaya = closeModalBiaya;
+window.simpanApproval = simpanApproval;
+window.konfirmasiSelesai = konfirmasiSelesai;
+window.prosesBayar = prosesBayar;
+window.updateTotal = updateTotal;
+window.searchSparepart = searchSparepart;
+window.addSparepart = addSparepart;
+window.removeSparepart = removeSparepart;
+window.updateSparepartQty = updateSparepartQty;
+window.hitungKembalian = hitungKembalian;
+window.renderPage = renderPage;
+window.searchCustomer = searchCustomer;
+window.selectCustomer = selectCustomer;
+window.checkDuplicateWA = checkDuplicateWA;
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
