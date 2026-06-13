@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ServisHP Pro - Manajemen Servis Handphone</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --color-text-primary: #1C1E24;
+            --color-text-secondary: #5B5F6E;
+            --color-text-tertiary: #8E92A2;
+            --color-background-primary: #FFFFFF;
+            --color-background-secondary: #F8F9FC;
+            --color-background-tertiary: #F2F4F8;
+            --color-background-danger: #E24B4A;
+            --color-border-primary: #E1E4E8;
+            --color-border-secondary: #E9ECEF;
+            --color-border-tertiary: #EDF0F4;
+            --border-radius-md: 8px;
+            --border-radius-lg: 14px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            color: var(--color-text-primary);
+            background: var(--color-background-tertiary);
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            min-width: 240px;
+            background: var(--color-background-primary);
+            border-right: 1px solid var(--color-border-tertiary);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 1.25rem 1.25rem;
+            border-bottom: 1px solid var(--color-border-tertiary);
+        }
+
+        .sidebar-logo h1 {
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #185FA5, #2D7FC1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .sidebar-logo p {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            margin-top: 4px;
+        }
+
+        .nav-section {
+            padding: 0.75rem 0;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--color-text-tertiary);
+            padding: 0 1.25rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 1.25rem;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            transition: all 0.15s;
+        }
+
+        .nav-item:hover {
+            background: var(--color-background-secondary);
+            color: var(--color-text-primary);
+        }
+
+        .nav-item.active {
+            background: var(--color-background-secondary);
+            color: #185FA5;
+            font-weight: 500;
+            border-right: 3px solid #185FA5;
+        }
+
+        .nav-item i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .badge-count {
+            margin-left: auto;
+            background: #E24B4A;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 20px;
+            min-width: 22px;
+            text-align: center;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background: var(--color-background-tertiary);
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-background-primary);
+            border-bottom: 1px solid var(--color-border-tertiary);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .topbar-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: var(--border-radius-md);
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid var(--color-border-secondary);
+            background: transparent;
+            color: var(--color-text-primary);
+            transition: all 0.15s;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--color-background-secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #185FA5;
+            color: #fff;
+            border-color: #185FA5;
+        }
+
+        .btn-primary:hover {
+            background: #0C447C;
+        }
+
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 12px;
+        }
+
+        .btn-danger {
+            background: #E24B4A;
+            color: white;
+            border-color: #E24B4A;
+        }
+
+        .btn-success {
+            background: #1D9E75;
+            color: white;
+            border-color: #1D9E75;
+        }
+
+        .content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        /* GRID */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.2rem;
+            border: 1px solid var(--color-border-tertiary);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .metric-val {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .metric-val.green {
+            color: #1D9E75;
+        }
+
+        .metric-val.amber {
+            color: #BA7517;
+        }
+
+        .card {
+            background: var(--color-background-primary);
+            border: 1px solid var(--color-border-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 8px;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            border-bottom: 1px solid var(--color-border-tertiary);
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--color-border-tertiary);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--color-background-secondary);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .s-waiting { background: #FFF0E0; color: #B45A0A; }
+        .s-diag { background: #E8F0FE; color: #185FA5; }
+        .s-approval { background: #EDECFE; color: #4A3FBA; }
+        .s-repair { background: #E8F3E2; color: #2A6E0A; }
+        .s-qc { background: #FFEFD9; color: #A55B00; }
+        .s-done { background: #E0F5EE; color: #0F6E56; }
+        .s-taken { background: #F0EFEA; color: #5E5C57; }
+        .s-cancel { background: #FDE8E8; color: #C23D3D; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+        .modal {
+            background: white;
+            border-radius: 20px;
+            width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #E9ECEF;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #8E92A2;
+        }
+        .form-group { margin-bottom: 1rem; }
+        .form-label { font-size: 12px; font-weight: 600; margin-bottom: 6px; display: block; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CED4DA;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1000px) {
+            .grid-4, .grid-2 { grid-template-columns: 1fr; gap: 12px; }
+            .sidebar { width: 200px; min-width: 200px; }
+        }
+        @media (max-width: 768px) {
+            .app { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 0; }
+            .sidebar-logo { display: none; }
+            .nav-section { display: flex; gap: 5px; padding: 8px; }
+            .nav-item { white-space: nowrap; }
+        }
+        i, .fas, .far { margin-right: 4px; }
+        .empty-state { text-align: center; padding: 3rem; color: #8E92A2; }
+        .filter-chip {
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            border: 1px solid var(--color-border-secondary);
+            background: transparent;
+            cursor: pointer;
+        }
+        .filter-chip.active {
+            background: #185FA5;
+            color: white;
+            border-color: #185FA5;
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="root">
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h1><i class="fas fa-tools"></i> ServisHP Pro</h1>
+            <p>MANAJEMEN SERVIS</p>
+        </div>
+        <div class="nav-section">
+            <div class="nav-label">Utama</div>
+            <div class="nav-item active" data-page="dashboard"><i class="fas fa-chalkboard-user"></i> Dashboard</div>
+            <div class="nav-item" data-page="antrian"><i class="fas fa-list-ol"></i> Antrian <span class="badge-count" id="badge-antrian">0</span></div>
+            <div class="nav-item" data-page="servis"><i class="fas fa-screwdriver-wrench"></i> Data Servis <span class="badge-count" id="badge-servis">0</span></div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-label">Operasional</div>
+            <div class="nav-item" data-page="teknisi"><i class="fas fa-mobile-screen-button"></i> Teknisi</div>
+            <div class="nav-item" data-page="qc"><i class="fas fa-clipboard-list"></i> Quality Control</div>
+            <div class="nav-item" data-page="kasir"><i class="fas fa-cash-register"></i> Kasir</div>
+        </div>
+        <div class="nav-section">
+            <div class="nav-label">Manajemen</div>
+            <div class="nav-item" data-page="stok"><i class="fas fa-boxes"></i> Stok Sparepart</div>
+            <div class="nav-item" data-page="garansi"><i class="fas fa-shield-alt"></i> Garansi</div>
+            <div class="nav-item" data-page="laporan"><i class="fas fa-chart-line"></i> Laporan</div>
+            <div class="nav-item" data-page="pelanggan"><i class="fas fa-users"></i> Pelanggan</div>
+        </div>
+    </div>
+
+    <div class="main" id="main-content">
+        <div id="page-dashboard" class="page-content"></div>
+        <div id="page-antrian" class="page-content" style="display:none"></div>
+        <div id="page-servis" class="page-content" style="display:none"></div>
+        <div id="page-teknisi" class="page-content" style="display:none"></div>
+        <div id="page-qc" class="page-content" style="display:none"></div>
+        <div id="page-kasir" class="page-content" style="display:none"></div>
+        <div id="page-stok" class="page-content" style="display:none"></div>
+        <div id="page-garansi" class="page-content" style="display:none"></div>
+        <div id="page-laporan" class="page-content" style="display:none"></div>
+        <div id="page-pelanggan" class="page-content" style="display:none"></div>
+    </div>
+
+    <!-- Modal Tambah Servis -->
+    <div id="modal-new-servis" class="modal-overlay" style="display:none">
+        <div class="modal">
+            <div class="modal-header"><span class="modal-title"><i class="fas fa-plus-circle"></i> Servis Baru</span><button class="close-btn" onclick="closeModal('modal-new-servis')">&times;</button></div>
+            <div class="form-group"><label class="form-label">Nama Pelanggan</label><input type="text" id="new-nama" placeholder="Nama lengkap"></div>
+            <div class="form-group"><label class="form-label">No. WhatsApp</label><input type="text" id="new-wa" placeholder="0812xxxx"></div>
+            <div class="form-group"><label class="form-label">Perangkat</label><input type="text" id="new-device" placeholder="Contoh: iPhone 14 Pro"></div>
+            <div class="form-group"><label class="form-label">Keluhan</label><textarea id="new-keluhan" rows="2" placeholder="Deskripsikan keluhan"></textarea></div>
+            <div class="form-group"><label class="form-label">Estimasi Biaya</label><input type="number" id="new-biaya" placeholder="Estimasi biaya"></div>
+            <div style="display:flex; gap:10px; justify-content:flex-end"><button class="btn" onclick="closeModal('modal-new-servis')">Batal</button><button class="btn btn-primary" onclick="tambahServisBaru()">Simpan</button></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data utama
+    let dataServis = [];
+    let dataSparepart = [
+        { id: 1, nama: "LCD iPhone 14 Pro", stok: 5, minStok: 2, harga: 1800000 },
+        { id: 2, nama: "Baterai Samsung S23", stok: 3, minStok: 2, harga: 450000 },
+        { id: 3, nama: "Charging Port", stok: 8, minStok: 3, harga: 120000 }
+    ];
+    let dataPelanggan = [];
+    let dataPembayaran = [];
+
+    // Load dari localStorage
+    function loadData() {
+        const savedServis = localStorage.getItem('servishp_servis');
+        if(savedServis) dataServis = JSON.parse(savedServis);
+        else {
+            dataServis = [
+                { id: "SRV001", nama: "Andi N.", wa: "081234567", device: "iPhone 14 Pro", keluhan: "Layar retak", status: "repair", estimasi: 850000, tglMasuk: "2026-06-11", teknisi: "Budi" },
+                { id: "SRV002", nama: "Sari R.", wa: "081345678", device: "Samsung S23", keluhan: "Batre cepat habis", status: "approval", estimasi: 350000, tglMasuk: "2026-06-11", teknisi: "Andre" },
+                { id: "SRV003", nama: "Dwi W.", wa: "081456789", device: "Redmi Note 12", keluhan: "Tidak bisa nyala", status: "done", estimasi: 180000, tglMasuk: "2026-06-10", teknisi: "Budi" }
+            ];
+        }
+        const savedPelanggan = localStorage.getItem('servishp_pelanggan');
+        if(savedPelanggan) dataPelanggan = JSON.parse(savedPelanggan);
+        else dataPelanggan = dataServis.map(s => ({ nama: s.nama, wa: s.wa, device: s.device, totalServis: 1 }));
+        updateBadges();
+    }
+
+    function saveServis() {
+        localStorage.setItem('servishp_servis', JSON.stringify(dataServis));
+        updateBadges();
+    }
+
+    function updateBadges() {
+        const antrianCount = dataServis.filter(s => s.status === 'waiting' || s.status === 'diag' || s.status === 'approval' || s.status === 'repair').length;
+        document.getElementById('badge-antrian') && (document.getElementById('badge-antrian').innerText = antrianCount);
+        document.getElementById('badge-servis') && (document.getElementById('badge-servis').innerText = dataServis.length);
+    }
+
+    function tambahServisBaru() {
+        const nama = document.getElementById('new-nama').value;
+        const wa = document.getElementById('new-wa').value;
+        const device = document.getElementById('new-device').value;
+        const keluhan = document.getElementById('new-keluhan').value;
+        const biaya = parseInt(document.getElementById('new-biaya').value);
+        if(!nama || !device) { alert("Isi nama dan perangkat"); return; }
+        const newId = "SRV" + (dataServis.length + 1001);
+        const newServis = {
+            id: newId, nama, wa, device, keluhan, status: "waiting", estimasi: biaya || 0, tglMasuk: new Date().toISOString().slice(0,10), teknisi: "-"
+        };
+        dataServis.push(newServis);
+        saveServis();
+        closeModal('modal-new-servis');
+        document.getElementById('new-nama').value = '';
+        document.getElementById('new-wa').value = '';
+        document.getElementById('new-device').value = '';
+        document.getElementById('new-keluhan').value = '';
+        document.getElementById('new-biaya').value = '';
+        renderCurrentPage();
+        alert("Servis baru ditambahkan!");
+    }
+
+    function ubahStatusServis(id, statusBaru) {
+        const servis = dataServis.find(s => s.id === id);
+        if(servis) { servis.status = statusBaru; saveServis(); renderCurrentPage(); }
+    }
+
+    function getStatusLabel(status) {
+        const map = { waiting: "Menunggu", diag: "Diagnosa", approval: "Persetujuan", repair: "Perbaikan", qc: "Quality Control", done: "Siap Diambil", taken: "Sudah Diambil", cancel: "Batal" };
+        const kelas = { waiting: "s-waiting", diag: "s-diag", approval: "s-approval", repair: "s-repair", qc: "s-qc", done: "s-done", taken: "s-taken", cancel: "s-cancel" };
+        return `<span class="status-badge ${kelas[status] || 's-waiting'}">${map[status] || status}</span>`;
+    }
+
+    // Render halaman
+    function renderDashboard() {
+        const masukHariIni = dataServis.filter(s => s.tglMasuk === new Date().toISOString().slice(0,10)).length;
+        const dalamPengerjaan = dataServis.filter(s => ['waiting','diag','approval','repair','qc'].includes(s.status)).length;
+        const siapDiambil = dataServis.filter(s => s.status === 'done').length;
+        const totalOmzet = dataPembayaran.reduce((sum, p) => sum + (p.nominal || 0), 0);
+        return `
+            <div class="topbar"><span class="topbar-title"><i class="fas fa-tachometer-alt"></i> Dashboard</span><div><button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button></div></div>
+            <div class="content">
+                <div class="grid-4">
+                    <div class="metric"><div class="metric-label"><i class="fas fa-inbox"></i> Servis masuk hari ini</div><div class="metric-val">${masukHariIni}</div></div>
+                    <div class="metric"><div class="metric-label"><i class="fas fa-spinner"></i> Dalam pengerjaan</div><div class="metric-val amber">${dalamPengerjaan}</div></div>
+                    <div class="metric"><div class="metric-label"><i class="fas fa-box-open"></i> Siap diambil</div><div class="metric-val green">${siapDiambil}</div></div>
+                    <div class="metric"><div class="metric-label"><i class="fas fa-money-bill-wave"></i> Total Omzet</div><div class="metric-val">Rp ${totalOmzet.toLocaleString()}</div></div>
+                </div>
+                <div class="card"><div class="card-header"><span class="card-title">Servis Terbaru</span><button class="btn btn-sm" onclick="navigateTo('servis')">Lihat semua</button></div>
+                <table><thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
+                    ${dataServis.slice(0,5).map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${s.estimasi.toLocaleString()}</td></tr>`).join('')}
+                    ${dataServis.length === 0 ? '<tr><td colspan="5" class="empty-state">Belum ada data servis</td></tr>' : ''}
+                </tbody></table></div>
+            </div>
+        `;
+    }
+
+    function renderServis() {
+        return `
+            <div class="topbar"><span class="topbar-title"><i class="fas fa-screwdriver-wrench"></i> Data Servis</span><button class="btn btn-primary btn-sm" onclick="openModal('modal-new-servis')"><i class="fas fa-plus"></i> Servis Baru</button></div>
+            <div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Keluhan</th><th>Status</th><th>Estimasi</th><th>Aksi</th></tr></thead><tbody>
+                ${dataServis.map(s => `<tr>
+                    <td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${s.keluhan || '-'}</td>
+                    <td>${getStatusLabel(s.status)}</td><td>Rp ${s.estimasi.toLocaleString()}</td>
+                    <td><select onchange="ubahStatusServis('${s.id}', this.value)" style="padding:4px;font-size:12px">
+                        <option value="waiting" ${s.status==='waiting'?'selected':''}>Menunggu</option>
+                        <option value="diag" ${s.status==='diag'?'selected':''}>Diagnosa</option>
+                        <option value="approval" ${s.status==='approval'?'selected':''}>Persetujuan</option>
+                        <option value="repair" ${s.status==='repair'?'selected':''}>Perbaikan</option>
+                        <option value="qc" ${s.status==='qc'?'selected':''}>QC</option>
+                        <option value="done" ${s.status==='done'?'selected':''}>Siap Diambil</option>
+                        <option value="taken" ${s.status==='taken'?'selected':''}>Sudah Diambil</option>
+                    </select></td>
+                </tr>`).join('')}
+                ${dataServis.length === 0 ? '<tr><td colspan="7" class="empty-state">Tidak ada data</td></tr>' : ''}
+            </tbody></table></div></div>
+        `;
+    }
+
+    function renderAntrian() {
+        const antrian = dataServis.filter(s => !['done','taken','cancel'].includes(s.status));
+        return `
+            <div class="topbar"><span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span></div>
+            <div class="content"><div class="card"><table><thead><tr><th>No</th><th>Pelanggan</th><th>Device</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
+                ${antrian.map((s,idx) => `<tr><td>${idx+1}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${s.estimasi.toLocaleString()}</td></tr>`).join('')}
+            </tbody></table></div></div>
+        `;
+    }
+
+    function renderTeknisi() {
+        return `<div class="topbar"><span class="topbar-title">Teknisi & Tugas</span></div><div class="content"><div class="card"><h4>Job List Teknisi</h4><ul>${dataServis.filter(s => s.status==='repair').map(s => `<li>${s.device} - ${s.nama} (ID: ${s.id})</li>`).join('')||'<li>Tidak ada job aktif</li>'}</ul></div></div>`;
+    }
+
+    function renderQC() {
+        const qcList = dataServis.filter(s => s.status === 'repair');
+        return `<div class="topbar"><span class="topbar-title">Quality Control</span></div><div class="content"><div class="card"><table><thead><tr><th>ID Servis</th><th>Perangkat</th><th>Aksi QC</th></tr></thead><tbody>${qcList.map(s => `<tr><td>${s.id}</td><td>${s.device}</td><td><button class="btn btn-sm btn-success" onclick="ubahStatusServis('${s.id}','done')">Lulus QC</button></td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+
+    function renderKasir() {
+        const tagihan = dataServis.filter(s => s.status === 'done');
+        return `<div class="topbar"><span class="topbar-title">Kasir & Pembayaran</span></div><div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Total</th><th>Aksi</th></tr></thead><tbody>${tagihan.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>Rp ${s.estimasi.toLocaleString()}</td><td><button class="btn btn-primary btn-sm" onclick="bayarServis('${s.id}', ${s.estimasi})">Bayar</button></td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+
+    window.bayarServis = function(id, nominal) {
+        if(confirm(`Konfirmasi pembayaran Rp ${nominal.toLocaleString()}?`)) {
+            dataPembayaran.push({ id, tanggal: new Date().toISOString(), nominal, metode: "Tunai" });
+            ubahStatusServis(id, 'taken');
+            alert("Pembayaran berhasil");
+            renderCurrentPage();
+        }
+    };
+
+    function renderStok() {
+        return `<div class="topbar"><span class="topbar-title">Stok Sparepart</span><button class="btn btn-primary btn-sm" onclick="tambahStokDemo()">+ Tambah Stok</button></div>
+        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>Stok</th><th>Min Stok</th><th>Status</th></tr></thead><tbody>${dataSparepart.map(p => `<tr><td>${p.nama}</td><td>${p.stok}</td><td>${p.minStok}</td><td class="${p.stok <= p.minStok ? 'stock-low' : 'stock-ok'}">${p.stok <= p.minStok ? '⚠️ Stok Menipis' : 'Aman'}</td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+    window.tambahStokDemo = function() { alert("Fitur tambah stok (demo)"); };
+
+    function renderGaransi() {
+        const garansiList = dataServis.filter(s => s.status === 'taken' && new Date(s.tglMasuk) > new Date(Date.now() - 90*86400000));
+        return `<div class="topbar"><span class="topbar-title">Garansi Servis (90 hari)</span></div><div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Tanggal Servis</th></tr></thead><tbody>${garansiList.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${s.tglMasuk}</td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+
+    function renderLaporan() {
+        const totalServis = dataServis.length;
+        const selesai = dataServis.filter(s => s.status === 'taken').length;
+        const pendapatan = dataPembayaran.reduce((sum,p) => sum + p.nominal, 0);
+        return `<div class="topbar"><span class="topbar-title">Laporan Keuangan</span></div><div class="content"><div class="card"><p>Total Servis: ${totalServis}</p><p>Servis Selesai: ${selesai}</p><p>Total Pendapatan: Rp ${pendapatan.toLocaleString()}</p><p>Rata-rata per servis: Rp ${(pendapatan/(selesai||1)).toLocaleString()}</p></div></div>`;
+    }
+
+    function renderPelanggan() {
+        const unique = [...new Map(dataServis.map(s => [s.nama, s])).values()];
+        return `<div class="topbar"><span class="topbar-title">Data Pelanggan</span></div><div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>No WhatsApp</th><th>Perangkat Terakhir</th></tr></thead><tbody>${unique.map(p => `<tr><td>${p.nama}</td><td>${p.wa || '-'}</td><td>${p.device}</td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+
+    // Routing
+    let currentPage = 'dashboard';
+    function renderCurrentPage() {
+        const pageMap = {
+            dashboard: renderDashboard, antrian: renderAntrian, servis: renderServis, teknisi: renderTeknisi,
+            qc: renderQC, kasir: renderKasir, stok: renderStok, garansi: renderGaransi, laporan: renderLaporan, pelanggan: renderPelanggan
+        };
+        const container = document.getElementById(`page-${currentPage}`);
+        if(container && pageMap[currentPage]) container.innerHTML = pageMap[currentPage]();
+    }
+
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+        const target = document.getElementById(`page-${pageId}`);
+        if(target) target.style.display = 'block';
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            if(item.getAttribute('data-page') === pageId) item.classList.add('active');
+        });
+        currentPage = pageId;
+        renderCurrentPage();
+    }
+
+    window.navigateTo = navigateTo;
+    window.openModal = (id) => document.getElementById(id).style.display = 'flex';
+    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+    window.tambahServisBaru = tambahServisBaru;
+    window.ubahStatusServis = ubahStatusServis;
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => navigateTo(item.getAttribute('data-page')));
+    });
+
+    loadData();
+    navigateTo('dashboard');
+</script>
+</body>
+</html>
