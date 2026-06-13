@@ -30,7 +30,7 @@
         }
 
         body {
-            font-family: var(--font-sans);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 14px;
             color: var(--color-text-primary);
             background: var(--color-background-tertiary);
@@ -45,8 +45,8 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 240px;
-            min-width: 240px;
+            width: 260px;
+            min-width: 260px;
             background: var(--color-background-primary);
             border-right: 1px solid var(--color-border-tertiary);
             display: flex;
@@ -97,6 +97,7 @@
             font-size: 13px;
             color: var(--color-text-secondary);
             transition: all 0.15s;
+            border-radius: 0px;
         }
 
         .nav-item:hover {
@@ -200,6 +201,12 @@
             background: #1D9E75;
             color: white;
             border-color: #1D9E75;
+        }
+
+        .btn-warning {
+            background: #BA7517;
+            color: white;
+            border-color: #BA7517;
         }
 
         .content {
@@ -363,6 +370,32 @@
             font-size: 13px;
         }
 
+        .settings-group {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border-tertiary);
+        }
+        .settings-group h3 {
+            font-size: 16px;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+        }
+        .settings-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .info-text {
+            background: #E8F0FE;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #185FA5;
+            margin-top: 10px;
+        }
+
         @media (max-width: 1000px) {
             .grid-4, .grid-2 { grid-template-columns: 1fr; gap: 12px; }
             .sidebar { width: 200px; min-width: 200px; }
@@ -389,6 +422,8 @@
             color: white;
             border-color: #185FA5;
         }
+        .stock-low { color: #E24B4A; font-weight: 600; }
+        .stock-ok { color: #1D9E75; }
     </style>
 </head>
 <body>
@@ -416,6 +451,7 @@
             <div class="nav-item" data-page="garansi"><i class="fas fa-shield-alt"></i> Garansi</div>
             <div class="nav-item" data-page="laporan"><i class="fas fa-chart-line"></i> Laporan</div>
             <div class="nav-item" data-page="pelanggan"><i class="fas fa-users"></i> Pelanggan</div>
+            <div class="nav-item" data-page="pengaturan"><i class="fas fa-cog"></i> Pengaturan</div>
         </div>
     </div>
 
@@ -430,6 +466,7 @@
         <div id="page-garansi" class="page-content" style="display:none"></div>
         <div id="page-laporan" class="page-content" style="display:none"></div>
         <div id="page-pelanggan" class="page-content" style="display:none"></div>
+        <div id="page-pengaturan" class="page-content" style="display:none"></div>
     </div>
 
     <!-- Modal Tambah Servis -->
@@ -444,60 +481,94 @@
             <div style="display:flex; gap:10px; justify-content:flex-end"><button class="btn" onclick="closeModal('modal-new-servis')">Batal</button><button class="btn btn-primary" onclick="tambahServisBaru()">Simpan</button></div>
         </div>
     </div>
+
+    <!-- Modal Import -->
+    <div id="modal-import" class="modal-overlay" style="display:none">
+        <div class="modal">
+            <div class="modal-header"><span class="modal-title"><i class="fas fa-database"></i> Import Database</span><button class="close-btn" onclick="closeModal('modal-import')">&times;</button></div>
+            <div class="form-group"><label class="form-label">Pilih file JSON</label><input type="file" id="import-file" accept=".json"></div>
+            <div class="info-text"><i class="fas fa-info-circle"></i> File harus berformat JSON dari hasil export ServisHP Pro.</div>
+            <div style="display:flex; gap:10px; justify-content:flex-end"><button class="btn" onclick="closeModal('modal-import')">Batal</button><button class="btn btn-primary" onclick="importDatabase()">Import</button></div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Data utama
+    // ==================== DATA STRUCTURE ====================
     let dataServis = [];
-    let dataSparepart = [
-        { id: 1, nama: "LCD iPhone 14 Pro", stok: 5, minStok: 2, harga: 1800000 },
-        { id: 2, nama: "Baterai Samsung S23", stok: 3, minStok: 2, harga: 450000 },
-        { id: 3, nama: "Charging Port", stok: 8, minStok: 3, harga: 120000 }
-    ];
+    let dataSparepart = [];
     let dataPelanggan = [];
     let dataPembayaran = [];
 
-    // Load dari localStorage
-    function loadData() {
-        const savedServis = localStorage.getItem('servishp_servis');
-        if(savedServis) dataServis = JSON.parse(savedServis);
-        else {
-            dataServis = [
-                { id: "SRV001", nama: "Andi N.", wa: "081234567", device: "iPhone 14 Pro", keluhan: "Layar retak", status: "repair", estimasi: 850000, tglMasuk: "2026-06-11", teknisi: "Budi" },
-                { id: "SRV002", nama: "Sari R.", wa: "081345678", device: "Samsung S23", keluhan: "Batre cepat habis", status: "approval", estimasi: 350000, tglMasuk: "2026-06-11", teknisi: "Andre" },
-                { id: "SRV003", nama: "Dwi W.", wa: "081456789", device: "Redmi Note 12", keluhan: "Tidak bisa nyala", status: "done", estimasi: 180000, tglMasuk: "2026-06-10", teknisi: "Budi" }
-            ];
-        }
-        const savedPelanggan = localStorage.getItem('servishp_pelanggan');
-        if(savedPelanggan) dataPelanggan = JSON.parse(savedPelanggan);
-        else dataPelanggan = dataServis.map(s => ({ nama: s.nama, wa: s.wa, device: s.device, totalServis: 1 }));
-        updateBadges();
+    // ==================== INITIAL DATA ====================
+    function initDefaultData() {
+        dataServis = [
+            { id: "SRV001", nama: "Andi N.", wa: "081234567", device: "iPhone 14 Pro", keluhan: "Layar retak", status: "repair", estimasi: 850000, tglMasuk: "2026-06-11", teknisi: "Budi" },
+            { id: "SRV002", nama: "Sari R.", wa: "081345678", device: "Samsung S23", keluhan: "Batre cepat habis", status: "approval", estimasi: 350000, tglMasuk: "2026-06-11", teknisi: "Andre" },
+            { id: "SRV003", nama: "Dwi W.", wa: "081456789", device: "Redmi Note 12", keluhan: "Tidak bisa nyala", status: "done", estimasi: 180000, tglMasuk: "2026-06-10", teknisi: "Budi" }
+        ];
+        dataSparepart = [
+            { id: 1, nama: "LCD iPhone 14 Pro", stok: 5, minStok: 2, harga: 1800000 },
+            { id: 2, nama: "Baterai Samsung S23", stok: 3, minStok: 2, harga: 450000 },
+            { id: 3, nama: "Charging Port", stok: 8, minStok: 3, harga: 120000 }
+        ];
+        dataPembayaran = [];
+        dataPelanggan = dataServis.map(s => ({ nama: s.nama, wa: s.wa, device: s.device, totalServis: 1 }));
     }
 
-    function saveServis() {
-        localStorage.setItem('servishp_servis', JSON.stringify(dataServis));
+    // ==================== LOCALSTORAGE ====================
+    function loadData() {
+        const saved = localStorage.getItem('servishp_full_db');
+        if(saved) {
+            try {
+                const db = JSON.parse(saved);
+                dataServis = db.servis || [];
+                dataSparepart = db.sparepart || [];
+                dataPembayaran = db.pembayaran || [];
+                dataPelanggan = db.pelanggan || [];
+                if(dataServis.length === 0) initDefaultData();
+            } catch(e) { initDefaultData(); }
+        } else {
+            initDefaultData();
+        }
+        updateBadges();
+        saveAllData();
+    }
+
+    function saveAllData() {
+        const db = {
+            servis: dataServis,
+            sparepart: dataSparepart,
+            pembayaran: dataPembayaran,
+            pelanggan: dataPelanggan,
+            lastUpdate: new Date().toISOString()
+        };
+        localStorage.setItem('servishp_full_db', JSON.stringify(db));
         updateBadges();
     }
 
     function updateBadges() {
-        const antrianCount = dataServis.filter(s => s.status === 'waiting' || s.status === 'diag' || s.status === 'approval' || s.status === 'repair').length;
-        document.getElementById('badge-antrian') && (document.getElementById('badge-antrian').innerText = antrianCount);
-        document.getElementById('badge-servis') && (document.getElementById('badge-servis').innerText = dataServis.length);
+        const antrianCount = dataServis.filter(s => ['waiting','diag','approval','repair','qc'].includes(s.status)).length;
+        const badgeAntrian = document.getElementById('badge-antrian');
+        const badgeServis = document.getElementById('badge-servis');
+        if(badgeAntrian) badgeAntrian.innerText = antrianCount;
+        if(badgeServis) badgeServis.innerText = dataServis.length;
     }
 
+    // ==================== CRUD SERVIS ====================
     function tambahServisBaru() {
         const nama = document.getElementById('new-nama').value;
         const wa = document.getElementById('new-wa').value;
         const device = document.getElementById('new-device').value;
         const keluhan = document.getElementById('new-keluhan').value;
-        const biaya = parseInt(document.getElementById('new-biaya').value);
+        const biaya = parseInt(document.getElementById('new-biaya').value) || 0;
         if(!nama || !device) { alert("Isi nama dan perangkat"); return; }
         const newId = "SRV" + (dataServis.length + 1001);
         const newServis = {
-            id: newId, nama, wa, device, keluhan, status: "waiting", estimasi: biaya || 0, tglMasuk: new Date().toISOString().slice(0,10), teknisi: "-"
+            id: newId, nama, wa, device, keluhan, status: "waiting", estimasi: biaya, tglMasuk: new Date().toISOString().slice(0,10), teknisi: "-"
         };
         dataServis.push(newServis);
-        saveServis();
+        saveAllData();
         closeModal('modal-new-servis');
         document.getElementById('new-nama').value = '';
         document.getElementById('new-wa').value = '';
@@ -510,7 +581,16 @@
 
     function ubahStatusServis(id, statusBaru) {
         const servis = dataServis.find(s => s.id === id);
-        if(servis) { servis.status = statusBaru; saveServis(); renderCurrentPage(); }
+        if(servis) { servis.status = statusBaru; saveAllData(); renderCurrentPage(); }
+    }
+
+    function bayarServis(id, nominal) {
+        if(confirm(`Konfirmasi pembayaran Rp ${nominal.toLocaleString()}?`)) {
+            dataPembayaran.push({ id, tanggal: new Date().toISOString(), nominal, metode: "Tunai" });
+            ubahStatusServis(id, 'taken');
+            alert("Pembayaran berhasil");
+            renderCurrentPage();
+        }
     }
 
     function getStatusLabel(status) {
@@ -519,7 +599,66 @@
         return `<span class="status-badge ${kelas[status] || 's-waiting'}">${map[status] || status}</span>`;
     }
 
-    // Render halaman
+    // ==================== EXPORT IMPORT ====================
+    function exportDatabase() {
+        const db = {
+            servis: dataServis,
+            sparepart: dataSparepart,
+            pembayaran: dataPembayaran,
+            pelanggan: dataPelanggan,
+            exportDate: new Date().toISOString(),
+            version: "1.0"
+        };
+        const jsonStr = JSON.stringify(db, null, 2);
+        const blob = new Blob([jsonStr], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `servishp_backup_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert("Database berhasil diekspor!");
+    }
+
+    function importDatabase() {
+        const fileInput = document.getElementById('import-file');
+        if(!fileInput.files || fileInput.files.length === 0) {
+            alert("Pilih file JSON terlebih dahulu!");
+            return;
+        }
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if(imported.servis) dataServis = imported.servis;
+                if(imported.sparepart) dataSparepart = imported.sparepart;
+                if(imported.pembayaran) dataPembayaran = imported.pembayaran;
+                if(imported.pelanggan) dataPelanggan = imported.pelanggan;
+                saveAllData();
+                closeModal('modal-import');
+                fileInput.value = '';
+                renderCurrentPage();
+                alert("Import berhasil! Data telah diperbarui.");
+            } catch(err) {
+                alert("File tidak valid! Pastikan file adalah hasil export dari ServisHP Pro.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function resetDatabase() {
+        if(confirm("PERINGATAN! Ini akan menghapus SEMUA data dan mengembalikan ke data awal. Lanjutkan?")) {
+            initDefaultData();
+            saveAllData();
+            renderCurrentPage();
+            alert("Database telah direset ke data awal.");
+        }
+    }
+
+    // ==================== RENDER PAGES ====================
     function renderDashboard() {
         const masukHariIni = dataServis.filter(s => s.tglMasuk === new Date().toISOString().slice(0,10)).length;
         const dalamPengerjaan = dataServis.filter(s => ['waiting','diag','approval','repair','qc'].includes(s.status)).length;
@@ -567,66 +706,112 @@
 
     function renderAntrian() {
         const antrian = dataServis.filter(s => !['done','taken','cancel'].includes(s.status));
-        return `
-            <div class="topbar"><span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span></div>
-            <div class="content"><div class="card"><table><thead><tr><th>No</th><th>Pelanggan</th><th>Device</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
-                ${antrian.map((s,idx) => `<tr><td>${idx+1}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${s.estimasi.toLocaleString()}</td></tr>`).join('')}
-            </tbody></table></div></div>
-        `;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>No</th><th>Pelanggan</th><th>Device</th><th>Status</th><th>Estimasi</th></tr></thead><tbody>
+            ${antrian.map((s,idx) => `<tr><td>${idx+1}</td><td>${s.nama}</td><td>${s.device}</td><td>${getStatusLabel(s.status)}</td><td>Rp ${s.estimasi.toLocaleString()}</td></tr>`).join('')}
+            ${antrian.length === 0 ? '<tr><td colspan="5" class="empty-state">Tidak ada antrian</td></tr>' : ''}
+        </tbody></table></div></div>`;
     }
 
     function renderTeknisi() {
-        return `<div class="topbar"><span class="topbar-title">Teknisi & Tugas</span></div><div class="content"><div class="card"><h4>Job List Teknisi</h4><ul>${dataServis.filter(s => s.status==='repair').map(s => `<li>${s.device} - ${s.nama} (ID: ${s.id})</li>`).join('')||'<li>Tidak ada job aktif</li>'}</ul></div></div>`;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-user-cog"></i> Teknisi & Tugas</span></div>
+        <div class="content"><div class="card"><h4><i class="fas fa-tasks"></i> Job List Aktif</h4><ul>${dataServis.filter(s => s.status==='repair').map(s => `<li><strong>${s.device}</strong> - ${s.nama} (ID: ${s.id})</li>`).join('')||'<li>Tidak ada job aktif</li>'}</ul></div></div>`;
     }
 
     function renderQC() {
         const qcList = dataServis.filter(s => s.status === 'repair');
-        return `<div class="topbar"><span class="topbar-title">Quality Control</span></div><div class="content"><div class="card"><table><thead><tr><th>ID Servis</th><th>Perangkat</th><th>Aksi QC</th></tr></thead><tbody>${qcList.map(s => `<tr><td>${s.id}</td><td>${s.device}</td><td><button class="btn btn-sm btn-success" onclick="ubahStatusServis('${s.id}','done')">Lulus QC</button></td></tr>`).join('')}</tbody></table></div></div>`;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-clipboard-list"></i> Quality Control</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>ID Servis</th><th>Perangkat</th><th>Aksi QC</th></tr></thead><tbody>
+            ${qcList.map(s => `<tr><td>${s.id}</td><td>${s.device}</td><td><button class="btn btn-sm btn-success" onclick="ubahStatusServis('${s.id}','done')"><i class="fas fa-check"></i> Lulus QC</button></td></tr>`).join('')}
+            ${qcList.length === 0 ? '<tr><td colspan="3" class="empty-state">Tidak ada servis menunggu QC</td></tr>' : ''}
+        </tbody></table></div></div>`;
     }
 
     function renderKasir() {
         const tagihan = dataServis.filter(s => s.status === 'done');
-        return `<div class="topbar"><span class="topbar-title">Kasir & Pembayaran</span></div><div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Total</th><th>Aksi</th></tr></thead><tbody>${tagihan.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>Rp ${s.estimasi.toLocaleString()}</td><td><button class="btn btn-primary btn-sm" onclick="bayarServis('${s.id}', ${s.estimasi})">Bayar</button></td></tr>`).join('')}</tbody></table></div></div>`;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-cash-register"></i> Kasir & Pembayaran</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Total</th><th>Aksi</th></tr></thead><tbody>
+            ${tagihan.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>Rp ${s.estimasi.toLocaleString()}</td><td><button class="btn btn-primary btn-sm" onclick="bayarServis('${s.id}', ${s.estimasi})"><i class="fas fa-money-bill"></i> Bayar</button></td></tr>`).join('')}
+            ${tagihan.length === 0 ? '<td><td colspan="4" class="empty-state">Tidak ada tagihan</td></tr>' : ''}
+        </tbody></table></div></div>`;
     }
-
-    window.bayarServis = function(id, nominal) {
-        if(confirm(`Konfirmasi pembayaran Rp ${nominal.toLocaleString()}?`)) {
-            dataPembayaran.push({ id, tanggal: new Date().toISOString(), nominal, metode: "Tunai" });
-            ubahStatusServis(id, 'taken');
-            alert("Pembayaran berhasil");
-            renderCurrentPage();
-        }
-    };
 
     function renderStok() {
-        return `<div class="topbar"><span class="topbar-title">Stok Sparepart</span><button class="btn btn-primary btn-sm" onclick="tambahStokDemo()">+ Tambah Stok</button></div>
-        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>Stok</th><th>Min Stok</th><th>Status</th></tr></thead><tbody>${dataSparepart.map(p => `<tr><td>${p.nama}</td><td>${p.stok}</td><td>${p.minStok}</td><td class="${p.stok <= p.minStok ? 'stock-low' : 'stock-ok'}">${p.stok <= p.minStok ? '⚠️ Stok Menipis' : 'Aman'}</td></tr>`).join('')}</tbody></table></div></div>`;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-boxes"></i> Stok Sparepart</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>Stok</th><th>Min Stok</th><th>Status</th></tr></thead><tbody>
+            ${dataSparepart.map(p => `<tr><td>${p.nama}</td><td>${p.stok}</td><td>${p.minStok}</td><td class="${p.stok <= p.minStok ? 'stock-low' : 'stock-ok'}">${p.stok <= p.minStok ? '⚠️ Stok Menipis' : '✓ Aman'}</td></tr>`).join('')}
+        </tbody></table></div></div>`;
     }
-    window.tambahStokDemo = function() { alert("Fitur tambah stok (demo)"); };
 
     function renderGaransi() {
-        const garansiList = dataServis.filter(s => s.status === 'taken' && new Date(s.tglMasuk) > new Date(Date.now() - 90*86400000));
-        return `<div class="topbar"><span class="topbar-title">Garansi Servis (90 hari)</span></div><div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Tanggal Servis</th></tr></thead><tbody>${garansiList.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${s.tglMasuk}</td></tr>`).join('')}</tbody></table></div></div>`;
+        const tigaBulanLalu = new Date(Date.now() - 90*86400000);
+        const garansiList = dataServis.filter(s => s.status === 'taken' && new Date(s.tglMasuk) > tigaBulanLalu);
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-shield-alt"></i> Garansi Servis (90 hari)</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Device</th><th>Tanggal Servis</th></tr></thead><tbody>
+            ${garansiList.map(s => `<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.device}</td><td>${s.tglMasuk}</td></tr>`).join('')}
+            ${garansiList.length === 0 ? '<tr><td colspan="4" class="empty-state">Tidak ada garansi aktif</td></tr>' : ''}
+        </tbody></table></div></div>`;
     }
 
     function renderLaporan() {
         const totalServis = dataServis.length;
         const selesai = dataServis.filter(s => s.status === 'taken').length;
         const pendapatan = dataPembayaran.reduce((sum,p) => sum + p.nominal, 0);
-        return `<div class="topbar"><span class="topbar-title">Laporan Keuangan</span></div><div class="content"><div class="card"><p>Total Servis: ${totalServis}</p><p>Servis Selesai: ${selesai}</p><p>Total Pendapatan: Rp ${pendapatan.toLocaleString()}</p><p>Rata-rata per servis: Rp ${(pendapatan/(selesai||1)).toLocaleString()}</p></div></div>`;
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-chart-line"></i> Laporan Keuangan</span></div>
+        <div class="content"><div class="card"><div class="settings-group"><h3>Ringkasan</h3><p><strong>Total Servis:</strong> ${totalServis}</p><p><strong>Servis Selesai:</strong> ${selesai}</p><p><strong>Total Pendapatan:</strong> Rp ${pendapatan.toLocaleString()}</p><p><strong>Rata-rata per servis:</strong> Rp ${(pendapatan/(selesai||1)).toLocaleString()}</p></div></div></div>`;
     }
 
     function renderPelanggan() {
-        const unique = [...new Map(dataServis.map(s => [s.nama, s])).values()];
-        return `<div class="topbar"><span class="topbar-title">Data Pelanggan</span></div><div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>No WhatsApp</th><th>Perangkat Terakhir</th></tr></thead><tbody>${unique.map(p => `<tr><td>${p.nama}</td><td>${p.wa || '-'}</td><td>${p.device}</td></tr>`).join('')}</tbody></table></div></div>`;
+        const uniqueMap = new Map();
+        dataServis.forEach(s => { if(!uniqueMap.has(s.nama)) uniqueMap.set(s.nama, s); });
+        const unique = Array.from(uniqueMap.values());
+        return `<div class="topbar"><span class="topbar-title"><i class="fas fa-users"></i> Data Pelanggan</span></div>
+        <div class="content"><div class="card"><table><thead><tr><th>Nama</th><th>No WhatsApp</th><th>Perangkat Terakhir</th></tr></thead><tbody>
+            ${unique.map(p => `<tr><td>${p.nama}</td><td>${p.wa || '-'}</td><td>${p.device}</td></tr>`).join('')}
+            ${unique.length === 0 ? '<tr><td colspan="3" class="empty-state">Belum ada pelanggan</td></tr>' : ''}
+        </tbody></table></div></div>`;
     }
 
-    // Routing
+    function renderPengaturan() {
+        return `
+            <div class="topbar"><span class="topbar-title"><i class="fas fa-cog"></i> Pengaturan & Database</span></div>
+            <div class="content">
+                <div class="card">
+                    <div class="settings-group">
+                        <h3><i class="fas fa-database"></i> Backup & Restore Database</h3>
+                        <div class="settings-row">
+                            <button class="btn btn-primary" onclick="exportDatabase()"><i class="fas fa-download"></i> Export Database (JSON)</button>
+                            <button class="btn btn-success" onclick="openModal('modal-import')"><i class="fas fa-upload"></i> Import Database</button>
+                        </div>
+                        <div class="info-text"><i class="fas fa-info-circle"></i> Export akan menyimpan semua data (servis, sparepart, pembayaran, pelanggan) ke file JSON. Gunakan Import untuk memulihkan data dari file backup.</div>
+                    </div>
+                    <div class="settings-group">
+                        <h3><i class="fas fa-trash-alt"></i> Reset Data</h3>
+                        <div class="settings-row">
+                            <button class="btn btn-danger" onclick="resetDatabase()"><i class="fas fa-exclamation-triangle"></i> Reset ke Data Awal</button>
+                        </div>
+                        <div class="info-text"><i class="fas fa-exclamation-circle"></i> Peringatan: Reset akan menghapus SEMUA data yang tersimpan dan mengembalikan ke data contoh. Tindakan ini tidak dapat dibatalkan!</div>
+                    </div>
+                    <div class="settings-group">
+                        <h3><i class="fas fa-chart-simple"></i> Statistik Database</h3>
+                        <p><strong>Total Servis:</strong> ${dataServis.length}</p>
+                        <p><strong>Total Sparepart:</strong> ${dataSparepart.length}</p>
+                        <p><strong>Total Transaksi:</strong> ${dataPembayaran.length}</p>
+                        <p><strong>Total Pelanggan:</strong> ${new Set(dataServis.map(s=>s.nama)).size}</p>
+                        <p><strong>Terakhir Update:</strong> ${new Date().toLocaleString()}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==================== ROUTING ====================
     let currentPage = 'dashboard';
     function renderCurrentPage() {
         const pageMap = {
             dashboard: renderDashboard, antrian: renderAntrian, servis: renderServis, teknisi: renderTeknisi,
-            qc: renderQC, kasir: renderKasir, stok: renderStok, garansi: renderGaransi, laporan: renderLaporan, pelanggan: renderPelanggan
+            qc: renderQC, kasir: renderKasir, stok: renderStok, garansi: renderGaransi, 
+            laporan: renderLaporan, pelanggan: renderPelanggan, pengaturan: renderPengaturan
         };
         const container = document.getElementById(`page-${currentPage}`);
         if(container && pageMap[currentPage]) container.innerHTML = pageMap[currentPage]();
@@ -644,11 +829,16 @@
         renderCurrentPage();
     }
 
+    // ==================== GLOBAL FUNCTIONS & INIT ====================
     window.navigateTo = navigateTo;
-    window.openModal = (id) => document.getElementById(id).style.display = 'flex';
-    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+    window.openModal = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'flex'; };
+    window.closeModal = (id) => { const el = document.getElementById(id); if(el) el.style.display = 'none'; };
     window.tambahServisBaru = tambahServisBaru;
     window.ubahStatusServis = ubahStatusServis;
+    window.bayarServis = bayarServis;
+    window.exportDatabase = exportDatabase;
+    window.importDatabase = importDatabase;
+    window.resetDatabase = resetDatabase;
 
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => navigateTo(item.getAttribute('data-page')));
