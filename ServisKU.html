@@ -32,7 +32,6 @@ body {
   line-height: 1.5;
 }
 
-/* ===== LAYOUT ===== */
 .app { display: flex; min-height: 100vh; }
 
 .sidebar {
@@ -58,7 +57,6 @@ body {
   flex-direction: column;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar-logo {
   padding: 1.1rem 1.25rem 1rem;
   border-bottom: 1px solid var(--border);
@@ -123,7 +121,6 @@ body {
   text-align: center;
 }
 
-/* ===== TOPBAR ===== */
 .topbar {
   display: flex;
   align-items: center;
@@ -141,7 +138,6 @@ body {
 .topbar-title { font-size: 16px; font-weight: 700; color: var(--text); }
 .topbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* ===== BUTTONS ===== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -167,10 +163,8 @@ body {
 .btn-sm { padding: 5px 10px; font-size: 12px; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ===== CONTENT ===== */
 .content { padding: 1.5rem; flex: 1; }
 
-/* ===== METRIC CARDS ===== */
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -195,7 +189,6 @@ body {
 .metric-val.blue { color: var(--primary); }
 .metric-sub { font-size: 11px; color: var(--text-sec); }
 
-/* ===== CARD ===== */
 .card {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -214,7 +207,6 @@ body {
 }
 .card-title { font-size: 14px; font-weight: 700; color: var(--text); }
 
-/* ===== TABLE ===== */
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -228,7 +220,6 @@ th { font-weight: 600; font-size: 11px; color: var(--text-sec); text-transform: 
 tr:last-child td { border-bottom: none; }
 tbody tr:hover { background: var(--bg-sec); }
 
-/* ===== STATUS BADGES ===== */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -249,7 +240,6 @@ tbody tr:hover { background: var(--bg-sec); }
 .s-garansi-aktif { background: #E0F5EE; color: #0F6E56; }
 .s-garansi-kadaluarsa { background: #FDE8E8; color: #C23D3D; }
 
-/* ===== FILTER SECTION ===== */
 .filter-section {
   display: flex;
   gap: 10px;
@@ -273,7 +263,6 @@ tbody tr:hover { background: var(--bg-sec); }
   border-color: var(--primary);
 }
 
-/* ===== MODAL ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -317,7 +306,6 @@ tbody tr:hover { background: var(--bg-sec); }
 }
 .close-btn:hover { background: var(--border); color: var(--text); }
 
-/* ===== FORM ===== */
 .form-group { margin-bottom: 1rem; }
 .form-label { font-size: 12px; font-weight: 600; margin-bottom: 5px; display: block; color: var(--text); }
 .required:after { content: " *"; color: var(--danger); }
@@ -340,7 +328,6 @@ input:focus, select:focus, textarea:focus {
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-/* ===== INLINE ELEMENTS ===== */
 .cost-summary {
   background: var(--bg-sec);
   padding: 12px 16px;
@@ -420,9 +407,8 @@ input:focus, select:focus, textarea:focus {
 .empty-state i { font-size: 36px; margin-bottom: 12px; opacity: 0.4; display: block; }
 .empty-state p { font-size: 14px; }
 
-/* ===== CUSTOMER SEARCH ===== */
-.customer-search { position: relative; }
-.customer-results {
+.customer-search, .sparepart-search { position: relative; }
+.customer-results, .search-results {
   position: absolute;
   top: calc(100% + 4px);
   left: 0; right: 0;
@@ -434,7 +420,7 @@ input:focus, select:focus, textarea:focus {
   z-index: 200;
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
-.customer-item {
+.customer-item, .search-item {
   padding: 10px 14px;
   cursor: pointer;
   border-bottom: 1px solid var(--border);
@@ -443,42 +429,9 @@ input:focus, select:focus, textarea:focus {
   align-items: center;
   transition: background 0.15s;
 }
-.customer-item:last-child { border-bottom: none; }
-.customer-item:hover { background: var(--bg-sec); }
-.customer-item .name { font-weight: 600; color: var(--primary); font-size: 13px; }
-.customer-item .wa { font-size: 11px; color: var(--text-sec); margin-top: 2px; }
-.customer-item .count { font-size: 11px; background: var(--primary-light); color: var(--primary); padding: 2px 8px; border-radius: 12px; font-weight: 600; white-space: nowrap; }
+.customer-item:last-child, .search-item:last-child { border-bottom: none; }
+.customer-item:hover, .search-item:hover { background: var(--bg-sec); }
 
-/* ===== SPAREPART SEARCH ===== */
-.sparepart-search { position: relative; }
-.search-results {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0; right: 0;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 200;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-.search-item {
-  padding: 10px 14px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background 0.15s;
-}
-.search-item:last-child { border-bottom: none; }
-.search-item:hover { background: var(--bg-sec); }
-.search-item .name { font-weight: 500; font-size: 13px; }
-.search-item .price { color: var(--primary); font-size: 12px; font-weight: 600; }
-.search-item .stok-info { font-size: 11px; color: var(--text-sec); }
-
-/* ===== SELECTED SPAREPARTS ===== */
 .sparepart-list-item {
   background: var(--bg-sec);
   padding: 10px 12px;
@@ -491,70 +444,7 @@ input:focus, select:focus, textarea:focus {
   gap: 8px;
   border: 1px solid var(--border);
 }
-.sparepart-list-item .info { flex: 1; min-width: 0; }
-.sparepart-list-item .name { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sparepart-list-item .price { font-size: 12px; color: var(--text-sec); }
-.sparepart-list-item .qty {
-  width: 70px;
-  padding: 5px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  text-align: center;
-  font-size: 13px;
-}
-.booking-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #FFF7ED;
-  color: #B45A0A;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 10px;
-  margin-left: 8px;
-  border: 1px solid #FDDCAB;
-}
 
-/* ===== LOG ===== */
-.log-entry {
-  background: var(--bg-sec);
-  border-left: 3px solid var(--primary);
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  border-radius: 0 8px 8px 0;
-  font-size: 12px;
-}
-.log-time { color: var(--text-sec); font-size: 10px; margin-bottom: 3px; }
-.log-action { font-weight: 700; color: var(--primary); }
-.log-user {
-  display: inline-block;
-  background: var(--primary);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 10px;
-  margin-top: 4px;
-}
-
-/* ===== STOK ===== */
-.stock-low { color: var(--danger); font-weight: 700; }
-.stock-ok { color: #1D9E75; font-weight: 600; }
-
-/* ===== QUICK ACTION ITEMS ===== */
-.quick-action {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-.quick-action:last-child { border-bottom: none; }
-.quick-action-info { flex: 1; min-width: 0; }
-.quick-action-name { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.quick-action-sub { font-size: 11px; color: var(--text-sec); }
-
-/* ===== MOBILE ===== */
 .mobile-menu-toggle {
   display: none;
   position: fixed;
@@ -602,13 +492,10 @@ input:focus, select:focus, textarea:focus {
   .grid-4 { grid-template-columns: 1fr; }
 }
 
-/* ===== MISC ===== */
 .divider { height: 1px; background: var(--border); margin: 12px 0; }
 .text-muted { color: var(--text-sec); }
 .text-small { font-size: 12px; }
 .fw-600 { font-weight: 600; }
-.success-highlight { border-color: var(--success) !important; background: #F0FDF4 !important; transition: all 0.3s; }
-.flex-center { display: flex; align-items: center; gap: 8px; }
 </style>
 </head>
 <body>
@@ -663,9 +550,7 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- ===== MODALS ===== -->
-
-<!-- Modal Servis Baru -->
+<!-- MODALS -->
 <div id="modal-new-servis" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
@@ -678,22 +563,15 @@ input:focus, select:focus, textarea:focus {
         <input type="text" id="search-customer" placeholder="Ketik nama pelanggan..." autocomplete="off" oninput="searchCustomer()">
         <div id="customer-results" class="customer-results" style="display:none"></div>
       </div>
-      <div class="info-text" style="margin-top:8px">
-        <i class="fas fa-info-circle"></i> Ketik nama pelanggan lama untuk mengisi otomatis, atau ketik nama baru langsung.
-      </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label required">No. WhatsApp</label>
-        <input type="text" id="new-wa" placeholder="0812xxxx" onblur="checkDuplicateWA()">
-        <div id="wa-warning" class="warning-text" style="display:none; margin-top:5px">
-          <i class="fas fa-exclamation-triangle"></i> Nomor ini terdaftar atas nama <strong><span id="existing-name"></span></strong>
-        </div>
+        <input type="text" id="new-wa" placeholder="0812xxxx">
       </div>
       <div class="form-group">
         <label class="form-label required">Perangkat</label>
-        <input type="text" id="new-device" placeholder="Contoh: iPhone 14 Pro" list="device-history">
-        <datalist id="device-history"></datalist>
+        <input type="text" id="new-device" placeholder="Contoh: iPhone 14 Pro">
       </div>
     </div>
     <div class="form-group">
@@ -711,36 +589,12 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- Modal Biaya Servis (DENGAN OPSI GARANSI) -->
 <div id="modal-biaya-servis" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
       <span><i class="fas fa-calculator"></i> Input Biaya &amp; Sparepart</span>
       <button class="close-btn" onclick="closeModalBiaya()">&times;</button>
     </div>
-    <div class="warning-text" style="margin-bottom:14px">
-      <i class="fas fa-info-circle"></i> <strong>Sistem Booking Stok</strong> — Sparepart yang dipilih akan di-booking dan baru dikurangi setelah servis selesai.
-    </div>
-    
-    <!-- BAGIAN GARANSI (BARU) -->
-    <div class="form-group" style="background: var(--bg-sec); padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 16px;">
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-        <input type="checkbox" id="biaya-garansi-check" onchange="toggleGaransiOptions()" class="w-4 h-4">
-        <label for="biaya-garansi-check" class="form-label" style="margin-bottom: 0;"><i class="fas fa-shield-alt" style="color: #1D9E75;"></i> Berikan Garansi Servis</label>
-      </div>
-      <div id="biaya-garansi-options" style="display: none; margin-left: 24px;">
-        <div class="form-label" style="font-size: 11px;">Durasi Garansi:</div>
-        <div style="display: flex; gap: 16px; margin-top: 6px;">
-          <label><input type="radio" name="biaya-garansi-durasi" value="7"> 7 Hari</label>
-          <label><input type="radio" name="biaya-garansi-durasi" value="14"> 14 Hari</label>
-          <label><input type="radio" name="biaya-garansi-durasi" value="30" checked> 30 Hari</label>
-        </div>
-        <div class="info-text" style="margin-top: 8px; font-size: 11px; padding: 6px 10px;">
-          <i class="fas fa-info-circle"></i> Garansi akan aktif setelah pembayaran lunas dan barang diambil.
-        </div>
-      </div>
-    </div>
-    
     <div class="form-group">
       <label class="form-label">Biaya Servis / Jasa (Rp)</label>
       <input type="number" id="biaya-jasa" value="0" oninput="updateTotal()">
@@ -753,15 +607,10 @@ input:focus, select:focus, textarea:focus {
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label flex-center">Sparepart Terpilih <span class="booking-badge"><i class="fas fa-clock"></i> Booking</span></label>
+      <label class="form-label">Sparepart Terpilih</label>
       <div id="selected-spareparts"></div>
     </div>
     <div class="cost-summary" id="cost-summary">Total Biaya: Rp 0</div>
-    <div id="biaya-warning" class="warning-text" style="display:none"><i class="fas fa-info-circle"></i> Minimal isi biaya jasa atau pilih sparepart!</div>
-    <div class="template-preview">
-      <h4><i class="fab fa-whatsapp"></i> Preview Pesan WhatsApp</h4>
-      <div id="preview-wa" class="preview-content"></div>
-    </div>
     <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px">
       <button class="btn" onclick="closeModalBiaya()">Batal</button>
       <button class="btn btn-success" id="btn-simpan" onclick="simpanApproval()" disabled><i class="fab fa-whatsapp"></i> Simpan &amp; Kirim WA</button>
@@ -769,7 +618,6 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- Modal Selesai -->
 <div id="modal-selesai" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
@@ -780,11 +628,6 @@ input:focus, select:focus, textarea:focus {
       <label class="form-label">Catatan Penyelesaian</label>
       <textarea id="catatan-selesai" rows="3" placeholder="Catatan penyelesaian..."></textarea>
     </div>
-    <div class="payment-detail"><strong>Total: </strong><span id="total-display">Rp 0</span></div>
-    <div class="template-preview">
-      <h4><i class="fab fa-whatsapp"></i> Preview Pesan WhatsApp</h4>
-      <div id="preview-done" class="preview-content"></div>
-    </div>
     <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px">
       <button class="btn" onclick="closeModal('modal-selesai')">Batal</button>
       <button class="btn btn-success" onclick="konfirmasiSelesai()"><i class="fab fa-whatsapp"></i> Selesai &amp; Kurangi Stok</button>
@@ -792,7 +635,6 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- Modal Bayar (DENGAN KONFIRMASI GARANSI) -->
 <div id="modal-bayar" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
@@ -818,16 +660,6 @@ input:focus, select:focus, textarea:focus {
       <input type="number" id="kembalian" readonly style="background:#f5f5f5; font-weight:700;">
     </div>
     <div class="payment-detail"><strong>Tagihan: </strong><span id="tagihan">Rp 0</span></div>
-    
-    <!-- Informasi Garansi yang Akan Diaktifkan -->
-    <div id="garansi-aktivasi-info" class="garansi-info" style="display:none">
-      <i class="fas fa-shield-alt"></i> <strong>Garansi akan diaktifkan</strong> setelah pembayaran dikonfirmasi. Pelanggan akan mendapat garansi servis.
-    </div>
-    
-    <div class="template-preview">
-      <h4><i class="fab fa-whatsapp"></i> Preview Pesan WhatsApp</h4>
-      <div id="preview-bayar" class="preview-content"></div>
-    </div>
     <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px">
       <button class="btn" onclick="closeModal('modal-bayar')">Batal</button>
       <button class="btn btn-success" onclick="prosesBayar()"><i class="fab fa-whatsapp"></i> Bayar &amp; Kirim WA</button>
@@ -835,7 +667,6 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- Modal Tambah Stok -->
 <div id="modal-stok" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
@@ -868,7 +699,6 @@ input:focus, select:focus, textarea:focus {
   </div>
 </div>
 
-<!-- Modal Teknisi -->
 <div id="modal-teknisi" class="modal-overlay" style="display:none">
   <div class="modal">
     <div class="modal-header">
@@ -939,38 +769,9 @@ let selectedId = null;
 let currentSelectedSpareparts = [];
 let currentUser = "admin";
 let selectedCustomerData = null;
-let pengaturan = {
-  namaUsaha: "ServisHP Pro",
-  alamat: "Jl. Contoh No. 1",
-  telepon: "0812-3456-7890",
-  garansiHari: 30,
-  template_approval: "Halo {nama}, perangkat {device} Anda sudah selesai diagnosa.\n✅ Estimasi biaya: Rp {total}\n\n{garansi_text}Mohon konfirmasi persetujuan perbaikan.",
-  template_done: "Halo {nama}, perangkat {device} Anda sudah SELESAI diperbaiki! 🎉\nTotal biaya: Rp {total}\n{garansi_text}Silakan ambil di toko kami.",
-  template_payment: "Halo {nama}, terima kasih telah mempercayakan perbaikan perangkat {device}.\nTotal pembayaran: Rp {total}\nMetode: {metode}\n{garansi_text}Semoga perangkat Anda awet! 😊"
-};
-
-function loadHistory() {
-  try {
-    const saved = localStorage.getItem('deviceHistory');
-    if (saved) {
-      deviceHistory = JSON.parse(saved);
-      updateDeviceDatalist();
-    }
-  } catch(e) {}
-}
-
-function saveToDeviceHistory(device) {
-  if (!device || deviceHistory.includes(device)) return;
-  deviceHistory.unshift(device);
-  if (deviceHistory.length > 20) deviceHistory.pop();
-  try { localStorage.setItem('deviceHistory', JSON.stringify(deviceHistory)); } catch(e) {}
-  updateDeviceDatalist();
-}
-
-function updateDeviceDatalist() {
-  const dl = document.getElementById('device-history');
-  if (dl) dl.innerHTML = deviceHistory.map(d => `<option value="${escapeHtml(d)}">`).join('');
-}
+let currentBiayaServisId = null;
+let currentSelesaiId = null;
+let currentBayarId = null;
 
 // ==================== UTILS ====================
 function escapeHtml(str) {
@@ -1008,9 +809,8 @@ function navigate(page) {
   if (navEl) navEl.classList.add('active');
   currentPage = page;
   renderPage(page);
-  // close mobile sidebar
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('active');
+  document.getElementById('sidebar')?.classList.remove('open');
+  document.getElementById('sidebarOverlay')?.classList.remove('active');
 }
 
 function renderPage(page) {
@@ -1035,8 +835,22 @@ function renderPage(page) {
 function updateBadges() {
   const antrian = dataServis.filter(s => ['waiting','diag'].includes(s.status)).length;
   const aktif = dataServis.filter(s => !['taken','cancel'].includes(s.status)).length;
-  document.getElementById('badge-antrian').textContent = antrian;
-  document.getElementById('badge-servis').textContent = aktif;
+  const badgeAntrian = document.getElementById('badge-antrian');
+  const badgeServis = document.getElementById('badge-servis');
+  if (badgeAntrian) badgeAntrian.textContent = antrian;
+  if (badgeServis) badgeServis.textContent = aktif;
+}
+
+// ==================== MODALS ====================
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.style.display = 'none';
+}
+
+function closeModalBiaya() {
+  closeModal('modal-biaya-servis');
+  currentSelectedSpareparts = [];
+  currentBiayaServisId = null;
 }
 
 // ==================== DASHBOARD ====================
@@ -1044,11 +858,7 @@ function renderDashboard() {
   const today = new Date().toISOString().split('T')[0];
   const aktif = dataServis.filter(s => !['taken','cancel'].includes(s.status)).length;
   const siap = dataServis.filter(s => s.status === 'done').length;
-  const selesaiHariIni = dataServis.filter(s => s.status === 'taken' && s.updatedAt?.startsWith(today.replace(/-/g,'/'))).length;
   const pendapatanHariIni = dataPembayaran.filter(p => p.tanggal === today).reduce((s, p) => s + p.nominal, 0);
-  const stokHabis = dataSparepart.filter(s => (s.stok - s.booked) <= s.minStok).length;
-  const garansiAktif = dataServis.filter(s => s.garansi && s.garansi.aktif && new Date(s.garansi.activatedAt) > new Date()).length;
-
   const recent = [...dataServis].sort((a,b) => b.id.localeCompare(a.id)).slice(0, 5);
 
   document.getElementById('page-dashboard').innerHTML = `
@@ -1060,115 +870,82 @@ function renderDashboard() {
     </div>
     <div class="content">
       <div class="grid-4">
-        <div class="metric">
-          <div class="metric-label">Servis Aktif</div>
-          <div class="metric-val blue">${aktif}</div>
-          <div class="metric-sub">sedang dalam proses</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Siap Diambil</div>
-          <div class="metric-val green">${siap}</div>
-          <div class="metric-sub">menunggu pelanggan</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Pendapatan Hari Ini</div>
-          <div class="metric-val green">${formatRp(pendapatanHariIni)}</div>
-          <div class="metric-sub">dari ${dataPembayaran.filter(p=>p.tanggal===today).length} transaksi</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Garansi Aktif</div>
-          <div class="metric-val blue">${garansiAktif}</div>
-          <div class="metric-sub">unit dalam masa garansi</div>
-        </div>
+        <div class="metric"><div class="metric-label">Servis Aktif</div><div class="metric-val blue">${aktif}</div><div class="metric-sub">sedang dalam proses</div></div>
+        <div class="metric"><div class="metric-label">Siap Diambil</div><div class="metric-val green">${siap}</div><div class="metric-sub">menunggu pelanggan</div></div>
+        <div class="metric"><div class="metric-label">Pendapatan Hari Ini</div><div class="metric-val green">${formatRp(pendapatanHariIni)}</div><div class="metric-sub">dari ${dataPembayaran.filter(p=>p.tanggal===today).length} transaksi</div></div>
+        <div class="metric"><div class="metric-label">Total Servis</div><div class="metric-val blue">${dataServis.length}</div><div class="metric-sub">keseluruhan</div></div>
       </div>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex-wrap:wrap;">
-        <div class="card" style="grid-column: 1 / -1">
-          <div class="card-header">
-            <span class="card-title"><i class="fas fa-list"></i> Servis Terbaru</span>
-            <button class="btn btn-sm" onclick="navigate('servis')">Lihat Semua</button>
-          </div>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Teknisi</th></tr></thead>
-              <tbody>
-                ${recent.map(s => `<tr>
-                  <td><span style="font-family:monospace;font-size:12px;color:var(--primary);font-weight:700">${s.id}</span></td>
-                  <td>${escapeHtml(s.nama)}</td>
-                  <td style="font-size:12px">${escapeHtml(s.device)}</td>
-                  <td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td>
-                  <td style="font-size:12px">${escapeHtml(s.teknisi)}</td>
-                </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0;">
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title"><i class="fas fa-bell"></i> Perlu Perhatian</span>
-          </div>
-          ${dataServis.filter(s => s.status === 'approval').map(s => `
-            <div class="quick-action">
-              <div class="quick-action-info">
-                <div class="quick-action-name">${escapeHtml(s.nama)} — ${escapeHtml(s.device)}</div>
-                <div class="quick-action-sub">Menunggu persetujuan • ${formatRp(s.biaya.total)}</div>
-              </div>
-              <span class="status-badge s-approval">Approval</span>
-            </div>`).join('') || '<div class="empty-state" style="padding:1.5rem"><i class="fas fa-check-circle" style="color:#1D9E75"></i><p>Tidak ada yang perlu perhatian</p></div>'}
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title"><i class="fas fa-box-open"></i> Stok Kritis</span>
-          </div>
-          ${dataSparepart.filter(s => (s.stok - s.booked) <= s.minStok).map(s => `
-            <div class="quick-action">
-              <div class="quick-action-info">
-                <div class="quick-action-name">${escapeHtml(s.nama)}</div>
-                <div class="quick-action-sub">Sisa: ${s.stok - s.booked} • Min: ${s.minStok}</div>
-              </div>
-              <span class="stock-low">${s.stok - s.booked}</span>
-            </div>`).join('') || '<div class="empty-state" style="padding:1.5rem"><i class="fas fa-boxes-stacked" style="color:#1D9E75"></i><p>Stok aman semua</p></div>'}
-        </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title"><i class="fas fa-list"></i> Servis Terbaru</span><button class="btn btn-sm" onclick="navigate('servis')">Lihat Semua</button></div>
+        <div class="table-responsive"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Teknisi</th></tr></thead><tbody>
+          ${recent.map(s => `<tr><td><span style="font-family:monospace;color:var(--primary);font-weight:700">${s.id}</span></td><td>${escapeHtml(s.nama)}</td><td>${escapeHtml(s.device)}</td><td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td><td>${escapeHtml(s.teknisi)}</td></tr>`).join('')}
+        </tbody></table></div>
       </div>
     </div>
   `;
 }
 
+// ==================== SERVIS BARU ====================
+function openNewServis() {
+  document.getElementById('search-customer').value = '';
+  document.getElementById('new-wa').value = '';
+  document.getElementById('new-device').value = '';
+  document.getElementById('new-keluhan').value = '';
+  document.getElementById('new-biaya').value = '';
+  selectedCustomerData = null;
+  document.getElementById('modal-new-servis').style.display = 'flex';
+}
+
+function searchCustomer() {
+  const search = document.getElementById('search-customer').value.toLowerCase();
+  const resultsDiv = document.getElementById('customer-results');
+  if (!search) { resultsDiv.style.display = 'none'; return; }
+  const customers = [...new Map(dataServis.map(s => [s.wa, { nama: s.nama, wa: s.wa }])).values()];
+  const filtered = customers.filter(c => c.nama.toLowerCase().includes(search));
+  if (filtered.length > 0) {
+    resultsDiv.innerHTML = filtered.map(c => `<div class="customer-item" onclick="selectCustomer('${escapeHtml(c.nama)}', '${c.wa}')"><div><div class="name">${escapeHtml(c.nama)}</div><div class="wa">${c.wa}</div></div></div>`).join('');
+    resultsDiv.style.display = 'block';
+  } else { resultsDiv.style.display = 'none'; }
+}
+
+function selectCustomer(nama, wa) {
+  document.getElementById('search-customer').value = nama;
+  document.getElementById('new-wa').value = wa;
+  document.getElementById('customer-results').style.display = 'none';
+  selectedCustomerData = { nama, wa };
+}
+
+function tambahServisBaru() {
+  const nama = document.getElementById('search-customer').value.trim();
+  const wa = document.getElementById('new-wa').value.trim();
+  const device = document.getElementById('new-device').value.trim();
+  const keluhan = document.getElementById('new-keluhan').value.trim();
+  const estimasi = parseInt(document.getElementById('new-biaya').value) || 0;
+  if (!nama || !wa || !device) { alert('Nama, No. WA, dan Perangkat wajib diisi!'); return; }
+  const newId = genId();
+  const now = nowStr();
+  const today = new Date().toISOString().split('T')[0];
+  const newServis = {
+    id: newId, nama, wa, device, keluhan, estimasi, status: 'waiting',
+    tglMasuk: today, teknisi: '-',
+    biaya: { jasa: 0, spareparts: [], total: 0 },
+    bookedSpareparts: [],
+    createdAt: now, createdBy: currentUser, updatedAt: now, updatedBy: currentUser,
+    garansi: { promised: false, durasi: 0, aktif: false, activatedAt: null }
+  };
+  dataServis.push(newServis);
+  addLog('CREATE_SERVIS', newId, `Membuat servis baru untuk ${nama} (${device})`);
+  closeModal('modal-new-servis');
+  alert(`Servis ${newId} berhasil dibuat!`);
+  navigate('antrian');
+}
+
 // ==================== DATA SERVIS ====================
 function renderServis() {
   document.getElementById('page-servis').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-screwdriver-wrench"></i> Data Servis</span>
-      <div class="topbar-actions">
-        <button class="btn btn-primary" onclick="openNewServis()"><i class="fas fa-plus"></i> Servis Baru</button>
-      </div>
-    </div>
-    <div class="content">
-      <div class="filter-section">
-        <div class="filter-group">
-          <label>Status</label>
-          <select onchange="filterServis(this.value)">
-            <option value="semua">Semua Status</option>
-            ${STATUS_ORDER.map(k => `<option value="${k}" ${currentPage==='servis'&&window._filterServis===k?'selected':''}>${STATUS[k]}</option>`).join('')}
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Cari</label>
-          <input type="text" placeholder="Nama, HP, ID..." oninput="cariServis(this.value)" id="search-servis">
-        </div>
-      </div>
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table id="tbl-servis">
-            <thead><tr><th>ID</th><th>Tgl Masuk</th><th>Pelanggan</th><th>Perangkat</th><th>Keluhan</th><th>Teknisi</th><th>Status</th><th>Biaya</th><th>Garansi</th><th>Aksi</th></tr></thead>
-            <tbody id="tbody-servis"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-screwdriver-wrench"></i> Data Servis</span><div class="topbar-actions"><button class="btn btn-primary" onclick="openNewServis()"><i class="fas fa-plus"></i> Servis Baru</button></div></div>
+    <div class="content"><div class="filter-section"><div class="filter-group"><label>Status</label><select onchange="filterServis(this.value)"><option value="semua">Semua Status</option>${STATUS_ORDER.map(k => `<option value="${k}">${STATUS[k]}</option>`).join('')}</select></div><div class="filter-group"><label>Cari</label><input type="text" placeholder="Nama, HP, ID..." oninput="cariServis(this.value)" id="search-servis"></div></div>
+    <div class="card" style="padding:0"><div class="table-responsive"><table id="tbl-servis"><thead><tr><th>ID</th><th>Tgl Masuk</th><th>Pelanggan</th><th>Perangkat</th><th>Keluhan</th><th>Teknisi</th><th>Status</th><th>Biaya</th><th>Aksi</th></tr></thead><tbody id="tbody-servis"></tbody></table></div></div></div>
   `;
   renderTabelServis(dataServis);
 }
@@ -1176,85 +953,30 @@ function renderServis() {
 window._filterServis = 'semua';
 window._searchServis = '';
 
-function filterServis(val) {
-  window._filterServis = val;
-  applyFilterServis();
-}
-
-function cariServis(val) {
-  window._searchServis = val.toLowerCase();
-  applyFilterServis();
-}
+function filterServis(val) { window._filterServis = val; applyFilterServis(); }
+function cariServis(val) { window._searchServis = val.toLowerCase(); applyFilterServis(); }
 
 function applyFilterServis() {
   let data = dataServis;
-  if (window._filterServis && window._filterServis !== 'semua') {
-    data = data.filter(s => s.status === window._filterServis);
-  }
-  if (window._searchServis) {
-    data = data.filter(s =>
-      s.nama.toLowerCase().includes(window._searchServis) ||
-      s.id.toLowerCase().includes(window._searchServis) ||
-      s.wa.includes(window._searchServis) ||
-      s.device.toLowerCase().includes(window._searchServis)
-    );
-  }
+  if (window._filterServis && window._filterServis !== 'semua') data = data.filter(s => s.status === window._filterServis);
+  if (window._searchServis) data = data.filter(s => s.nama.toLowerCase().includes(window._searchServis) || s.id.toLowerCase().includes(window._searchServis) || s.wa.includes(window._searchServis) || s.device.toLowerCase().includes(window._searchServis));
   renderTabelServis(data);
 }
 
 function renderTabelServis(data) {
   const tbody = document.getElementById('tbody-servis');
   if (!tbody) return;
-  if (data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada data servis</p></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map(s => {
-    let garansiStatus = '';
-    if (s.garansi && s.garansi.promised) {
-      if (s.garansi.aktif) {
-        garansiStatus = `<span class="status-badge s-garansi-aktif"><i class="fas fa-shield-alt"></i> Aktif ${s.garansi.durasi} hr</span>`;
-      } else if (s.status === 'taken' || s.status === 'done') {
-        garansiStatus = `<span class="status-badge s-garansi-kadaluarsa">Tidak Aktif</span>`;
-      } else {
-        garansiStatus = `<span class="status-badge s-waiting">Janji ${s.garansi.durasi} hr</span>`;
-      }
-    } else {
-      garansiStatus = `<span class="text-muted">-</span>`;
-    }
-    return `
-    <tr>
-      <td><span style="font-family:monospace;font-size:12px;color:var(--primary);font-weight:700">${s.id}</span></td>
-      <td style="font-size:12px;color:var(--text-sec)">${s.tglMasuk}</td>
-      <td>
-        <div style="font-weight:600">${escapeHtml(s.nama)}</div>
-        <div style="font-size:11px;color:var(--text-sec)">${s.wa}</div>
-      </td>
-      <td style="font-size:12px">${escapeHtml(s.device)}</td>
-      <td style="font-size:12px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(s.keluhan)}</td>
-      <td style="font-size:12px">${escapeHtml(s.teknisi)}</td>
-      <td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td>
-      <td style="font-size:12px;font-weight:600">${s.biaya.total > 0 ? formatRp(s.biaya.total) : '<span class="text-muted">-</span>'}</td>
-      <td style="text-align:center">${garansiStatus}</td>
-      <td>${renderAksiServis(s)}</td>
-    </tr>`;
-  }).join('');
+  if (data.length === 0) { tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada data servis</p></div></td></tr>`; return; }
+  tbody.innerHTML = data.map(s => `<tr><td><span style="font-family:monospace;color:var(--primary);font-weight:700">${s.id}</span></td><td>${s.tglMasuk}</td><td><div style="font-weight:600">${escapeHtml(s.nama)}</div><div style="font-size:11px;color:var(--text-sec)">${s.wa}</div></td><td>${escapeHtml(s.device)}</td><td>${escapeHtml(s.keluhan)}</td><td>${escapeHtml(s.teknisi)}</td><td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td><td>${s.biaya.total > 0 ? formatRp(s.biaya.total) : '-'}</td><td>${renderAksiServis(s)}</td></tr>`).join('');
 }
 
 function renderAksiServis(s) {
   const acts = [];
-  if (s.status === 'waiting') {
-    acts.push(`<button class="btn btn-sm" onclick="nextStatus('${s.id}')"><i class="fas fa-play"></i> Diagnosa</button>`);
-  } else if (s.status === 'diag') {
-    acts.push(`<button class="btn btn-primary btn-sm" onclick="openBiayaModal('${s.id}')"><i class="fas fa-calculator"></i> Input Biaya</button>`);
-  } else if (s.status === 'repair') {
-    acts.push(`<button class="btn btn-sm" onclick="nextStatus('${s.id}')"><i class="fas fa-forward"></i> → QC</button>`);
-  } else if (s.status === 'qc') {
-    acts.push(`<button class="btn btn-success btn-sm" onclick="openSelesaiModal('${s.id}')"><i class="fas fa-check"></i> Selesai</button>`);
-  }
-  if (!['taken','cancel'].includes(s.status)) {
-    acts.push(`<button class="btn btn-sm btn-ghost" onclick="if(confirm('Batalkan servis ${s.id}?')) batalServis('${s.id}')"><i class="fas fa-times"></i></button>`);
-  }
+  if (s.status === 'waiting') acts.push(`<button class="btn btn-sm" onclick="nextStatus('${s.id}')"><i class="fas fa-play"></i> Diagnosa</button>`);
+  else if (s.status === 'diag') acts.push(`<button class="btn btn-primary btn-sm" onclick="openBiayaModal('${s.id}')"><i class="fas fa-calculator"></i> Input Biaya</button>`);
+  else if (s.status === 'repair') acts.push(`<button class="btn btn-sm" onclick="nextStatus('${s.id}')"><i class="fas fa-forward"></i> → QC</button>`);
+  else if (s.status === 'qc') acts.push(`<button class="btn btn-success btn-sm" onclick="openSelesaiModal('${s.id}')"><i class="fas fa-check"></i> Selesai</button>`);
+  if (!['taken','cancel'].includes(s.status)) acts.push(`<button class="btn btn-sm btn-ghost" onclick="if(confirm('Batalkan servis ${s.id}?')) batalServis('${s.id}')"><i class="fas fa-times"></i></button>`);
   return `<div style="display:flex;gap:4px;flex-wrap:wrap">${acts.join('')}</div>`;
 }
 
@@ -1263,11 +985,10 @@ function nextStatus(id) {
   if (!s) return;
   const flow = { waiting:'diag', diag:'approval', repair:'qc', qc:'done' };
   if (flow[s.status]) {
-    const oldStatus = s.status;
     s.status = flow[s.status];
     s.updatedAt = nowStr();
     s.updatedBy = currentUser;
-    addLog('UPDATE_STATUS', id, `Status ${STATUS[oldStatus]} → ${STATUS[s.status]}`);
+    addLog('UPDATE_STATUS', id, `Status ${STATUS[s.status]} → ${STATUS[flow[s.status]]}`);
     renderPage(currentPage);
   }
 }
@@ -1275,14 +996,9 @@ function nextStatus(id) {
 function batalServis(id) {
   const s = dataServis.find(x => x.id === id);
   if (!s) return;
-  // Kembalikan booking stok
-  s.bookedSpareparts?.forEach(b => {
-    const sp = dataSparepart.find(x => x.id === b.id);
-    if (sp) sp.booked = Math.max(0, sp.booked - b.qty);
-  });
+  s.bookedSpareparts?.forEach(b => { const sp = dataSparepart.find(x => x.id === b.id); if (sp) sp.booked = Math.max(0, sp.booked - b.qty); });
   s.status = 'cancel';
   s.updatedAt = nowStr();
-  s.updatedBy = currentUser;
   addLog('CANCEL_SERVIS', id, 'Servis dibatalkan');
   renderPage(currentPage);
 }
@@ -1291,71 +1007,184 @@ function batalServis(id) {
 function renderAntrian() {
   const antrian = dataServis.filter(s => ['waiting','diag','approval'].includes(s.status));
   document.getElementById('page-antrian').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span>
-      <button class="btn btn-primary" onclick="openNewServis()"><i class="fas fa-plus"></i> Servis Baru</button>
-    </div>
-    <div class="content">
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>No</th><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Keluhan</th><th>Status</th><th>Aksi</th></tr></thead>
-            <tbody>
-              ${antrian.length === 0 ? `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-check-circle"></i><p>Antrian kosong</p></div></td></tr>` :
-                antrian.map((s, i) => `<tr>
-                  <td style="font-weight:700;color:var(--text-sec)">${i+1}</td>
-                  <td><span style="font-family:monospace;font-size:12px;color:var(--primary);font-weight:700">${s.id}</span></td>
-                  <td>
-                    <div style="font-weight:600">${escapeHtml(s.nama)}</div>
-                    <div style="font-size:11px;color:var(--text-sec)">${s.wa}</div>
-                  </td>
-                  <td style="font-size:12px">${escapeHtml(s.device)}</td>
-                  <td style="font-size:12px">${escapeHtml(s.keluhan)}</td>
-                  <td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td>
-                  <td>${renderAksiServis(s)}</td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-list-ol"></i> Antrian Servis</span><button class="btn btn-primary" onclick="openNewServis()"><i class="fas fa-plus"></i> Servis Baru</button></div>
+    <div class="content"><div class="card" style="padding:0"><div class="table-responsive"><table><thead><tr><th>No</th><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Keluhan</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
+      ${antrian.length === 0 ? `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-check-circle"></i><p>Antrian kosong</p></div></td></tr>` : antrian.map((s, i) => `<tr><td>${i+1}</td><td><span style="font-family:monospace;color:var(--primary);font-weight:700">${s.id}</span></td><td><div>${escapeHtml(s.nama)}</div><div style="font-size:11px">${s.wa}</div></td><td>${escapeHtml(s.device)}</td><td>${escapeHtml(s.keluhan)}</td><td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td><td>${renderAksiServis(s)}</td></tr>`).join('')}
+    </tbody></table></div></div></div>
   `;
+}
+
+// ==================== INPUT BIAYA ====================
+function openBiayaModal(id) {
+  currentBiayaServisId = id;
+  const servis = dataServis.find(s => s.id === id);
+  if (!servis) return;
+  document.getElementById('biaya-jasa').value = servis.biaya?.jasa || 0;
+  document.getElementById('selected-spareparts').innerHTML = '';
+  currentSelectedSpareparts = [];
+  updateTotal();
+  document.getElementById('modal-biaya-servis').style.display = 'flex';
+}
+
+function searchSparepart() {
+  const search = document.getElementById('search-sparepart').value.toLowerCase();
+  const resultsDiv = document.getElementById('search-results');
+  if (!search) { resultsDiv.style.display = 'none'; return; }
+  const filtered = dataSparepart.filter(sp => sp.nama.toLowerCase().includes(search));
+  if (filtered.length > 0) {
+    resultsDiv.innerHTML = filtered.map(sp => `<div class="search-item" onclick="addSparepart(${sp.id}, '${escapeHtml(sp.nama)}', ${sp.harga})"><div class="name">${escapeHtml(sp.nama)}</div><div class="price">${formatRp(sp.harga)}</div><div class="stok-info">Stok: ${sp.stok - sp.booked}</div></div>`).join('');
+    resultsDiv.style.display = 'block';
+  } else { resultsDiv.style.display = 'none'; }
+}
+
+function addSparepart(id, nama, harga) {
+  const existing = currentSelectedSpareparts.find(sp => sp.id === id);
+  if (existing) { existing.qty++; }
+  else { currentSelectedSpareparts.push({ id, nama, harga, qty: 1 }); }
+  renderSelectedSpareparts();
+  document.getElementById('search-results').style.display = 'none';
+  document.getElementById('search-sparepart').value = '';
+  updateTotal();
+}
+
+function renderSelectedSpareparts() {
+  const container = document.getElementById('selected-spareparts');
+  if (!container) return;
+  if (currentSelectedSpareparts.length === 0) { container.innerHTML = '<div class="text-muted">Belum ada sparepart dipilih</div>'; return; }
+  container.innerHTML = currentSelectedSpareparts.map(sp => `
+    <div class="sparepart-list-item">
+      <div class="info"><div class="name">${escapeHtml(sp.nama)}</div><div class="price">${formatRp(sp.harga)}</div></div>
+      <input type="number" class="qty" value="${sp.qty}" min="1" onchange="updateSparepartQty(${sp.id}, this.value)">
+      <button class="btn btn-sm btn-ghost" onclick="removeSparepart(${sp.id})"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+}
+
+function updateSparepartQty(id, qty) {
+  const sp = currentSelectedSpareparts.find(s => s.id === id);
+  if (sp) { sp.qty = Math.max(1, parseInt(qty) || 1); updateTotal(); renderSelectedSpareparts(); }
+}
+
+function removeSparepart(id) {
+  currentSelectedSpareparts = currentSelectedSpareparts.filter(s => s.id !== id);
+  renderSelectedSpareparts();
+  updateTotal();
+}
+
+function updateTotal() {
+  const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
+  const totalSparepart = currentSelectedSpareparts.reduce((sum, sp) => sum + (sp.harga * sp.qty), 0);
+  const total = jasa + totalSparepart;
+  document.getElementById('cost-summary').innerHTML = `Total Biaya: ${formatRp(total)}`;
+  const btnSimpan = document.getElementById('btn-simpan');
+  if (btnSimpan) btnSimpan.disabled = (total === 0);
+}
+
+function simpanApproval() {
+  const id = currentBiayaServisId;
+  const servis = dataServis.find(s => s.id === id);
+  if (!servis) return;
+  const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
+  const totalSparepart = currentSelectedSpareparts.reduce((sum, sp) => sum + (sp.harga * sp.qty), 0);
+  const total = jasa + totalSparepart;
+  if (total === 0) { alert('Minimal isi biaya jasa atau pilih sparepart!'); return; }
+  servis.biaya = { jasa, spareparts: [...currentSelectedSpareparts], total };
+  servis.status = 'approval';
+  servis.updatedAt = nowStr();
+  currentSelectedSpareparts.forEach(sp => { const spare = dataSparepart.find(s => s.id === sp.id); if (spare) spare.booked = (spare.booked || 0) + sp.qty; });
+  servis.bookedSpareparts = [...currentSelectedSpareparts];
+  addLog('APPROVE_SERVIS', id, `Biaya ditetapkan: ${formatRp(total)}`);
+  closeModalBiaya();
+  alert(`Biaya untuk ${servis.id} telah disimpan.`);
+  navigate('servis');
+}
+
+// ==================== QC ====================
+function renderQC() {
+  const qcList = dataServis.filter(s => s.status === 'qc');
+  document.getElementById('page-qc').innerHTML = `
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-clipboard-check"></i> Quality Control</span></div>
+    <div class="content">${qcList.length === 0 ? `<div class="card"><div class="empty-state"><i class="fas fa-clipboard-check"></i><p>Tidak ada unit di QC saat ini</p></div></div>` : qcList.map(s => `<div class="card"><div style="display:flex;justify-content:space-between"><div><div style="font-weight:700">${escapeHtml(s.nama)}</div><div>${s.id} · ${escapeHtml(s.device)}</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--primary)">${formatRp(s.biaya.total)}</div><div>Teknisi: ${escapeHtml(s.teknisi)}</div></div></div><div class="divider"></div><div style="display:flex;gap:8px"><button class="btn btn-success" onclick="openSelesaiModal('${s.id}')"><i class="fas fa-check"></i> Setujui — Siap Diambil</button><button class="btn btn-danger" onclick="kembalikanKeRepair('${s.id}')"><i class="fas fa-undo"></i> Kembalikan ke Repair</button></div></div>`).join('')}</div>
+  `;
+}
+
+function kembalikanKeRepair(id) {
+  const s = dataServis.find(x => x.id === id);
+  if (s && s.status === 'qc') { s.status = 'repair'; s.updatedAt = nowStr(); addLog('RETURN_TO_REPAIR', id, 'Dikembalikan dari QC ke Repair'); renderPage('qc'); }
+}
+
+// ==================== SELESAI ====================
+function openSelesaiModal(id) {
+  currentSelesaiId = id;
+  document.getElementById('catatan-selesai').value = '';
+  document.getElementById('modal-selesai').style.display = 'flex';
+}
+
+function konfirmasiSelesai() {
+  const id = currentSelesaiId;
+  const servis = dataServis.find(s => s.id === id);
+  if (!servis) return;
+  const catatan = document.getElementById('catatan-selesai').value;
+  servis.status = 'done';
+  servis.updatedAt = nowStr();
+  addLog('COMPLETE_SERVIS', id, `Servis selesai. Catatan: ${catatan}`);
+  closeModal('modal-selesai');
+  alert(`Servis ${id} telah selesai dan siap diambil.`);
+  navigate('kasir');
+}
+
+// ==================== KASIR ====================
+function renderKasir() {
+  const siap = dataServis.filter(s => s.status === 'done');
+  document.getElementById('page-kasir').innerHTML = `
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-cash-register"></i> Kasir</span></div>
+    <div class="content">${siap.length === 0 ? `<div class="card"><div class="empty-state"><i class="fas fa-cash-register"></i><p>Tidak ada unit siap diambil</p></div></div>` : siap.map(s => `<div class="card"><div style="display:flex;justify-content:space-between"><div><div style="font-weight:700">${escapeHtml(s.nama)}</div><div>${s.id} · ${escapeHtml(s.device)}</div><a href="https://wa.me/${s.wa.replace(/\D/g,'')}" target="_blank" style="color:#25D366"><i class="fab fa-whatsapp"></i> ${s.wa}</a></div><div style="text-align:right"><div style="font-weight:700;color:var(--primary);font-size:18px">${formatRp(s.biaya.total)}</div></div></div><div class="divider"></div><button class="btn btn-primary" onclick="openBayarModal('${s.id}')"><i class="fas fa-money-bill-wave"></i> Proses Pembayaran</button></div>`).join('')}</div>
+  `;
+}
+
+function openBayarModal(id) {
+  currentBayarId = id;
+  const servis = dataServis.find(s => s.id === id);
+  if (!servis) return;
+  document.getElementById('tagihan').innerHTML = formatRp(servis.biaya.total);
+  document.getElementById('dibayar').value = '';
+  document.getElementById('kembalian').value = '';
+  document.getElementById('modal-bayar').style.display = 'flex';
+}
+
+function hitungKembalian() {
+  const servis = dataServis.find(s => s.id === currentBayarId);
+  if (!servis) return;
+  const dibayar = parseInt(document.getElementById('dibayar').value) || 0;
+  const tagihan = servis.biaya.total;
+  const kembali = dibayar - tagihan;
+  document.getElementById('kembalian').value = kembali > 0 ? kembali : 0;
+}
+
+function prosesBayar() {
+  const id = currentBayarId;
+  const servis = dataServis.find(s => s.id === id);
+  if (!servis) return;
+  const metode = document.getElementById('metode').value;
+  const dibayar = parseInt(document.getElementById('dibayar').value) || 0;
+  if (dibayar < servis.biaya.total) { alert('Pembayaran kurang!'); return; }
+  servis.status = 'taken';
+  servis.updatedAt = nowStr();
+  dataPembayaran.push({ id: servis.id, tanggal: new Date().toISOString().split('T')[0], nominal: servis.biaya.total, metode, createdBy: currentUser });
+  servis.bookedSpareparts?.forEach(b => { const sp = dataSparepart.find(x => x.id === b.id); if (sp) { sp.stok -= b.qty; sp.booked = Math.max(0, sp.booked - b.qty); } });
+  addLog('PAYMENT', id, `Pembayaran lunas via ${metode}, total ${formatRp(servis.biaya.total)}`);
+  closeModal('modal-bayar');
+  alert(`Pembayaran untuk ${servis.id} berhasil!`);
+  navigate('dashboard');
 }
 
 // ==================== TEKNISI ====================
 function renderTeknisi() {
   document.getElementById('page-teknisi').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-user-cog"></i> Manajemen Teknisi</span>
-      <button class="btn btn-primary" onclick="openAddTeknisi()"><i class="fas fa-plus"></i> Tambah Teknisi</button>
-    </div>
-    <div class="content">
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>No</th><th>Nama</th><th>Keahlian</th><th>Pekerjaan Aktif</th><th>Status</th><th>Aksi</th></tr></thead>
-            <tbody>
-              ${dataTeknisi.map((t, i) => {
-                const aktif = dataServis.filter(s => s.teknisi === t.nama && !['taken','cancel','done'].includes(s.status)).length;
-                return `<tr>
-                  <td style="color:var(--text-sec)">${i+1}</td>
-                  <td><div style="font-weight:600">${escapeHtml(t.nama)}</div></td>
-                  <td style="font-size:12px">${escapeHtml(t.skill)}</td>
-                  <td><span style="font-weight:700;color:var(--primary)">${aktif}</span> <span style="font-size:11px;color:var(--text-sec)">unit</span></td>
-                  <td><span class="status-badge ${t.active ? 's-repair' : 's-cancel'}">${t.active ? 'Aktif' : 'Nonaktif'}</span></td>
-                  <td>
-                    <div style="display:flex;gap:6px">
-                      <button class="btn btn-sm" onclick="editTeknisi(${t.id})"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-sm btn-ghost" onclick="toggleTeknisi(${t.id})">${t.active ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>
-                    </div>
-                  </td>
-                </tr>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-user-cog"></i> Manajemen Teknisi</span><button class="btn btn-primary" onclick="openAddTeknisi()"><i class="fas fa-plus"></i> Tambah Teknisi</button></div>
+    <div class="content"><div class="card" style="padding:0"><div class="table-responsive"><table><thead><tr><th>No</th><th>Nama</th><th>Keahlian</th><th>Pekerjaan Aktif</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
+      ${dataTeknisi.map((t, i) => { const aktif = dataServis.filter(s => s.teknisi === t.nama && !['taken','cancel','done'].includes(s.status)).length; return `<tr><td>${i+1}</td><td><div style="font-weight:600">${escapeHtml(t.nama)}</div></td><td>${escapeHtml(t.skill)}</td><td><span style="font-weight:700;color:var(--primary)">${aktif}</span></td><td><span class="status-badge ${t.active ? 's-repair' : 's-cancel'}">${t.active ? 'Aktif' : 'Nonaktif'}</span></td><td><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="editTeknisi(${t.id})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-ghost" onclick="toggleTeknisi(${t.id})">${t.active ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button></div></td></tr>`; }).join('')}
+    </tbody></table></div></div></div>
   `;
 }
 
@@ -1382,136 +1211,21 @@ function simpanTeknisi() {
   const skill = document.getElementById('teknisi-skill').value.trim();
   const editId = parseInt(document.getElementById('teknisi-edit-id').value);
   if (!nama) { alert('Nama teknisi wajib diisi!'); return; }
-  if (editId) {
-    const t = dataTeknisi.find(x => x.id === editId);
-    if (t) { t.nama = nama; t.skill = skill; }
-    addLog('EDIT_TEKNISI', 'T'+editId, `Edit teknisi: ${nama}`);
-  } else {
-    const newId = Math.max(...dataTeknisi.map(x => x.id), 0) + 1;
-    dataTeknisi.push({ id: newId, nama, skill, active: true });
-    addLog('ADD_TEKNISI', 'T'+newId, `Tambah teknisi: ${nama}`);
-  }
+  if (editId) { const t = dataTeknisi.find(x => x.id === editId); if (t) { t.nama = nama; t.skill = skill; } addLog('EDIT_TEKNISI', 'T'+editId, `Edit teknisi: ${nama}`); }
+  else { const newId = Math.max(...dataTeknisi.map(x => x.id), 0) + 1; dataTeknisi.push({ id: newId, nama, skill, active: true }); addLog('ADD_TEKNISI', 'T'+newId, `Tambah teknisi: ${nama}`); }
   closeModal('modal-teknisi');
   renderTeknisi();
 }
 
-function toggleTeknisi(id) {
-  const t = dataTeknisi.find(x => x.id === id);
-  if (t) { t.active = !t.active; renderTeknisi(); }
-}
-
-// ==================== QC ====================
-function renderQC() {
-  const qcList = dataServis.filter(s => s.status === 'qc');
-  document.getElementById('page-qc').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-clipboard-check"></i> Quality Control</span>
-    </div>
-    <div class="content">
-      ${qcList.length === 0 ? `<div class="card"><div class="empty-state"><i class="fas fa-clipboard-check"></i><p>Tidak ada unit di QC saat ini</p></div></div>` :
-        qcList.map(s => `
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-              <div>
-                <div style="font-weight:700;font-size:15px">${escapeHtml(s.nama)}</div>
-                <div style="font-size:12px;color:var(--text-sec)">${s.id} · ${escapeHtml(s.device)}</div>
-                <div style="font-size:12px;color:var(--text-sec);margin-top:4px">${escapeHtml(s.keluhan)}</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-weight:700;color:var(--primary);font-size:16px">${formatRp(s.biaya.total)}</div>
-                <div style="font-size:11px;color:var(--text-sec)">Teknisi: ${escapeHtml(s.teknisi)}</div>
-              </div>
-            </div>
-            <div class="divider"></div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn btn-success" onclick="openSelesaiModal('${s.id}')"><i class="fas fa-check"></i> Setujui — Siap Diambil</button>
-              <button class="btn btn-danger" onclick="kembalikanKeRepair('${s.id}')"><i class="fas fa-undo"></i> Kembalikan ke Repair</button>
-            </div>
-          </div>
-        `).join('')}
-    </div>
-  `;
-}
-
-function kembalikanKeRepair(id) {
-  const s = dataServis.find(x => x.id === id);
-  if (s && s.status === 'qc') {
-    s.status = 'repair';
-    s.updatedAt = nowStr();
-    s.updatedBy = currentUser;
-    addLog('RETURN_TO_REPAIR', id, 'Dikembalikan dari QC ke Repair');
-    renderPage('qc');
-  }
-}
-
-// ==================== KASIR ====================
-function renderKasir() {
-  const siap = dataServis.filter(s => s.status === 'done');
-  document.getElementById('page-kasir').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-cash-register"></i> Kasir</span>
-    </div>
-    <div class="content">
-      ${siap.length === 0 ? `<div class="card"><div class="empty-state"><i class="fas fa-cash-register"></i><p>Tidak ada unit siap diambil</p></div></div>` :
-        siap.map(s => `
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-              <div>
-                <div style="font-weight:700;font-size:15px">${escapeHtml(s.nama)}</div>
-                <div style="font-size:12px;color:var(--text-sec)">${s.id} · ${escapeHtml(s.device)}</div>
-                <a href="https://wa.me/${s.wa.replace(/\D/g,'')}" target="_blank" style="font-size:12px;color:#25D366"><i class="fab fa-whatsapp"></i> ${s.wa}</a>
-                ${s.garansi && s.garansi.promised ? `<div class="garansi-info" style="margin-top: 8px; display: inline-block;"><i class="fas fa-shield-alt"></i> Janji garansi ${s.garansi.durasi} hari (akan aktif setelah pembayaran)</div>` : ''}
-              </div>
-              <div style="text-align:right">
-                <div style="font-weight:700;color:var(--primary);font-size:18px">${formatRp(s.biaya.total)}</div>
-                <div style="font-size:11px;color:var(--text-sec)">Total tagihan</div>
-              </div>
-            </div>
-            <div class="divider"></div>
-            <button class="btn btn-primary" onclick="openBayarModal('${s.id}')"><i class="fas fa-money-bill-wave"></i> Proses Pembayaran</button>
-          </div>
-        `).join('')}
-    </div>
-  `;
-}
+function toggleTeknisi(id) { const t = dataTeknisi.find(x => x.id === id); if (t) { t.active = !t.active; renderTeknisi(); } }
 
 // ==================== STOK ====================
 function renderStok() {
   document.getElementById('page-stok').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-boxes-stacked"></i> Stok Sparepart</span>
-      <button class="btn btn-primary" onclick="openAddStok()"><i class="fas fa-plus"></i> Tambah Sparepart</button>
-    </div>
-    <div class="content">
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>Nama Sparepart</th><th>Harga</th><th>Stok</th><th>Booking</th><th>Tersedia</th><th>Min. Stok</th><th>Kondisi</th><th>Aksi</th></tr></thead>
-            <tbody>
-              ${dataSparepart.map(s => {
-                const tersedia = s.stok - s.booked;
-                const kritis = tersedia <= s.minStok;
-                return `<tr>
-                  <td><div style="font-weight:600">${escapeHtml(s.nama)}</div></td>
-                  <td style="font-size:12px">${formatRp(s.harga)}</td>
-                  <td>${s.stok}</td>
-                  <td>${s.booked > 0 ? `<span style="color:var(--warning);font-weight:600">${s.booked}</span>` : '0'}</td>
-                  <td class="${kritis ? 'stock-low' : 'stock-ok'}">${tersedia}</td>
-                  <td>${s.minStok}</td>
-                  <td><span class="status-badge ${kritis ? 's-cancel' : 's-repair'}">${kritis ? 'Kritis' : 'Aman'}</span></td>
-                  <td>
-                    <div style="display:flex;gap:6px">
-                      <button class="btn btn-sm" onclick="editStok(${s.id})"><i class="fas fa-pen"></i></button>
-                      <button class="btn btn-sm" onclick="tambahStok(${s.id})"><i class="fas fa-plus"></i> Stok</button>
-                    </div>
-                  </td>
-                </table>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-boxes-stacked"></i> Stok Sparepart</span><button class="btn btn-primary" onclick="openAddStok()"><i class="fas fa-plus"></i> Tambah Sparepart</button></div>
+    <div class="content"><div class="card" style="padding:0"><div class="table-responsive"><table><thead><tr><th>Nama Sparepart</th><th>Harga</th><th>Stok</th><th>Booking</th><th>Tersedia</th><th>Min. Stok</th><th>Aksi</th></tr></thead><tbody>
+      ${dataSparepart.map(s => { const tersedia = s.stok - s.booked; const kritis = tersedia <= s.minStok; return `<tr><td><div style="font-weight:600">${escapeHtml(s.nama)}</div></td><td>${formatRp(s.harga)}</td><td>${s.stok}</td><td>${s.booked > 0 ? `<span style="color:var(--warning);font-weight:600">${s.booked}</span>` : '0'}</td><td class="${kritis ? 'stock-low' : 'stock-ok'}">${tersedia}</td><td>${s.minStok}</td><td><div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="editStok(${s.id})"><i class="fas fa-pen"></i></button><button class="btn btn-sm" onclick="tambahStok(${s.id})"><i class="fas fa-plus"></i> Stok</button></div></td>`; }).join('')}
+    </tbody></table></div></div></div>
   `;
 }
 
@@ -1554,953 +1268,75 @@ function simpanStok() {
   const harga = parseInt(document.getElementById('stok-harga').value);
   if (!nama || isNaN(qty) || isNaN(harga)) { alert('Lengkapi semua data!'); return; }
   const editId = parseInt(document.getElementById('stok-edit-id').value);
-  if (editId) {
-    const s = dataSparepart.find(x => x.id === editId);
-    if (s) { s.nama = nama; s.stok = qty; s.minStok = min || 2; s.harga = harga; }
-    addLog('EDIT_SPAREPART', 'SP'+editId, `Edit: ${nama}`);
-  } else {
-    const newId = Math.max(...dataSparepart.map(x => x.id), 0) + 1;
-    dataSparepart.push({ id:newId, nama, stok:qty, minStok:min||2, harga, booked:0 });
-    addLog('ADD_SPAREPART', 'SP'+newId, `Tambah sparepart: ${nama}`);
-  }
+  if (editId) { const s = dataSparepart.find(x => x.id === editId); if (s) { s.nama = nama; s.stok = qty; s.minStok = min || 2; s.harga = harga; } addLog('EDIT_SPAREPART', 'SP'+editId, `Edit: ${nama}`); }
+  else { const newId = Math.max(...dataSparepart.map(x => x.id), 0) + 1; dataSparepart.push({ id:newId, nama, stok:qty, minStok:min||2, harga, booked:0 }); addLog('ADD_SPAREPART', 'SP'+newId, `Tambah sparepart: ${nama}`); }
   closeModal('modal-stok');
   renderStok();
 }
 
-// ==================== GARANSI (HALAMAN LENGKAP) ====================
+// ==================== GARANSI ====================
 function renderGaransi() {
   const garansiItems = dataServis.filter(s => s.garansi && (s.garansi.promised || s.garansi.aktif));
   document.getElementById('page-garansi').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-shield-halved"></i> Manajemen Garansi</span>
-      <div class="topbar-actions">
-        <button class="btn btn-primary" onclick="pengaturan.garansiHari = parseInt(prompt('Durasi garansi default (hari):', pengaturan.garansiHari)) || 30; renderGaransi()"><i class="fas fa-gear"></i> Set Default</button>
-      </div>
-    </div>
-    <div class="content">
-      <div class="info-text" style="margin-bottom:14px">
-        <i class="fas fa-info-circle"></i> Garansi berlaku <strong>${pengaturan.garansiHari} hari</strong> setelah perangkat diambil pelanggan. Garansi aktif otomatis saat kasir mengonfirmasi pembayaran.
-      </div>
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Janji Garansi</th><th>Tgl Diambil</th><th>Garansi Hingga</th><th>Status Garansi</th><th>Aksi</th></tr></thead>
-            <tbody>
-              ${garansiItems.length === 0 ? `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-shield-halved"></i><p>Belum ada data garansi</p></div></td></tr>` :
-                garansiItems.map(s => {
-                  const tglDiambil = s.garansi.activatedAt ? new Date(s.garansi.activatedAt) : null;
-                  const tglGaransi = tglDiambil ? new Date(tglDiambil) : null;
-                  if (tglGaransi && s.garansi.aktif) tglGaransi.setDate(tglGaransi.getDate() + s.garansi.durasi);
-                  const masih = tglGaransi ? new Date() <= tglGaransi : false;
-                  let statusBadge = '';
-                  let statusText = '';
-                  if (!s.garansi.aktif) {
-                    statusBadge = 's-waiting';
-                    statusText = 'Belum Aktif';
-                  } else if (masih) {
-                    statusBadge = 's-garansi-aktif';
-                    statusText = `Aktif (sisa ${Math.ceil((tglGaransi - new Date()) / (1000 * 60 * 60 * 24))} hari)`;
-                  } else {
-                    statusBadge = 's-garansi-kadaluarsa';
-                    statusText = 'Kadaluarsa';
-                  }
-                  return `<tr>
-                    <td><span style="font-family:monospace;font-size:12px;color:var(--primary);font-weight:700">${s.id}</span></td>
-                    <td style="font-weight:600">${escapeHtml(s.nama)}</td>
-                    <td style="font-size:12px">${escapeHtml(s.device)}</td>
-                    <td><span class="status-badge s-approval">${s.garansi.promised ? s.garansi.durasi + ' Hari' : '-'}</span></td>
-                    <td style="font-size:12px">${s.garansi.activatedAt ? new Date(s.garansi.activatedAt).toLocaleDateString('id-ID') : '-'}</td>
-                    <td style="font-size:12px">${tglGaransi ? tglGaransi.toLocaleDateString('id-ID') : '-'}</td>
-                    <td><span class="status-badge ${statusBadge}">${statusText}</span></td>
-                    <td>
-                      <div style="display:flex;gap:6px">
-                        <a href="https://wa.me/${s.wa.replace(/\D/g,'')}" target="_blank" class="btn btn-sm btn-ghost" title="Hubungi Pelanggan"><i class="fab fa-whatsapp"></i></a>
-                        <button class="btn btn-sm" onclick="lihatDetailServis('${s.id}')"><i class="fas fa-eye"></i></button>
-                      </div>
-                    </td>
-                  </tr>`;
-                }).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-shield-halved"></i> Manajemen Garansi</span></div>
+    <div class="content"><div class="info-text" style="margin-bottom:14px"><i class="fas fa-info-circle"></i> Garansi berlaku 30 hari setelah perangkat diambil pelanggan.</div>
+    <div class="card" style="padding:0"><div class="table-responsive"><table><thead><tr><th>ID</th><th>Pelanggan</th><th>Perangkat</th><th>Status Garansi</th><th>Aksi</th></tr></thead><tbody>
+      ${garansiItems.length === 0 ? `<tr><td colspan="5"><div class="empty-state"><i class="fas fa-shield-halved"></i><p>Belum ada data garansi</p></div></td></tr>` : garansiItems.map(s => { let statusText = s.garansi.aktif ? '<span class="status-badge s-garansi-aktif">Aktif</span>' : '<span class="status-badge s-waiting">Belum Aktif</span>'; return `<tr><td>${s.id}</td><td>${escapeHtml(s.nama)}</td><td>${escapeHtml(s.device)}</td><td>${statusText}</td><td><button class="btn btn-sm" onclick="alert('Detail garansi: ${s.id} - ${s.nama}')"><i class="fas fa-info-circle"></i> Detail</button></td>`; }).join('')}
+    </tbody></table></div></div></div>
   `;
-}
-
-function lihatDetailServis(id) {
-  // Bisa diimplementasikan untuk menampilkan detail servis
-  alert(`Detail servis #${id} - Implementasi selanjutnya`);
 }
 
 // ==================== LAPORAN ====================
 function renderLaporan() {
-  const taken = dataServis.filter(s => s.status === 'taken');
-  const totalPendapatan = dataPembayaran.reduce((s, p) => s + p.nominal, 0);
-  const byTeknisi = {};
-  dataServis.forEach(s => {
-    if (!['cancel'].includes(s.status) && s.teknisi !== '-') {
-      if (!byTeknisi[s.teknisi]) byTeknisi[s.teknisi] = 0;
-      byTeknisi[s.teknisi]++;
-    }
-  });
-  const garansiAktif = dataServis.filter(s => s.garansi && s.garansi.aktif && new Date(s.garansi.activatedAt) > new Date()).length;
-  const garansiKadaluarsa = dataServis.filter(s => s.garansi && s.garansi.aktif && new Date(s.garansi.activatedAt) <= new Date()).length;
-
-  // Hitung pendapatan per bulan
-  const pendapatanPerBulan = {};
-  dataPembayaran.forEach(p => {
-    const bulan = p.tanggal.substring(0, 7); // format YYYY-MM
-    pendapatanPerBulan[bulan] = (pendapatanPerBulan[bulan] || 0) + p.nominal;
-  });
-
   document.getElementById('page-laporan').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-chart-line"></i> Laporan</span>
-      <div class="topbar-actions">
-        <button class="btn btn-sm" onclick="exportLaporanCSV()"><i class="fas fa-download"></i> Export CSV</button>
-      </div>
-    </div>
-    <div class="content">
-      <div class="grid-4">
-        <div class="metric">
-          <div class="metric-label">Total Servis</div>
-          <div class="metric-val blue">${dataServis.length}</div>
-          <div class="metric-sub">semua waktu</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Selesai & Diambil</div>
-          <div class="metric-val green">${taken.length}</div>
-          <div class="metric-sub">sudah lunas</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Total Pendapatan</div>
-          <div class="metric-val green">${formatRp(totalPendapatan)}</div>
-          <div class="metric-sub">dari ${dataPembayaran.length} transaksi</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Garansi</div>
-          <div class="metric-val blue">${garansiAktif}</div>
-          <div class="metric-sub">Aktif / ${garansiKadaluarsa} kadaluarsa</div>
-        </div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Servis per Status</span></div>
-          ${STATUS_ORDER.map(k => {
-            const n = dataServis.filter(s => s.status === k).length;
-            const pct = dataServis.length > 0 ? Math.round(n/dataServis.length*100) : 0;
-            return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-              <div style="width:90px;font-size:12px"><span class="status-badge ${STATUS_COLOR[k]}">${STATUS[k]}</span></div>
-              <div style="flex:1;background:var(--bg-ter);border-radius:4px;height:8px">
-                <div style="width:${pct}%;background:var(--primary);height:8px;border-radius:4px;transition:width 0.3s"></div>
-              </div>
-              <div style="font-size:12px;font-weight:600;width:30px;text-align:right">${n}</div>
-            </div>`;
-          }).join('')}
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Kinerja Teknisi</span></div>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>Teknisi</th><th>Total Unit</th></tr></thead>
-              <tbody>
-                ${Object.entries(byTeknisi).sort((a,b) => b[1]-a[1]).map(([nama, jml]) =>
-                  `<tr><td style="font-weight:600">${escapeHtml(nama)}</td><td><span style="font-weight:700;color:var(--primary)">${jml}</span></td></tr>`
-                ).join('')}
-                ${Object.keys(byTeknisi).length === 0 ? '<tr><td colspan="2" class="text-muted" style="text-align:center">Belum ada data</td></tr>' : ''}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><span class="card-title">Pendapatan per Bulan</span></div>
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>Bulan</th><th>Total Pendapatan</th><th>Jumlah Transaksi</th></tr></thead>
-            <tbody>
-              ${Object.entries(pendapatanPerBulan).sort((a,b) => b[0].localeCompare(a[0])).map(([bulan, total]) => {
-                const jmlTrans = dataPembayaran.filter(p => p.tanggal.startsWith(bulan)).length;
-                return `<tr>
-                  <td>${bulan}</td>
-                  <td style="font-weight:700;color:#1D9E75">${formatRp(total)}</td>
-                  <td>${jmlTrans} transaksi</td>
-                </tr>`;
-              }).join('')}
-              ${Object.keys(pendapatanPerBulan).length === 0 ? '<tr><td colspan="3" class="text-muted" style="text-align:center">Belum ada data pendapatan</td></tr>' : ''}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><span class="card-title">Riwayat Pembayaran</span></div>
-        <div class="table-responsive">
-          <table>
-            <thead><tr><th>ID Servis</th><th>Tanggal</th><th>Nominal</th><th>Metode</th><th>Oleh</th></tr></thead>
-            <tbody>
-              ${dataPembayaran.length === 0 ? '<tr><td colspan="5" style="text-align:center;color:var(--text-sec)">Belum ada transaksi</td></tr>' :
-                dataPembayaran.map(p => `<tr>
-                  <td><span style="font-family:monospace;font-size:12px;color:var(--primary);font-weight:700">${p.id}</span></td>
-                  <td style="font-size:12px">${p.tanggal}</td>
-                  <td style="font-weight:700;color:#1D9E75">${formatRp(p.nominal)}</td>
-                  <td style="font-size:12px">${p.metode}</td>
-                  <td style="font-size:12px">${p.createdBy}</td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-chart-line"></i> Laporan</span></div>
+    <div class="content"><div class="card"><div class="card-header"><span class="card-title">Ringkasan Servis</span></div>
+    <div class="grid-4"><div class="metric"><div class="metric-label">Total Servis</div><div class="metric-val blue">${dataServis.length}</div></div>
+    <div class="metric"><div class="metric-label">Servis Selesai</div><div class="metric-val green">${dataServis.filter(s => s.status === 'taken').length}</div></div>
+    <div class="metric"><div class="metric-label">Servis Batal</div><div class="metric-val red">${dataServis.filter(s => s.status === 'cancel').length}</div></div>
+    <div class="metric"><div class="metric-label">Total Pendapatan</div><div class="metric-val green">${formatRp(dataPembayaran.reduce((s, p) => s + p.nominal, 0))}</div></div></div></div></div>
   `;
-}
-
-function exportLaporanCSV() {
-  let csv = "ID Servis,Pelanggan,Perangkat,Status,Teknisi,Total Biaya,Tanggal Masuk,Tanggal Selesai,Status Garansi\n";
-  dataServis.forEach(s => {
-    const garansiStatus = s.garansi && s.garansi.aktif ? `Aktif ${s.garansi.durasi} hari` : (s.garansi && s.garansi.promised ? `Janji ${s.garansi.durasi} hari` : 'Tidak Ada');
-    csv += `"${s.id}","${escapeCsv(s.nama)}","${escapeCsv(s.device)}","${STATUS[s.status]}","${escapeCsv(s.teknisi)}","${s.biaya.total}","${s.tglMasuk}","${s.updatedAt || ''}","${garansiStatus}"\n`;
-  });
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `laporan_servis_${new Date().toISOString().split('T')[0]}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-  addLog('EXPORT_LAPORAN', 'ALL', 'Mengekspor laporan servis ke CSV');
-}
-
-function escapeCsv(str) {
-  if (!str) return '';
-  return str.replace(/"/g, '""');
 }
 
 // ==================== PELANGGAN ====================
 function renderPelanggan() {
-  const seen = new Map();
-  dataServis.forEach(s => {
-    if (!seen.has(s.wa) || seen.get(s.wa).totalServis < dataServis.filter(x => x.wa === s.wa).length) {
-      seen.set(s.wa, {
-        nama: s.nama,
-        wa: s.wa,
-        totalServis: dataServis.filter(x => x.wa === s.wa).length,
-        totalBiaya: dataServis.filter(x => x.wa === s.wa).reduce((sum, x) => sum + (x.biaya.total || 0), 0),
-        lastServis: s.tglMasuk
-      });
-    }
-  });
-  const pelangganList = Array.from(seen.values()).sort((a,b) => b.totalServis - a.totalServis);
-
+  const pelanggan = [...new Map(dataServis.map(s => [s.wa, { nama: s.nama, wa: s.wa, totalServis: dataServis.filter(x => x.wa === s.wa).length }])).values()];
   document.getElementById('page-pelanggan').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-users"></i> Manajemen Pelanggan</span>
-      <button class="btn btn-primary" onclick="openNewServis()"><i class="fas fa-plus"></i> Servis Baru</button>
-    </div>
-    <div class="content">
-      <div class="filter-section">
-        <div class="filter-group">
-          <label>Cari Pelanggan</label>
-          <input type="text" id="search-pelanggan" placeholder="Nama atau No. WA..." oninput="filterPelanggan()">
-        </div>
-      </div>
-      <div class="card" style="padding:0">
-        <div class="table-responsive">
-          <table id="tbl-pelanggan">
-            <thead><tr><th>No</th><th>Nama</th><th>No. WhatsApp</th><th>Total Servis</th><th>Total Belanja</th><th>Servis Terakhir</th><th>Aksi</th></tr></thead>
-            <tbody id="tbody-pelanggan"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-users"></i> Manajemen Pelanggan</span></div>
+    <div class="content"><div class="card" style="padding:0"><div class="table-responsive"><table><thead><tr><th>Nama</th><th>No. WhatsApp</th><th>Total Servis</th><th>Aksi</th></tr></thead><tbody>
+      ${pelanggan.map(p => `<tr><td><div style="font-weight:600">${escapeHtml(p.nama)}</div></td><td>${p.wa}</td><td>${p.totalServis}</td><td><button class="btn btn-sm" onclick="alert('Riwayat servis ${p.nama}')"><i class="fas fa-history"></i> Riwayat</button></td>`).join('')}
+    </tbody></table></div></div></div>
   `;
-  renderTabelPelanggan(pelangganList);
-}
-
-window._searchPelanggan = '';
-
-function filterPelanggan() {
-  window._searchPelanggan = document.getElementById('search-pelanggan')?.value.toLowerCase() || '';
-  const seen = new Map();
-  dataServis.forEach(s => {
-    if (!seen.has(s.wa) || seen.get(s.wa).totalServis < dataServis.filter(x => x.wa === s.wa).length) {
-      seen.set(s.wa, {
-        nama: s.nama,
-        wa: s.wa,
-        totalServis: dataServis.filter(x => x.wa === s.wa).length,
-        totalBiaya: dataServis.filter(x => x.wa === s.wa).reduce((sum, x) => sum + (x.biaya.total || 0), 0),
-        lastServis: s.tglMasuk
-      });
-    }
-  });
-  let pelangganList = Array.from(seen.values());
-  if (window._searchPelanggan) {
-    pelangganList = pelangganList.filter(p => 
-      p.nama.toLowerCase().includes(window._searchPelanggan) || 
-      p.wa.includes(window._searchPelanggan)
-    );
-  }
-  renderTabelPelanggan(pelangganList);
-}
-
-function renderTabelPelanggan(data) {
-  const tbody = document.getElementById('tbody-pelanggan');
-  if (!tbody) return;
-  if (data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-users"></i><p>Tidak ada data pelanggan</p></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map((p, i) => `
-    <tr>
-      <td style="color:var(--text-sec)">${i+1}</td>
-      <td style="font-weight:600">${escapeHtml(p.nama)}</td>
-      <td><a href="https://wa.me/${p.wa.replace(/\D/g,'')}" target="_blank" style="color:#25D366"><i class="fab fa-whatsapp"></i> ${p.wa}</a></td>
-      <td><span class="status-badge s-repair">${p.totalServis} kali</span></td>
-      <td style="font-weight:700;color:#1D9E75">${formatRp(p.totalBiaya)}</td>
-      <td style="font-size:12px">${p.lastServis}</td>
-      <td>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-sm" onclick="riwayatPelanggan('${p.wa}')"><i class="fas fa-history"></i> Riwayat</button>
-          <button class="btn btn-sm btn-primary" onclick="openNewServisWithCustomer('${p.wa}', '${escapeHtml(p.nama)}')"><i class="fas fa-plus"></i> Servis</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function riwayatPelanggan(wa) {
-  const riwayat = dataServis.filter(s => s.wa === wa).sort((a,b) => b.id.localeCompare(a.id));
-  const pelanggan = riwayat[0];
-  let html = `<div class="modal-overlay" id="modal-riwayat" style="display:flex">
-    <div class="modal" style="max-width: 800px;">
-      <div class="modal-header">
-        <span><i class="fas fa-history"></i> Riwayat Servis - ${escapeHtml(pelanggan.nama)}</span>
-        <button class="close-btn" onclick="closeModal('modal-riwayat')">&times;</button>
-      </div>
-      <div class="table-responsive">
-        <table style="min-width: 500px;">
-          <thead><tr><th>ID</th><th>Perangkat</th><th>Status</th><th>Biaya</th><th>Garansi</th><th>Tgl Masuk</th></tr></thead>
-          <tbody>
-            ${riwayat.map(s => {
-              let garansiText = '-';
-              if (s.garansi && s.garansi.aktif) garansiText = `<span class="status-badge s-garansi-aktif">Aktif ${s.garansi.durasi} hr</span>`;
-              else if (s.garansi && s.garansi.promised) garansiText = `<span class="status-badge s-waiting">Janji ${s.garansi.durasi} hr</span>`;
-              return `<tr>
-                <td style="font-family:monospace;color:var(--primary);font-weight:700">${s.id}</td>
-                <td>${escapeHtml(s.device)}</td>
-                <td><span class="status-badge ${STATUS_COLOR[s.status]}">${STATUS[s.status]}</span></td>
-                <td style="font-weight:600">${s.biaya.total > 0 ? formatRp(s.biaya.total) : '-'}</td>
-                <td>${garansiText}</td>
-                <td style="font-size:12px">${s.tglMasuk}</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>
-      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px">
-        <button class="btn" onclick="closeModal('modal-riwayat')">Tutup</button>
-        <button class="btn btn-primary" onclick="closeModal('modal-riwayat'); openNewServisWithCustomer('${wa}', '${escapeHtml(pelanggan.nama)}')"><i class="fas fa-plus"></i> Servis Baru</button>
-      </div>
-    </div>
-  </div>`;
-  document.body.insertAdjacentHTML('beforeend', html);
-}
-
-function openNewServisWithCustomer(wa, nama) {
-  openNewServis();
-  setTimeout(() => {
-    document.getElementById('search-customer').value = nama;
-    document.getElementById('new-wa').value = wa;
-    selectedCustomerData = { nama, wa };
-  }, 100);
 }
 
 // ==================== PENGATURAN ====================
 function renderPengaturan() {
   document.getElementById('page-pengaturan').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-gear"></i> Pengaturan</span>
-    </div>
-    <div class="content">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Informasi Toko</span></div>
-        <div class="form-group">
-          <label class="form-label">Nama Usaha</label>
-          <input type="text" id="set-nama-usaha" value="${escapeHtml(pengaturan.namaUsaha)}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Alamat</label>
-          <textarea id="set-alamat" rows="2">${escapeHtml(pengaturan.alamat)}</textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Nomor Telepon</label>
-          <input type="text" id="set-telp" value="${escapeHtml(pengaturan.telepon)}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Durasi Garansi Default (hari)</label>
-          <input type="number" id="set-garansi" value="${pengaturan.garansiHari}">
-        </div>
-        <button class="btn btn-primary" onclick="simpanPengaturan()"><i class="fas fa-save"></i> Simpan Pengaturan</button>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><span class="card-title">Template Pesan WhatsApp</span></div>
-        <div class="form-group">
-          <label class="form-label">Template Persetujuan (Approval)</label>
-          <textarea id="set-template-approval" rows="4" class="font-mono" style="font-family:monospace;font-size:12px">${escapeHtml(pengaturan.template_approval)}</textarea>
-          <div class="info-text" style="margin-top:5px">Variabel: {nama}, {device}, {total}, {garansi_text}</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Template Selesai (Done)</label>
-          <textarea id="set-template-done" rows="4" class="font-mono" style="font-family:monospace;font-size:12px">${escapeHtml(pengaturan.template_done)}</textarea>
-          <div class="info-text" style="margin-top:5px">Variabel: {nama}, {device}, {total}, {garansi_text}</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Template Pembayaran (Payment)</label>
-          <textarea id="set-template-payment" rows="4" class="font-mono" style="font-family:monospace;font-size:12px">${escapeHtml(pengaturan.template_payment)}</textarea>
-          <div class="info-text" style="margin-top:5px">Variabel: {nama}, {device}, {total}, {metode}, {garansi_text}</div>
-        </div>
-        <button class="btn btn-primary" onclick="simpanTemplate()"><i class="fas fa-save"></i> Simpan Template</button>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><span class="card-title">Data & Backup</span></div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <button class="btn" onclick="backupData()"><i class="fas fa-download"></i> Backup Data (JSON)</button>
-          <button class="btn" onclick="restoreData()"><i class="fas fa-upload"></i> Restore Data</button>
-          <input type="file" id="restore-file" style="display:none" accept=".json" onchange="prosesRestore(this)">
-          <button class="btn btn-danger" onclick="resetData()"><i class="fas fa-trash"></i> Reset Demo Data</button>
-        </div>
-        <div class="info-text" style="margin-top:12px">
-          <i class="fas fa-info-circle"></i> Backup akan menyimpan semua data servis, sparepart, teknisi, dan pembayaran.
-        </div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-gear"></i> Pengaturan</span></div>
+    <div class="content"><div class="card"><div class="card-header"><span class="card-title">Informasi Aplikasi</span></div><div class="info-text">ServisHP Pro v1.0<br>Aplikasi Manajemen Servis Handphone<br>Data tersimpan di lokal browser (LocalStorage)</div></div></div>
   `;
-}
-
-function simpanPengaturan() {
-  pengaturan.namaUsaha = document.getElementById('set-nama-usaha').value;
-  pengaturan.alamat = document.getElementById('set-alamat').value;
-  pengaturan.telepon = document.getElementById('set-telp').value;
-  pengaturan.garansiHari = parseInt(document.getElementById('set-garansi').value) || 30;
-  addLog('UPDATE_SETTINGS', 'SETTINGS', 'Memperbarui pengaturan toko');
-  alert('Pengaturan berhasil disimpan!');
-  renderPengaturan();
-}
-
-function simpanTemplate() {
-  pengaturan.template_approval = document.getElementById('set-template-approval').value;
-  pengaturan.template_done = document.getElementById('set-template-done').value;
-  pengaturan.template_payment = document.getElementById('set-template-payment').value;
-  addLog('UPDATE_TEMPLATE', 'TEMPLATE', 'Memperbarui template WhatsApp');
-  alert('Template berhasil disimpan!');
-  renderPengaturan();
-}
-
-function backupData() {
-  const data = {
-    dataServis,
-    dataSparepart,
-    dataTeknisi,
-    dataPembayaran,
-    dataLog,
-    deviceHistory,
-    pengaturan
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `servishp_backup_${new Date().toISOString().split('T')[0]}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  addLog('BACKUP_DATA', 'ALL', 'Membackup semua data sistem');
-  alert('Backup berhasil dibuat!');
-}
-
-function restoreData() {
-  document.getElementById('restore-file').click();
-}
-
-function prosesRestore(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (data.dataServis) dataServis = data.dataServis;
-      if (data.dataSparepart) dataSparepart = data.dataSparepart;
-      if (data.dataTeknisi) dataTeknisi = data.dataTeknisi;
-      if (data.dataPembayaran) dataPembayaran = data.dataPembayaran;
-      if (data.dataLog) dataLog = data.dataLog;
-      if (data.deviceHistory) deviceHistory = data.deviceHistory;
-      if (data.pengaturan) Object.assign(pengaturan, data.pengaturan);
-      addLog('RESTORE_DATA', 'ALL', 'Me-restore data dari backup');
-      alert('Restore berhasil! Halaman akan dimuat ulang.');
-      location.reload();
-    } catch (err) {
-      alert('File backup tidak valid: ' + err.message);
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
-
-function resetData() {
-  if (confirm('RESET akan menghapus semua data dan mengembalikan ke data demo!\n\nApakah Anda yakin?')) {
-    localStorage.clear();
-    location.reload();
-  }
 }
 
 // ==================== LOG AKTIVITAS ====================
 function renderLog() {
   document.getElementById('page-logaktivitas').innerHTML = `
-    <div class="topbar">
-      <span class="topbar-title"><i class="fas fa-clock-rotate-left"></i> Log Aktivitas</span>
-      <div class="topbar-actions">
-        <button class="btn btn-sm" onclick="exportLogCSV()"><i class="fas fa-download"></i> Export Log</button>
-        <button class="btn btn-sm btn-danger" onclick="clearLogs()"><i class="fas fa-trash"></i> Hapus Semua</button>
-      </div>
-    </div>
-    <div class="content">
-      <div class="filter-section">
-        <div class="filter-group">
-          <label>Cari Log</label>
-          <input type="text" id="search-log" placeholder="Cari aksi, target, atau user..." oninput="filterLog()">
-        </div>
-        <div class="filter-group">
-          <label>Filter User</label>
-          <select id="filter-log-user" onchange="filterLog()">
-            <option value="">Semua User</option>
-            ${[...new Set(dataLog.map(l => l.user))].map(u => `<option value="${u}">${u}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      <div class="card" id="log-container" style="max-height: 500px; overflow-y: auto;">
-        <div id="log-list"></div>
-      </div>
-    </div>
+    <div class="topbar"><span class="topbar-title"><i class="fas fa-clock-rotate-left"></i> Log Aktivitas</span></div>
+    <div class="content"><div class="card">${dataLog.slice(0, 20).map(l => `<div class="log-entry"><div class="log-time">${l.timestamp} · ${l.user}</div><div><strong>${l.action}</strong> ${l.target}<br>${l.details}</div></div>`).join('')}</div></div>
   `;
-  renderLogList(dataLog);
 }
-
-let _filterLogSearch = '';
-let _filterLogUser = '';
-
-function filterLog() {
-  _filterLogSearch = document.getElementById('search-log')?.value.toLowerCase() || '';
-  _filterLogUser = document.getElementById('filter-log-user')?.value || '';
-  let filtered = dataLog;
-  if (_filterLogSearch) {
-    filtered = filtered.filter(l => 
-      l.action.toLowerCase().includes(_filterLogSearch) ||
-      l.target.toLowerCase().includes(_filterLogSearch) ||
-      l.details.toLowerCase().includes(_filterLogSearch) ||
-      l.user.toLowerCase().includes(_filterLogSearch)
-    );
-  }
-  if (_filterLogUser) {
-    filtered = filtered.filter(l => l.user === _filterLogUser);
-  }
-  renderLogList(filtered);
-}
-
-function renderLogList(logs) {
-  const container = document.getElementById('log-list');
-  if (!container) return;
-  if (logs.length === 0) {
-    container.innerHTML = '<div class="empty-state"><i class="fas fa-clock-rotate-left"></i><p>Tidak ada log aktivitas</p></div>';
-    return;
-  }
-  container.innerHTML = logs.map(l => `
-    <div class="log-entry">
-      <div class="log-time"><i class="far fa-clock"></i> ${l.timestamp}</div>
-      <div><span class="log-action">${escapeHtml(l.action)}</span> — ${escapeHtml(l.details)}</div>
-      <div class="log-user"><i class="fas fa-user"></i> ${escapeHtml(l.user)}</div>
-      <div style="font-size:10px; color:var(--text-sec); margin-top:4px">Target: ${escapeHtml(l.target)}</div>
-    </div>
-  `).join('');
-}
-
-function exportLogCSV() {
-  let csv = "Timestamp,User,Action,Target,Details\n";
-  dataLog.forEach(l => {
-    csv += `"${l.timestamp}","${escapeCsv(l.user)}","${escapeCsv(l.action)}","${escapeCsv(l.target)}","${escapeCsv(l.details)}"\n`;
-  });
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `log_aktivitas_${new Date().toISOString().split('T')[0]}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('Log berhasil diekspor!');
-}
-
-function clearLogs() {
-  if (confirm('Hapus semua log aktivitas? Tindakan ini tidak dapat dibatalkan!')) {
-    dataLog = [];
-    addLog('CLEAR_LOGS', 'ALL', 'Menghapus semua log aktivitas');
-    renderLog();
-    alert('Semua log telah dihapus!');
-  }
-}
-
-// ==================== MODAL FUNCTIONS (GARANSI) ====================
-function toggleGaransiOptions() {
-  const check = document.getElementById('biaya-garansi-check');
-  const optionsDiv = document.getElementById('biaya-garansi-options');
-  if (check.checked) {
-    optionsDiv.style.display = 'block';
-  } else {
-    optionsDiv.style.display = 'none';
-  }
-  updatePreviewWA();
-}
-
-// Update fungsi updateTotal untuk menyertakan garansi
-const originalUpdateTotal = updateTotal;
-function updateTotal() {
-  originalUpdateTotal();
-  updatePreviewWA();
-}
-
-function updatePreviewWA() {
-  const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
-  const totalSparepart = currentSelectedSpareparts.reduce((sum, sp) => sum + (sp.harga * sp.qty), 0);
-  const total = jasa + totalSparepart;
-  const previewDiv = document.getElementById('preview-wa');
-  const btnSimpan = document.getElementById('btn-simpan');
-  
-  if (total === 0) {
-    if (btnSimpan) btnSimpan.disabled = true;
-    document.getElementById('biaya-warning').style.display = 'block';
-    if (previewDiv) previewDiv.innerHTML = '<span class="text-muted">Isi biaya jasa atau pilih sparepart terlebih dahulu</span>';
-    return;
-  }
-  
-  if (btnSimpan) btnSimpan.disabled = false;
-  document.getElementById('biaya-warning').style.display = 'none';
-  
-  const garansiChecked = document.getElementById('biaya-garansi-check').checked;
-  let garansiText = '';
-  if (garansiChecked) {
-    const durasi = document.querySelector('input[name="biaya-garansi-durasi"]:checked').value;
-    garansiText = `\n\n🛡️ *Janji Garansi Servis:* ${durasi} Hari (akan aktif setelah pembayaran lunas dan barang diambil)`;
-  }
-  
-  const preview = pengaturan.template_approval
-    .replace('{nama}', selectedCustomerData?.nama || 'Pelanggan')
-    .replace('{device}', document.getElementById('new-device')?.value || 'Perangkat')
-    .replace('{total}', formatRp(total))
-    .replace('{garansi_text}', garansiText);
-  
-  if (previewDiv) previewDiv.innerHTML = preview;
-}
-
-function simpanApproval() {
-  if (!selectedId) return;
-  const job = dataServis.find(s => s.id === selectedId);
-  if (!job) return;
-  
-  const jasa = parseInt(document.getElementById('biaya-jasa').value) || 0;
-  const spareparts = currentSelectedSpareparts.map(sp => ({
-    id: sp.id,
-    nama: sp.nama,
-    harga: sp.harga,
-    qty: sp.qty
-  }));
-  const total = jasa + spareparts.reduce((sum, sp) => sum + (sp.harga * sp.qty), 0);
-  
-  job.biaya = { jasa, spareparts, total };
-  
-  // Booking stok sparepart
-  job.bookedSpareparts = spareparts.map(sp => ({ id: sp.id, nama: sp.nama, qty: sp.qty }));
-  spareparts.forEach(sp => {
-    const stock = dataSparepart.find(s => s.id === sp.id);
-    if (stock) stock.booked = (stock.booked || 0) + sp.qty;
-  });
-  
-  // Simpan data garansi jika dicentang
-  const garansiChecked = document.getElementById('biaya-garansi-check').checked;
-  if (garansiChecked) {
-    const durasi = parseInt(document.querySelector('input[name="biaya-garansi-durasi"]:checked').value);
-    job.garansi = {
-      promised: true,
-      durasi: durasi,
-      aktif: false,
-      activatedAt: null
-    };
-  } else {
-    job.garansi = { promised: false, durasi: 0, aktif: false, activatedAt: null };
-  }
-  
-  job.status = 'approval';
-  job.updatedAt = nowStr();
-  job.updatedBy = currentUser;
-  
-  addLog('ADD_COST', job.id, `Input biaya: ${formatRp(total)}${garansiChecked ? ` + Garansi ${durasi} hari` : ''}`);
-  
-  // Kirim WhatsApp
-  sendApprovalWA(job);
-  
-  closeModalBiaya();
-  renderPage(currentPage);
-  showToast(`Biaya dan garansi berhasil disimpan, WA approval dikirim ke ${job.nama}`, 'success');
-}
-
-function sendApprovalWA(job) {
-  let garansiText = '';
-  if (job.garansi && job.garansi.promised) {
-    garansiText = `\n\n🛡️ *Janji Garansi Servis:* ${job.garansi.durasi} Hari (akan aktif setelah pembayaran lunas dan barang diambil)`;
-  }
-  const msg = pengaturan.template_approval
-    .replace('{nama}', job.nama)
-    .replace('{device}', job.device)
-    .replace('{total}', formatRp(job.biaya.total))
-    .replace('{garansi_text}', garansiText);
-  const phone = job.wa.replace(/\D/g, '');
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-}
-
-function openSelesaiModal(id) {
-  const job = dataServis.find(s => s.id === id);
-  if (!job) return;
-  selectedId = id;
-  document.getElementById('total-display').textContent = formatRp(job.biaya.total);
-  
-  let garansiText = '';
-  if (job.garansi && job.garansi.promised) {
-    garansiText = `\n🛡️ *Janji Garansi Servis:* ${job.garansi.durasi} Hari (akan aktif setelah pembayaran dan pengambilan)`;
-  }
-  
-  const preview = pengaturan.template_done
-    .replace('{nama}', job.nama)
-    .replace('{device}', job.device)
-    .replace('{total}', formatRp(job.biaya.total))
-    .replace('{garansi_text}', garansiText);
-  document.getElementById('preview-done').innerHTML = preview;
-  document.getElementById('modal-selesai').style.display = 'flex';
-}
-
-function konfirmasiSelesai() {
-  const job = dataServis.find(s => s.id === selectedId);
-  if (!job) return;
-  
-  // Kurangi stok dari booking
-  job.bookedSpareparts?.forEach(b => {
-    const stock = dataSparepart.find(s => s.id === b.id);
-    if (stock) {
-      stock.stok -= b.qty;
-      stock.booked = Math.max(0, stock.booked - b.qty);
-    }
-  });
-  
-  const catatan = document.getElementById('catatan-selesai').value;
-  job.status = 'done';
-  job.updatedAt = nowStr();
-  job.updatedBy = currentUser;
-  if (catatan) job.notes = [...(job.notes || []), `[Selesai] ${catatan}`];
-  
-  addLog('FINISH_SERVIS', job.id, `Servis selesai, siap diambil. ${catatan ? 'Catatan: ' + catatan : ''}`);
-  
-  // Kirim WA notifikasi selesai
-  let garansiText = '';
-  if (job.garansi && job.garansi.promised) {
-    garansiText = `\n🛡️ *Janji Garansi Servis:* ${job.garansi.durasi} Hari (akan aktif setelah pembayaran dan pengambilan)`;
-  }
-  const msg = pengaturan.template_done
-    .replace('{nama}', job.nama)
-    .replace('{device}', job.device)
-    .replace('{total}', formatRp(job.biaya.total))
-    .replace('{garansi_text}', garansiText);
-  const phone = job.wa.replace(/\D/g, '');
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-  
-  closeModal('modal-selesai');
-  renderPage(currentPage);
-  showToast(`Servis ${job.id} selesai, notifikasi WA dikirim ke ${job.nama}`, 'success');
-}
-
-function openBayarModal(id) {
-  const job = dataServis.find(s => s.id === id);
-  if (!job) return;
-  selectedId = id;
-  document.getElementById('tagihan').textContent = formatRp(job.biaya.total);
-  document.getElementById('dibayar').value = '';
-  document.getElementById('kembalian').value = '';
-  
-  const garansiInfo = document.getElementById('garansi-aktivasi-info');
-  if (job.garansi && job.garansi.promised && !job.garansi.aktif) {
-    garansiInfo.style.display = 'block';
-    garansiInfo.innerHTML = `<i class="fas fa-shield-alt"></i> <strong>Garansi akan diaktifkan</strong> setelah pembayaran dikonfirmasi. Pelanggan akan mendapat garansi servis ${job.garansi.durasi} hari.`;
-  } else {
-    garansiInfo.style.display = 'none';
-  }
-  
-  updatePreviewBayar();
-  document.getElementById('modal-bayar').style.display = 'flex';
-}
-
-function hitungKembalian() {
-  const job = dataServis.find(s => s.id === selectedId);
-  if (!job) return;
-  const dibayar = parseInt(document.getElementById('dibayar').value) || 0;
-  const kembalian = dibayar - job.biaya.total;
-  document.getElementById('kembalian').value = kembalian >= 0 ? formatRp(kembalian) : 'Kurang ' + formatRp(Math.abs(kembalian));
-}
-
-function updatePreviewBayar() {
-  const job = dataServis.find(s => s.id === selectedId);
-  if (!job) return;
-  const metode = document.getElementById('metode').value;
-  
-  let garansiText = '';
-  if (job.garansi && job.garansi.promised && !job.garansi.aktif) {
-    garansiText = `\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari (berlaku mulai hari ini untuk kerusakan yang sama)`;
-  }
-  
-  const preview = pengaturan.template_payment
-    .replace('{nama}', job.nama)
-    .replace('{device}', job.device)
-    .replace('{total}', formatRp(job.biaya.total))
-    .replace('{metode}', metode)
-    .replace('{garansi_text}', garansiText);
-  document.getElementById('preview-bayar').innerHTML = preview;
-}
-
-function prosesBayar() {
-  const job = dataServis.find(s => s.id === selectedId);
-  if (!job) return;
-  const dibayar = parseInt(document.getElementById('dibayar').value) || 0;
-  if (dibayar < job.biaya.total) {
-    alert(`Pembayaran kurang! Tagihan: ${formatRp(job.biaya.total)}, Dibayar: ${formatRp(dibayar)}`);
-    return;
-  }
-  
-  const metode = document.getElementById('metode').value;
-  
-  // Catat pembayaran
-  dataPembayaran.push({
-    id: job.id,
-    tanggal: new Date().toISOString().split('T')[0],
-    nominal: job.biaya.total,
-    metode: metode,
-    createdBy: currentUser
-  });
-  
-  // Aktivasi garansi jika ada janji garansi
-  if (job.garansi && job.garansi.promised && !job.garansi.aktif) {
-    job.garansi.aktif = true;
-    job.garansi.activatedAt = new Date().toISOString();
-    addLog('ACTIVATE_GARANSI', job.id, `Garansi ${job.garansi.durasi} hari diaktifkan untuk ${job.nama}`);
-  }
-  
-  job.status = 'taken';
-  job.updatedAt = nowStr();
-  job.updatedBy = currentUser;
-  
-  addLog('PAYMENT', job.id, `Pembayaran ${formatRp(job.biaya.total)} via ${metode} oleh ${currentUser}`);
-  
-  // Kirim WA pembayaran
-  let garansiText = '';
-  if (job.garansi && job.garansi.aktif) {
-    const tglExp = new Date(job.garansi.activatedAt);
-    tglExp.setDate(tglExp.getDate() + job.garansi.durasi);
-    garansiText = `\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari (berlaku hingga ${tglExp.toLocaleDateString('id-ID')})`;
-  }
-  const msg = pengaturan.template_payment
-    .replace('{nama}', job.nama)
-    .replace('{device}', job.device)
-    .replace('{total}', formatRp(job.biaya.total))
-    .replace('{metode}', metode)
-    .replace('{garansi_text}', garansiText);
-  const phone = job.wa.replace(/\D/g, '');
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-  
-  closeModal('modal-bayar');
-  renderPage(currentPage);
-  showToast(`Pembayaran berhasil! Garansi ${job.garansi?.durasi || 0} hari diaktifkan.`, 'success');
-}
-
-// ==================== MODAL UTILITY ====================
-function closeModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) modal.style.display = 'none';
-}
-
-function closeModalBiaya() {
-  closeModal('modal-biaya-servis');
-  currentSelectedSpareparts = [];
-}
-
-function showToast(msg, type = 'success') {
-  // Implementasi sederhana toast
-  const toast = document.createElement('div');
-  toast.style.cssText = `position:fixed;bottom:20px;right:20px;background:${type === 'success' ? '#1D9E75' : '#E24B4A'};color:white;padding:12px 20px;border-radius:8px;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-size:13px;animation:fadeInOut 3s ease forwards`;
-  toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${msg}`;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-// Tambahkan style animasi toast
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(20px); }
-    15% { opacity: 1; transform: translateX(0); }
-    85% { opacity: 1; transform: translateX(0); }
-    100% { opacity: 0; transform: translateX(20px); }
-  }
-`;
-document.head.appendChild(style);
 
 // ==================== INITIALIZATION ====================
-function init() {
-  loadHistory();
-  updateDeviceDatalist();
-  renderPage('dashboard');
-  
-  // Mobile menu
+document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('mobileMenuToggle');
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
-  if (menuToggle) {
-    menuToggle.onclick = () => {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-    };
+  if (menuToggle && sidebar && overlay) {
+    menuToggle.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('active'); });
+    overlay.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); });
   }
-  if (overlay) {
-    overlay.onclick = () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-    };
-  }
-  
-  // Event listener untuk input biaya
-  const biayaJasa = document.getElementById('biaya-jasa');
-  if (biayaJasa) biayaJasa.addEventListener('input', updateTotal);
-  
-  // Event listener untuk radio garansi
-  const radioGaransi = document.querySelectorAll('input[name="biaya-garansi-durasi"]');
-  radioGaransi.forEach(r => r.addEventListener('change', updatePreviewWA));
-  
-  // Event listener untuk metode pembayaran
-  const metodeSelect = document.getElementById('metode');
-  if (metodeSelect) metodeSelect.addEventListener('change', updatePreviewBayar);
-}
-
-init();
+  document.querySelectorAll('.nav-item').forEach(item => { item.addEventListener('click', (e) => { const page = item.getAttribute('data-page'); if (page) navigate(page); }); });
+  navigate('dashboard');
+});
 </script>
 </body>
 </html>
