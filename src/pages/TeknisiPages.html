@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ServisHP Pro – Panel Teknisi</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; }
+
+    /* STATUS BADGES */
+    .badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px; padding: 3px 10px; border-radius: 999px; display: inline-block; white-space:nowrap; }
+    .b-diagnosa        { background:#ede9fe; color:#5b21b6; }
+    .b-laporan         { background:#fef3c7; color:#92400e; }
+    .b-menunggu-acc    { background:#ffedd5; color:#9a3412; }
+    .b-disetujui       { background:#dbeafe; color:#1e40af; }
+    .b-pengerjaan      { background:#e0f2fe; color:#0c4a6e; }
+    .b-selesai-dikerjakan { background:#f0fdf4; color:#166534; border:1px solid #86efac; }
+    .b-menunggu-bayar  { background:#fef9c3; color:#713f12; }
+    .b-dibatalkan      { background:#fee2e2; color:#991b1b; }
+    .b-selesai         { background:#d1fae5; color:#065f46; }
+
+    /* PRIORITY BORDER */
+    .p-high   { border-left: 4px solid #ef4444; }
+    .p-medium { border-left: 4px solid #f59e0b; }
+    .p-low    { border-left: 4px solid #10b981; }
+
+    /* CARD */
+    .card-job { transition: transform 0.18s, box-shadow 0.18s; cursor:pointer; }
+    .card-job:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,0.10); }
+
+    /* TAB */
+    .tab-btn  { transition: all 0.18s; white-space:nowrap; }
+    .tab-active { background:#2563eb; color:#fff !important; }
+
+
+
+    /* MODAL */
+    .modal-bg { background:rgba(0,0,0,0.55); backdrop-filter:blur(5px); }
+
+    /* STEP TIMELINE */
+    .step-done  { background:#2563eb; border-color:#2563eb; color:#fff; }
+    .step-active{ background:#fff; border-color:#2563eb; color:#2563eb; }
+    .step-idle  { background:#fff; border-color:#d1d5db; color:#9ca3af; }
+    .step-cancel{ background:#ef4444; border-color:#ef4444; color:#fff; }
+    .line-done  { background:#2563eb; }
+    .line-idle  { background:#e5e7eb; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:#f1f5f9} ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+
+    /* TOAST */
+    #toast { transition: opacity 0.3s; }
+    .inp { width:100%; border:1px solid #d1d5db; border-radius:10px; padding:8px 12px; font-size:14px; outline:none; background:#f9fafb; }
+    .inp:focus { border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,0.15); background:#fff; }
+    .btn-primary { background:#2563eb; color:#fff; font-weight:700; border-radius:10px; padding:9px 18px; font-size:14px; cursor:pointer; transition:background 0.18s; border:none; }
+    .btn-primary:hover { background:#1d4ed8; }
+    .btn-danger  { background:#ef4444; color:#fff; font-weight:700; border-radius:10px; padding:9px 18px; font-size:14px; cursor:pointer; transition:background 0.18s; border:none; }
+    .btn-danger:hover  { background:#dc2626; }
+    .btn-success { background:#16a34a; color:#fff; font-weight:700; border-radius:10px; padding:9px 18px; font-size:14px; cursor:pointer; transition:background 0.18s; border:none; }
+    .btn-success:hover { background:#15803d; }
+    .btn-gray    { background:#f3f4f6; color:#374151; font-weight:600; border-radius:10px; padding:9px 18px; font-size:14px; cursor:pointer; transition:background 0.18s; border:1px solid #e5e7eb; }
+    .btn-gray:hover    { background:#e5e7eb; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<nav class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-lg sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
+        <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
+      </div>
+      <div>
+        <div class="font-bold text-lg leading-none">ServisHP Pro</div>
+        <div class="text-blue-200 text-xs">Panel Teknisi</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <!-- notif -->
+      <div class="relative cursor-pointer" onclick="toggleNotif()">
+        <i class="fa-solid fa-bell text-xl text-blue-100"></i>
+        <span id="notif-count" class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center font-bold">2</span>
+      </div>
+      <!-- user -->
+      <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-xl">
+        <div class="w-7 h-7 bg-indigo-400 rounded-full flex items-center justify-center text-sm font-bold">A</div>
+        <div>
+          <div class="text-sm font-semibold leading-none">Andi</div>
+          <div class="text-blue-200 text-xs">Teknisi Senior</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- NOTIF PANEL -->
+<div id="notif-panel" class="hidden fixed top-16 right-4 w-80 bg-white rounded-2xl shadow-2xl z-50 border border-gray-100 overflow-hidden">
+  <div class="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
+    <span class="font-semibold text-sm">Notifikasi</span>
+    <button onclick="toggleNotif()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="notif-list" class="divide-y divide-gray-100 max-h-72 overflow-y-auto"></div>
+</div>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="max-w-6xl mx-auto px-4 py-6">
+
+  <!-- SUMMARY -->
+  <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-6" id="summary-cards"></div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-4 flex flex-col md:flex-row gap-3 items-start md:items-center">
+    <div class="relative flex-1 w-full">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+      <input id="q" type="text" placeholder="Cari no. job, perangkat, pelanggan…" oninput="render()"
+        class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 bg-gray-50"/>
+    </div>
+    <select id="f-priority" onchange="render()" class="text-sm border border-gray-200 rounded-xl px-3 py-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <option value="">Semua Prioritas</option>
+      <option>Tinggi</option><option>Sedang</option><option>Rendah</option>
+    </select>
+    <select id="f-sort" onchange="render()" class="text-sm border border-gray-200 rounded-xl px-3 py-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <option value="newest">Terbaru</option>
+      <option value="priority">Prioritas</option>
+      <option value="deadline">Deadline</option>
+    </select>
+  </div>
+
+  <!-- TABS -->
+  <div class="flex gap-1.5 mb-5 bg-white rounded-2xl p-1.5 shadow-sm border border-gray-100 overflow-x-auto" id="tab-bar"></div>
+
+  <!-- CARDS -->
+  <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  <div id="empty" class="hidden text-center py-20">
+    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <i class="fa-solid fa-box-open text-3xl text-gray-300"></i>
+    </div>
+    <p class="text-gray-400 font-medium">Tidak ada job di tab ini</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MODAL DETAIL / AKSI
+═══════════════════════════════════════════════════ -->
+<div id="modal" class="hidden fixed inset-0 z-50 modal-bg flex items-end md:items-center justify-center p-0 md:p-4">
+  <div class="bg-white w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-gray-100 flex items-start justify-between flex-shrink-0">
+      <div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="m-id" class="font-black text-blue-700 text-lg"></span>
+          <span id="m-priority" class="badge"></span>
+          <span id="m-status" class="badge"></span>
+        </div>
+        <div id="m-device" class="text-sm text-gray-400 mt-0.5"></div>
+      </div>
+      <button onclick="closeModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500 flex-shrink-0 ml-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Timeline Steps -->
+    <div id="m-timeline" class="px-6 py-4 border-b border-gray-100 overflow-x-auto flex-shrink-0"></div>
+
+    <!-- Body (scrollable) -->
+    <div class="overflow-y-auto flex-1 px-6 py-4 space-y-4">
+
+      <!-- Info Grid -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-gray-50 rounded-xl p-3">
+          <div class="text-xs text-gray-400 mb-0.5"><i class="fa-solid fa-user mr-1"></i>Pelanggan</div>
+          <div id="m-customer" class="font-semibold text-gray-800 text-sm"></div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-3">
+          <div class="text-xs text-gray-400 mb-0.5"><i class="fa-solid fa-phone mr-1"></i>No. HP</div>
+          <div id="m-phone" class="font-semibold text-gray-800 text-sm"></div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-3">
+          <div class="text-xs text-gray-400 mb-0.5"><i class="fa-solid fa-calendar mr-1"></i>Tanggal Masuk</div>
+          <div id="m-date" class="font-semibold text-gray-800 text-sm"></div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-3">
+          <div class="text-xs text-gray-400 mb-0.5"><i class="fa-solid fa-clock mr-1"></i>Estimasi Selesai</div>
+          <div id="m-deadline" class="font-semibold text-gray-800 text-sm"></div>
+        </div>
+      </div>
+
+      <!-- Keluhan -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+        <div class="text-xs text-amber-600 font-semibold mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Keluhan Pelanggan</div>
+        <div id="m-complaint" class="text-sm text-gray-700 leading-relaxed"></div>
+      </div>
+
+      <!-- DIAGNOSA RESULT (jika sudah ada) -->
+      <div id="m-diagnosa-result" class="hidden bg-purple-50 border border-purple-200 rounded-xl p-3">
+        <div class="text-xs text-purple-600 font-semibold mb-2"><i class="fa-solid fa-stethoscope mr-1"></i>Hasil Diagnosa</div>
+        <div id="m-diagnosa-text" class="text-sm text-gray-700 mb-2"></div>
+        <div id="m-sparepart-list" class="space-y-1"></div>
+        <div class="mt-2 flex items-center justify-between border-t border-purple-200 pt-2">
+          <span class="text-xs font-semibold text-purple-600">Total Estimasi Biaya</span>
+          <span id="m-total-cost" class="font-black text-blue-700"></span>
+        </div>
+        <!-- Tampilkan informasi garansi -->
+        <div id="m-garansi-info" class="hidden mt-2 bg-green-50 border border-green-200 rounded-lg p-2 text-xs">
+          <i class="fa-solid fa-shield-alt text-green-600 mr-1"></i>
+          <span class="font-semibold text-green-700">Garansi Servis:</span>
+          <span id="m-garansi-text" class="text-green-600"></span>
+        </div>
+      </div>
+
+      <!-- LOG CATATAN PENGERJAAN -->
+      <div id="m-notes-block" class="hidden">
+        <div class="text-xs text-gray-500 font-semibold mb-2"><i class="fa-solid fa-clipboard-list mr-1"></i>Log Catatan Pengerjaan</div>
+        <div id="m-notes-list" class="space-y-1.5"></div>
+      </div>
+
+      <!-- CATATAN PEMBATALAN -->
+      <div id="m-cancel-block" class="hidden bg-red-50 border border-red-200 rounded-xl p-3">
+        <div class="text-xs text-red-600 font-semibold mb-1"><i class="fa-solid fa-ban mr-1"></i>Alasan Pembatalan</div>
+        <div id="m-cancel-reason" class="text-sm text-gray-700"></div>
+      </div>
+
+      <!-- ACTION PANEL -->
+      <div id="m-actions"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUB-MODAL: INPUT DIAGNOSA (DENGAN OPSI GARANSI) ═══ -->
+<div id="sub-diagnosa" class="hidden fixed inset-0 z-60 modal-bg flex items-end md:items-center justify-center p-0 md:p-4" style="z-index:60">
+  <div class="bg-white w-full md:max-w-xl rounded-t-3xl md:rounded-3xl shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
+      <div class="font-bold text-gray-800"><i class="fa-solid fa-stethoscope mr-2 text-purple-600"></i>Input Hasil Diagnosa</div>
+      <button onclick="closeSub('sub-diagnosa')" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="overflow-y-auto flex-1 px-6 py-5 space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-gray-500 mb-1 block">Hasil Diagnosa / Kerusakan Ditemukan *</label>
+        <textarea id="d-diagnosa" rows="3" placeholder="Contoh: LCD retak pada bagian atas, backlight masih menyala. Touch screen tidak merespons area kiri…" class="inp resize-none"></textarea>
+      </div>
+      
+      <!-- Bagian GARANSI (BARU) -->
+      <div class="border border-gray-200 rounded-xl p-3 bg-gray-50">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="d-garansi-check" onchange="toggleGaransiOptions()" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+            <label for="d-garansi-check" class="text-sm font-semibold text-gray-700"><i class="fa-solid fa-shield-alt mr-1 text-green-600"></i>Berikan Garansi Servis</label>
+          </div>
+        </div>
+        <div id="garansi-options" class="hidden ml-6 mt-2 space-y-2">
+          <div class="text-xs text-gray-500 mb-1">Durasi Garansi:</div>
+          <div class="flex flex-wrap gap-3">
+            <label class="inline-flex items-center gap-1 text-sm">
+              <input type="radio" name="garansi-durasi" value="7" class="text-blue-600"> 7 Hari
+            </label>
+            <label class="inline-flex items-center gap-1 text-sm">
+              <input type="radio" name="garansi-durasi" value="14" class="text-blue-600"> 14 Hari
+            </label>
+            <label class="inline-flex items-center gap-1 text-sm">
+              <input type="radio" name="garansi-durasi" value="30" class="text-blue-600" checked> 30 Hari
+            </label>
+          </div>
+          <div class="text-xs text-gray-400 mt-1">Garansi berlaku untuk kerusakan yang sama pasca servis.</div>
+        </div>
+      </div>
+      
+      <!-- Sparepart -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-semibold text-gray-500">Sparepart dari Stok</label>
+          <button onclick="addSparepartRow()" class="text-xs bg-blue-50 text-blue-600 font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-100 border border-blue-200">
+            <i class="fa-solid fa-plus mr-1"></i>Tambah Sparepart
+          </button>
+        </div>
+        <div id="sparepart-rows" class="space-y-3"></div>
+      </div>
+      <!-- Biaya jasa -->
+      <div>
+        <label class="text-xs font-semibold text-gray-500 mb-1 block">Biaya Jasa Teknisi (Rp)</label>
+        <input id="d-jasa" type="number" placeholder="0" oninput="recalcTotal()" class="inp"/>
+      </div>
+      <!-- Total -->
+      <div class="bg-blue-50 rounded-xl p-3 flex items-center justify-between">
+        <span class="text-sm font-semibold text-blue-700">Total Estimasi Biaya</span>
+        <span id="d-total" class="font-black text-blue-700 text-lg">Rp 0</span>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-100 flex gap-2 flex-shrink-0">
+      <button onclick="closeSub('sub-diagnosa')" class="btn-gray flex-1">Batal</button>
+      <button onclick="submitDiagnosa()" class="btn-primary flex-1"><i class="fa-solid fa-paper-plane mr-1"></i>Kirim ke Pelanggan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUB-MODAL: KONFIRMASI PELANGGAN ═══ -->
+<div id="sub-approval" class="hidden fixed inset-0 z-60 modal-bg flex items-end md:items-center justify-center p-0 md:p-4" style="z-index:60">
+  <div class="bg-white w-full md:max-w-md rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div class="font-bold text-gray-800"><i class="fa-solid fa-user-check mr-2 text-green-600"></i>Respons Pelanggan</div>
+      <button onclick="closeSub('sub-approval')" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="px-6 py-5 space-y-3">
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800">
+        <i class="fa-solid fa-hourglass-half mr-1"></i>Menunggu konfirmasi pelanggan
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-gray-500 mb-1 block">Alasan penolakan (jika tidak disetujui)</label>
+        <input id="cancel-reason-input" type="text" placeholder="Contoh: pelanggan keberatan dengan harga…" class="inp"/>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-100 flex gap-2">
+      <button onclick="customerReject()" class="btn-danger flex-1"><i class="fa-solid fa-ban mr-1"></i>Tidak Disetujui</button>
+      <button onclick="customerApprove()" class="btn-success flex-1"><i class="fa-solid fa-check mr-1"></i>Disetujui</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUB-MODAL: TAMBAH CATATAN PENGERJAAN ═══ -->
+<div id="sub-progress" class="hidden fixed inset-0 z-60 modal-bg flex items-end md:items-center justify-center p-0 md:p-4" style="z-index:60">
+  <div class="bg-white w-full md:max-w-md rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div class="font-bold text-gray-800"><i class="fa-solid fa-clipboard-list mr-2 text-blue-600"></i>Tambah Catatan Pengerjaan</div>
+      <button onclick="closeSub('sub-progress')" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="px-6 py-5 space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-gray-500 mb-1 block">Catatan Perkembangan *</label>
+        <textarea id="prog-note" rows="4" placeholder="Contoh: LCD sudah dilepas, membersihkan konektor flex… atau Penggantian charging port selesai, sedang pengujian…" class="inp resize-none"></textarea>
+      </div>
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-700">
+        <i class="fa-solid fa-lightbulb mr-1"></i>Catatan akan tersimpan sebagai log pengerjaan dan bisa dilihat oleh admin.
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-100 flex gap-2">
+      <button onclick="closeSub('sub-progress')" class="btn-gray flex-1">Batal</button>
+      <button onclick="saveProgress()" class="btn-primary flex-1"><i class="fa-solid fa-floppy-disk mr-1"></i>Simpan Catatan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUB-MODAL: NOTIF SELESAI KE PELANGGAN ═══ -->
+<div id="sub-notif-done" class="hidden fixed inset-0 z-60 modal-bg flex items-end md:items-center justify-center p-0 md:p-4" style="z-index:60">
+  <div class="bg-white w-full md:max-w-md rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div class="font-bold text-gray-800"><i class="fa-brands fa-whatsapp mr-2 text-green-600"></i>Kirim Notifikasi WhatsApp</div>
+      <button onclick="closeSub('sub-notif-done')" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="px-6 py-5 space-y-3">
+      <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800">
+        <i class="fa-solid fa-circle-check mr-1"></i>Pekerjaan selesai! Kirim notifikasi ke pelanggan melalui WhatsApp.
+      </div>
+      <div>
+        <div class="text-xs font-semibold text-gray-500 mb-2">
+          <i class="fa-brands fa-whatsapp text-green-500 mr-1"></i>Preview Pesan WhatsApp:
+        </div>
+        <div id="nd-preview" class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-gray-800 leading-relaxed whitespace-pre-wrap font-mono"></div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-gray-500 mb-1 block">Catatan Tambahan (opsional)</label>
+        <input id="nd-note" type="text" placeholder="Contoh: garansi servis 30 hari…" class="inp"/>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-100 flex gap-2">
+      <button onclick="closeSub('sub-notif-done')" class="btn-gray flex-1">Batal</button>
+      <button onclick="sendWaNotifDone()" class="btn-success flex-1">
+        <i class="fa-brands fa-whatsapp mr-1"></i>Buka WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-6 right-6 z-[70] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-semibold max-w-xs">
+  <i id="toast-icon"></i><span id="toast-msg"></span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+// ─── STOCK SPAREPART ───────────────────────────────
+const STOCK = [
+  { id:'SP001', name:'LCD Samsung A54 ORI', price:280000, qty:5 },
+  { id:'SP002', name:'LCD iPhone 13 Pro ORI', price:650000, qty:3 },
+  { id:'SP003', name:'Baterai iPhone 12 ORI', price:350000, qty:8 },
+  { id:'SP004', name:'LCD Xiaomi Redmi Note 11', price:180000, qty:6 },
+  { id:'SP005', name:'Charging Port Oppo Reno 8', price:75000, qty:4 },
+  { id:'SP006', name:'Baterai Samsung A54', price:120000, qty:7 },
+  { id:'SP007', name:'Speaker Vivo V25', price:85000, qty:5 },
+  { id:'SP008', name:'Flex Kamera Realme GT Neo 3', price:155000, qty:2 },
+  { id:'SP009', name:'Charging Port Poco X5 Pro', price:90000, qty:3 },
+  { id:'SP010', name:'LCD iPhone 12', price:720000, qty:2 },
+  { id:'SP011', name:'Baterai Oppo Reno 8', price:130000, qty:9 },
+  { id:'SP012', name:'Flex Power Button Universal', price:45000, qty:10 },
+];
+
+// ─── STATUS CONFIG ──────────────────────────────────
+const STATUS_CFG = {
+  'diagnosa'          : { label:'Diagnosa',              badge:'b-diagnosa',           icon:'fa-stethoscope',    step:0 },
+  'laporan-dikirim'   : { label:'Laporan Dikirim',        badge:'b-laporan',            icon:'fa-paper-plane',    step:1 },
+  'menunggu-persetujuan':{ label:'Menunggu Persetujuan', badge:'b-menunggu-acc',       icon:'fa-hourglass-half', step:1 },
+  'disetujui'         : { label:'Disetujui',              badge:'b-disetujui',          icon:'fa-thumbs-up',      step:2 },
+  'pengerjaan'        : { label:'Sedang Dikerjakan',      badge:'b-pengerjaan',         icon:'fa-gears',          step:3 },
+  'selesai-dikerjakan': { label:'Selesai Dikerjakan',     badge:'b-selesai-dikerjakan', icon:'fa-circle-check',   step:4 },
+  'menunggu-bayar'    : { label:'Menunggu Pembayaran',    badge:'b-menunggu-bayar',     icon:'fa-cash-register',  step:5 },
+  'dibatalkan'        : { label:'Dibatalkan Pelanggan',   badge:'b-dibatalkan',         icon:'fa-ban',            step:-1 },
+  'selesai'           : { label:'Selesai & Diambil',      badge:'b-selesai',            icon:'fa-flag-checkered', step:6 },
+};
+
+const STEPS = [
+  { key:'diagnosa',           label:'Diagnosa',          icon:'fa-stethoscope' },
+  { key:'laporan',            label:'Laporan ke Pelanggan', icon:'fa-paper-plane' },
+  { key:'persetujuan',        label:'Persetujuan',       icon:'fa-user-check' },
+  { key:'pengerjaan',         label:'Pengerjaan',        icon:'fa-gears' },
+  { key:'selesai-dikerjakan', label:'Selesai',           icon:'fa-circle-check' },
+  { key:'menunggu-bayar',     label:'Bayar di Kasir',    icon:'fa-cash-register' },
+  { key:'diambil',            label:'Diambil',           icon:'fa-flag-checkered' },
+];
+
+// ─── JOB DATA ───────────────────────────────────────
+let jobs = [
+  {
+    id:'J-0042', device:'Samsung Galaxy A54', customer:'Budi Santoso', phone:'0812-3456-7890',
+    priority:'Tinggi', date:'2025-07-10', deadline:'2025-07-12',
+    complaint:'LCD retak parah, sentuhan tidak merespons di bagian bawah layar.',
+    status:'diagnosa',
+    diagnosa:null, spareparts:[], biayaJasa:0, cancelReason:'', notes:[], garansi:null
+  },
+  {
+    id:'J-0041', device:'iPhone 13 Pro', customer:'Siti Rahayu', phone:'0821-9988-7766',
+    priority:'Sedang', date:'2025-07-10', deadline:'2025-07-11',
+    complaint:'Charging port tidak bisa mengisi daya, kemungkinan ada kotoran atau kerusakan pin.',
+    status:'pengerjaan',
+    diagnosa:'Pin charging port patah dan ada karat di area konektor. Perlu penggantian port baru.',
+    spareparts:[{ id:'SP005', name:'Charging Port Oppo Reno 8', price:75000, qty:1 }],
+    biayaJasa:125000, cancelReason:'', notes:['Charging port lama sudah dilepas','Membersihkan area konektor dari karat','Port baru sudah dipasang, sedang pengujian pengisian daya'], garansi:{aktif:true, durasi:30}
+  },
+  {
+    id:'J-0040', device:'Xiaomi Redmi Note 11', customer:'Cahyo Prakoso', phone:'0877-5544-3322',
+    priority:'Rendah', date:'2025-07-09', deadline:'2025-07-13',
+    complaint:'Baterai drop, tidak tahan lama. Dalam 1 jam sudah habis.',
+    status:'menunggu-persetujuan',
+    diagnosa:'Baterai sudah mengembung, kapasitas turun di bawah 60%. Harus diganti segera.',
+    spareparts:[{ id:'SP004', name:'LCD Xiaomi Redmi Note 11', price:180000, qty:1 }],
+    biayaJasa:50000, cancelReason:'', notes:[], garansi:null
+  },
+  {
+    id:'J-0039', device:'Oppo Reno 8', customer:'Dewi Lestari', phone:'0856-1122-3344',
+    priority:'Sedang', date:'2025-07-09', deadline:'2025-07-11',
+    complaint:'Kamera belakang hasil foto buram dan gelap.',
+    status:'disetujui',
+    diagnosa:'Lensa kamera kotor dan flex kamera mulai longgar. Perlu pembersihan + penggantian flex.',
+    spareparts:[{ id:'SP008', name:'Flex Kamera Realme GT Neo 3', price:155000, qty:1 }],
+    biayaJasa:75000, cancelReason:'', notes:[], garansi:{aktif:true, durasi:14}
+  },
+  {
+    id:'J-0038', device:'Vivo V25', customer:'Arif Wibowo', phone:'0813-9900-1122',
+    priority:'Rendah', date:'2025-07-08', deadline:'2025-07-10',
+    complaint:'Speaker bawah tidak bersuara sama sekali.',
+    status:'selesai-dikerjakan',
+    diagnosa:'Membran speaker putus akibat volume terlalu keras. Perlu ganti speaker.',
+    spareparts:[{ id:'SP007', name:'Speaker Vivo V25', price:85000, qty:1 }],
+    biayaJasa:60000, cancelReason:'', notes:['Speaker lama dilepas','Speaker baru dipasang, suara normal kembali'], garancia:{aktif:true, durasi:30}
+  },
+  {
+    id:'J-0037', device:'Realme GT Neo 3', customer:'Rina Melati', phone:'0878-3344-5566',
+    priority:'Tinggi', date:'2025-07-08', deadline:'2025-07-12',
+    complaint:'HP terendam air saat hujan. Layar bergaris dan tombol power kadang mati.',
+    status:'dibatalkan',
+    diagnosa:'Water damage parah, motherboard korsleting. Estimasi perbaikan mahal.',
+    spareparts:[], biayaJasa:500000, cancelReason:'Pelanggan keberatan dengan estimasi biaya yang terlalu tinggi.',
+    notes:[], garansi:null
+  },
+  {
+    id:'J-0036', device:'Samsung Galaxy S22', customer:'Hendra Gunawan', phone:'0812-0011-2233',
+    priority:'Sedang', date:'2025-07-07', deadline:'2025-07-09',
+    complaint:'HP bootloop setelah update sistem.',
+    status:'menunggu-bayar',
+    diagnosa:'Firmware korup akibat update gagal. Perlu flashing ulang firmware resmi.',
+    spareparts:[], biayaJasa:100000, cancelReason:'', notes:['Backup data dilakukan','Flashing firmware resmi selesai','Sistem berjalan normal, semua fitur OK'], garansi:{aktif:true, durasi:30}
+  },
+  {
+    id:'J-0035', device:'iPhone 12', customer:'Maya Putri', phone:'0821-4455-6677',
+    priority:'Sedang', date:'2025-07-06', deadline:'2025-07-09',
+    complaint:'LCD pecah di pojok kanan. Masih menyala tapi ada dead pixel.',
+    status:'selesai',
+    diagnosa:'LCD retak dengan dead pixel, harus diganti. Touch masih sebagian berfungsi.',
+    spareparts:[{ id:'SP010', name:'LCD iPhone 12', price:720000, qty:1 }],
+    biayaJasa:150000, cancelReason:'', notes:['LCD lama dilepas dengan hati-hati','LCD baru dipasang dan dikalibrasi','Touch screen normal, tidak ada dead pixel'], garansi:{aktif:true, durasi:7}
+  },
+];
+
+let currentTab = 'semua';
+let activeJobId = null;
+let tempSpareparts = [];
+
+// ─── TABS CONFIG ────────────────────────────────────
+const TABS = [
+  { key:'semua',               label:'Semua',              icon:'fa-list' },
+  { key:'diagnosa',            label:'Diagnosa',           icon:'fa-stethoscope' },
+  { key:'menunggu-persetujuan',label:'Menunggu Acc',       icon:'fa-hourglass-half' },
+  { key:'disetujui',           label:'Disetujui',          icon:'fa-thumbs-up' },
+  { key:'pengerjaan',          label:'Dikerjakan',         icon:'fa-gears' },
+  { key:'selesai-dikerjakan',  label:'Selesai Dikerjakan', icon:'fa-circle-check' },
+  { key:'menunggu-bayar',      label:'Tunggu Bayar',       icon:'fa-cash-register' },
+  { key:'dibatalkan',          label:'Dibatalkan',         icon:'fa-ban' },
+  { key:'selesai',             label:'Selesai',            icon:'fa-flag-checkered' },
+];
+
+// ─── INIT ───────────────────────────────────────────
+function init() {
+  buildTabs();
+  render();
+  updateSummary();
+  buildNotifs();
+}
+
+// ─── TABS ───────────────────────────────────────────
+function buildTabs() {
+  const bar = document.getElementById('tab-bar');
+  bar.innerHTML = '';
+  TABS.forEach(t => {
+    const cnt = t.key === 'semua' ? jobs.length : jobs.filter(j=>j.status===t.key).length;
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn flex items-center gap-1.5 text-xs font-semibold py-2 px-3 rounded-xl text-gray-500 hover:bg-gray-100';
+    btn.id = 'tab-' + t.key;
+    btn.innerHTML = `<i class="fa-solid ${t.icon}"></i>${t.label}${cnt?`<span class="bg-gray-200 text-gray-600 rounded-full text-xs px-1.5">${cnt}</span>`:''}`;
+    btn.onclick = () => setTab(t.key);
+    bar.appendChild(btn);
+  });
+  document.getElementById('tab-' + currentTab).classList.add('tab-active');
+}
+
+function setTab(key) {
+  currentTab = key;
+  buildTabs();
+  render();
+}
+
+// ─── SUMMARY ───────────────────────────────────────
+function updateSummary() {
+  const data = [
+    { label:'Diagnosa',     key:'diagnosa',             icon:'fa-stethoscope',  color:'purple' },
+    { label:'Tunggu Acc',   key:'menunggu-persetujuan', icon:'fa-hourglass-half',color:'orange' },
+    { label:'Dikerjakan',   key:'pengerjaan',            icon:'fa-gears',        color:'blue'   },
+    { label:'Selesai Kerjakan',key:'selesai-dikerjakan',icon:'fa-circle-check', color:'teal'   },
+    { label:'Tunggu Bayar', key:'menunggu-bayar',        icon:'fa-cash-register',color:'yellow' },
+    { label:'Selesai',      key:'selesai',               icon:'fa-flag-checkered',color:'green' },
+  ];
+  const colorMap = {
+    purple:'bg-purple-100 text-purple-600', orange:'bg-orange-100 text-orange-600',
+    blue:'bg-blue-100 text-blue-600', teal:'bg-teal-100 text-teal-600',
+    yellow:'bg-yellow-100 text-yellow-700', green:'bg-green-100 text-green-600',
+  };
+  const grid = document.getElementById('summary-cards');
+  grid.innerHTML = data.map(d => `
+    <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow" onclick="setTab('${d.key}')">
+      <div class="flex items-center justify-between mb-1">
+        <div class="w-7 h-7 ${colorMap[d.color]} rounded-lg flex items-center justify-center">
+          <i class="fa-solid ${d.icon} text-xs"></i>
+        </div>
+        <span class="font-black text-gray-800 text-xl">${jobs.filter(j=>j.status===d.key).length}</span>
+      </div>
+      <div class="text-xs text-gray-400 font-medium leading-tight">${d.label}</div>
+    </div>
+  `).join('');
+}
+
+// ─── RENDER CARDS ───────────────────────────────────
+function render() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const fp = document.getElementById('f-priority').value;
+  const fs = document.getElementById('f-sort').value;
+
+  let list = jobs.filter(j => {
+    const tabOk = currentTab === 'semua' ? true : j.status === currentTab;
+    const qOk   = !q || j.id.toLowerCase().includes(q) || j.device.toLowerCase().includes(q) || j.customer.toLowerCase().includes(q);
+    const pOk   = !fp || j.priority === fp;
+    return tabOk && qOk && pOk;
+  });
+
+  const pOrd = { Tinggi:0, Sedang:1, Rendah:2 };
+  if (fs === 'priority') list.sort((a,b)=>pOrd[a.priority]-pOrd[b.priority]);
+  else if (fs === 'deadline') list.sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
+  else list.sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  const grid = document.getElementById('job-grid');
+  const empty = document.getElementById('empty');
+  grid.innerHTML = '';
+
+  if (!list.length) { empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+
+  list.forEach(job => {
+    const sc = STATUS_CFG[job.status];
+    const priBg = { Tinggi:'p-high', Sedang:'p-medium', Rendah:'p-low' }[job.priority];
+    const priColor = { Tinggi:'bg-red-50 text-red-600', Sedang:'bg-yellow-50 text-yellow-600', Rendah:'bg-green-50 text-green-600' }[job.priority];
+    const dl = Math.ceil((new Date(job.deadline)-new Date())/(864e5));
+    const dlColor = dl<0?'text-red-500 font-bold': dl<=1?'text-red-400': dl<=2?'text-yellow-500':'text-gray-400';
+    const dlText  = dl<0?'Overdue!': dl===0?'Hari ini!': `${dl} hari lagi`;
+    const total   = totalBiaya(job);
+
+    const card = document.createElement('div');
+    card.className = `card-job bg-white rounded-2xl shadow-sm border border-gray-100 p-5 ${priBg}`;
+    card.onclick = () => openModal(job.id);
+
+    let notesHTML = '';
+    if (job.notes && job.notes.length && ['pengerjaan','selesai-dikerjakan','menunggu-bayar','selesai'].includes(job.status)) {
+      notesHTML = `<div class="mb-3 bg-blue-50 border border-blue-100 rounded-xl p-2.5 space-y-1">
+        <div class="text-xs font-semibold text-blue-600 mb-1"><i class="fa-solid fa-clipboard-list mr-1"></i>Log Pengerjaan</div>
+        ${job.notes.map(n=>`<div class="flex items-start gap-1.5 text-xs text-gray-600"><i class="fa-solid fa-circle-dot text-blue-300 mt-0.5 text-xs"></i><span>${n}</span></div>`).join('')}
+      </div>`;
+    }
+
+    let ctaHTML = '';
+    if (job.status === 'diagnosa') {
+      ctaHTML = `<button onclick="event.stopPropagation();openDiagnosaModal('${job.id}')" class="mt-3 w-full bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold py-2 rounded-xl transition-colors">
+        <i class="fa-solid fa-stethoscope mr-1"></i> Mulai Diagnosa
+      </button>`;
+    } else if (job.status === 'menunggu-persetujuan') {
+      ctaHTML = `<button onclick="event.stopPropagation();openApprovalModal('${job.id}')" class="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-xl transition-colors">
+        <i class="fa-solid fa-user-check mr-1"></i> Catat Respons Pelanggan
+      </button>`;
+    } else if (job.status === 'disetujui') {
+      ctaHTML = `<button onclick="event.stopPropagation();startWork('${job.id}')" class="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-xl transition-colors">
+        <i class="fa-solid fa-play mr-1"></i> Mulai Pengerjaan
+      </button>`;
+    } else if (job.status === 'pengerjaan') {
+      ctaHTML = `<button onclick="event.stopPropagation();openProgressModal('${job.id}')" class="mt-3 w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold py-2 rounded-xl border border-indigo-200 transition-colors">
+        <i class="fa-solid fa-clipboard-list mr-1"></i> Tambah Catatan
+      </button>`;
+    } else if (job.status === 'selesai-dikerjakan') {
+      ctaHTML = `<button onclick="event.stopPropagation();openNotifDoneModal('${job.id}')" class="mt-3 w-full bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-xl transition-colors">
+        <i class="fa-brands fa-whatsapp mr-1"></i> Kirim Notifikasi WhatsApp
+      </button>`;
+    }
+
+    card.innerHTML = `
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <div class="font-black text-blue-700 text-sm">#${job.id}</div>
+          <div class="text-xs text-gray-400">${fmtDate(job.date)}</div>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+          <span class="badge ${sc.badge}"><i class="fa-solid ${sc.icon} mr-1"></i>${sc.label}</span>
+          <span class="badge text-xs ${priColor}" style="font-size:10px">${job.priority}</span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="font-semibold text-gray-800 text-sm">${job.device}</div>
+        <div class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-user mr-1"></i>${job.customer}</div>
+        ${total ? `<div class="text-xs text-blue-600 font-semibold mt-0.5"><i class="fa-solid fa-money-bill mr-1"></i>${fmtRp(total)}</div>` : ''}
+      </div>
+      ${notesHTML}
+      <div class="flex items-center justify-between text-xs">
+        <span class="${dlColor}"><i class="fa-regular fa-clock mr-1"></i>${dlText}</span>
+        <span class="text-gray-300">|</span>
+        <span class="text-gray-400">${fmtDate(job.deadline)}</span>
+      </div>
+      ${ctaHTML}
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ─── OPEN MODAL ─────────────────────────────────────
+function openModal(id) {
+  const job = jobs.find(j=>j.id===id);
+  if (!job) return;
+  activeJobId = id;
+  const sc = STATUS_CFG[job.status];
+  const priColor = { Tinggi:'bg-red-100 text-red-700', Sedang:'bg-yellow-100 text-yellow-700', Rendah:'bg-green-100 text-green-700' }[job.priority];
+
+  document.getElementById('m-id').textContent = '#' + job.id;
+  document.getElementById('m-priority').className = `badge ${priColor}`;
+  document.getElementById('m-priority').textContent = job.priority;
+  document.getElementById('m-status').className = `badge ${sc.badge}`;
+  document.getElementById('m-status').innerHTML = `<i class="fa-solid ${sc.icon} mr-1"></i>${sc.label}`;
+  document.getElementById('m-device').textContent = job.device;
+  document.getElementById('m-customer').textContent = job.customer;
+  document.getElementById('m-phone').textContent = job.phone;
+  document.getElementById('m-date').textContent = fmtDate(job.date);
+  document.getElementById('m-deadline').textContent = fmtDate(job.deadline);
+  document.getElementById('m-complaint').textContent = job.complaint;
+
+  // Timeline
+  renderTimeline(job);
+
+  // Diagnosa result
+  const drBlock = document.getElementById('m-diagnosa-result');
+  if (job.diagnosa) {
+    drBlock.classList.remove('hidden');
+    document.getElementById('m-diagnosa-text').textContent = job.diagnosa;
+    const spList = document.getElementById('m-sparepart-list');
+    spList.innerHTML = job.spareparts.length
+      ? job.spareparts.map(s=>`<div class="flex justify-between text-xs text-purple-800 bg-purple-100 rounded-lg px-2 py-1"><span>${s.name} x${s.qty}</span><span>${fmtRp(s.price*s.qty)}</span></div>`).join('')
+      : '<div class="text-xs text-gray-400">Tidak ada sparepart yang digunakan</div>';
+    document.getElementById('m-total-cost').textContent = fmtRp(totalBiaya(job));
+    
+    // Tampilkan info garansi jika ada
+    const garansiDiv = document.getElementById('m-garansi-info');
+    if (job.garansi && job.garansi.aktif) {
+      garansiDiv.classList.remove('hidden');
+      document.getElementById('m-garansi-text').textContent = `${job.garansi.durasi} Hari`;
+    } else {
+      garansiDiv.classList.add('hidden');
+    }
+  } else { 
+    drBlock.classList.add('hidden'); 
+    document.getElementById('m-garansi-info').classList.add('hidden');
+  }
+
+  // Log catatan pengerjaan
+  const nb = document.getElementById('m-notes-block');
+  if (job.notes && job.notes.length && ['pengerjaan','selesai-dikerjakan','menunggu-bayar','selesai'].includes(job.status)) {
+    nb.classList.remove('hidden');
+    document.getElementById('m-notes-list').innerHTML = job.notes.map((n, i) =>
+      `<div class="flex items-start gap-2 bg-gray-50 rounded-lg px-3 py-2">
+        <div class="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span class="text-xs font-bold text-blue-600">${i+1}</span>
+        </div>
+        <span class="text-sm text-gray-700">${n}</span>
+      </div>`
+    ).join('');
+  } else { nb.classList.add('hidden'); }
+
+  // Cancel reason
+  const cb = document.getElementById('m-cancel-block');
+  if (job.status === 'dibatalkan' && job.cancelReason) {
+    cb.classList.remove('hidden');
+    document.getElementById('m-cancel-reason').textContent = job.cancelReason;
+  } else { cb.classList.add('hidden'); }
+
+  // Actions
+  renderModalActions(job);
+
+  document.getElementById('modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+  document.body.style.overflow = '';
+  activeJobId = null;
+}
+
+// ─── TIMELINE RENDER ────────────────────────────────
+function renderTimeline(job) {
+  const container = document.getElementById('m-timeline');
+  const curStep = STATUS_CFG[job.status].step;
+  const cancelled = job.status === 'dibatalkan';
+
+  let html = '<div class="flex items-center min-w-max gap-0">';
+  STEPS.forEach((s, i) => {
+    let cls, lineCls;
+    if (cancelled) {
+      cls = i <= 1 ? 'step-done' : 'step-idle';
+      lineCls = i < 1 ? 'line-done' : 'line-idle';
+    } else {
+      cls = i < curStep ? 'step-done' : i === curStep ? 'step-active' : 'step-idle';
+      lineCls = i < curStep ? 'line-done' : 'line-idle';
+    }
+    html += `
+      <div class="flex flex-col items-center">
+        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs ${cls}" title="${s.label}">
+          ${i < curStep && !cancelled ? '<i class="fa-solid fa-check text-xs"></i>' : `<i class="fa-solid ${s.icon} text-xs"></i>`}
+        </div>
+        <div class="text-xs mt-1 text-center leading-tight ${i===curStep&&!cancelled?'text-blue-600 font-bold':'text-gray-400'}" style="max-width:60px">${s.label}</div>
+      </div>`;
+    if (i < STEPS.length-1) {
+      html += `<div class="h-0.5 w-8 mx-1 mb-5 ${lineCls}"></div>`;
+    }
+  });
+
+  if (cancelled) {
+    html += `<div class="flex flex-col items-center ml-2">
+      <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs step-cancel">
+        <i class="fa-solid fa-ban text-xs"></i>
+      </div>
+      <div class="text-xs mt-1 text-center text-red-500 font-bold" style="max-width:60px">Dibatalkan</div>
+    </div>`;
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ─── MODAL ACTIONS ──────────────────────────────────
+function renderModalActions(job) {
+  const div = document.getElementById('m-actions');
+  div.innerHTML = '';
+
+  const s = job.status;
+  if (s === 'diagnosa') {
+    div.innerHTML = `<button onclick="openDiagnosaModal('${job.id}')" class="btn-primary w-full">
+      <i class="fa-solid fa-stethoscope mr-2"></i>Input Hasil Diagnosa
+    </button>`;
+  } else if (s === 'menunggu-persetujuan') {
+    div.innerHTML = `
+      <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-sm text-orange-700 mb-3">
+        <i class="fa-solid fa-hourglass-half mr-1"></i>Menunggu konfirmasi persetujuan dari pelanggan
+      </div>
+      <div class="flex gap-2">
+        <button onclick="sendWaDiagnosa(jobs.find(j=>j.id==='${job.id}'))" class="btn-gray flex-1">
+          <i class="fa-brands fa-whatsapp mr-1"></i>Kirim Ulang WA
+        </button>
+        <button onclick="openApprovalModal('${job.id}')" class="btn-primary flex-1">
+          <i class="fa-solid fa-user-check mr-1"></i>Catat Respons
+        </button>
+      </div>`;
+  } else if (s === 'disetujui') {
+    div.innerHTML = `
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-sm text-blue-700 mb-3">
+        <i class="fa-solid fa-thumbs-up mr-1"></i>Pelanggan telah menyetujui. Siap untuk dikerjakan.
+      </div>
+      <button onclick="startWork('${job.id}');closeModal()" class="btn-primary w-full">
+        <i class="fa-solid fa-play mr-2"></i>Mulai Pengerjaan
+      </button>`;
+  } else if (s === 'pengerjaan') {
+    div.innerHTML = `
+      <div class="space-y-2">
+        <button onclick="openProgressModal('${job.id}')" class="btn-gray w-full">
+          <i class="fa-solid fa-clipboard-list mr-1"></i>Tambah Catatan Pengerjaan
+        </button>
+        <button onclick="markSelesaiDikerjakan('${job.id}')" class="btn-success w-full">
+          <i class="fa-solid fa-circle-check mr-1"></i>Tandai Selesai Dikerjakan
+        </button>
+      </div>`;
+  } else if (s === 'selesai-dikerjakan') {
+    div.innerHTML = `
+      <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-sm text-green-700 mb-3">
+        <i class="fa-solid fa-circle-check mr-1"></i>Pengerjaan selesai! Beritahu pelanggan dan kirim ke kasir.
+      </div>
+      <button onclick="openNotifDoneModal('${job.id}')" class="btn-success w-full">
+        <i class="fa-brands fa-whatsapp mr-2"></i>Kirim Notifikasi WhatsApp
+      </button>`;
+  } else if (s === 'menunggu-bayar') {
+    div.innerHTML = `
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
+        <i class="fa-solid fa-cash-register text-3xl text-yellow-500 mb-2"></i>
+        <div class="font-bold text-yellow-800 text-sm">Menunggu Pembayaran di Kasir</div>
+        <div class="text-yellow-600 text-xs mt-1">Total: <span class="font-black">${fmtRp(totalBiaya(job))}</span></div>
+        <div class="text-gray-400 text-xs mt-1">Proses pembayaran dilakukan oleh kasir</div>
+      </div>`;
+  } else if (s === 'selesai') {
+    div.innerHTML = `
+      <div class="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
+        <i class="fa-solid fa-flag-checkered text-3xl text-green-500"></i>
+        <div>
+          <div class="font-bold text-green-800 text-sm">Selesai & Sudah Diambil</div>
+          <div class="text-green-600 text-xs mt-0.5">Pembayaran lunas · HP sudah dikembalikan ke pelanggan</div>
+        </div>
+      </div>`;
+  } else if (s === 'dibatalkan') {
+    div.innerHTML = `
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
+        <i class="fa-solid fa-ban text-3xl text-red-400"></i>
+        <div>
+          <div class="font-bold text-red-700 text-sm">Dibatalkan oleh Pelanggan</div>
+          <div class="text-red-500 text-xs mt-0.5">HP dikembalikan dalam kondisi semula</div>
+        </div>
+      </div>`;
+  }
+}
+
+// ─── FUNGSI UNTUK GARANSI ───────────────────────────
+function toggleGaransiOptions() {
+  const check = document.getElementById('d-garansi-check');
+  const optionsDiv = document.getElementById('garansi-options');
+  if (check.checked) {
+    optionsDiv.classList.remove('hidden');
+  } else {
+    optionsDiv.classList.add('hidden');
+  }
+}
+
+// ─── DIAGNOSA MODAL (DENGAN DUKUNGAN GARANSI) ─────────
+function openDiagnosaModal(id) {
+  activeJobId = id;
+  tempSpareparts = [];
+  document.getElementById('d-diagnosa').value = '';
+  document.getElementById('d-jasa').value = '';
+  document.getElementById('sparepart-rows').innerHTML = '';
+  
+  // Reset form garansi
+  const garansiCheck = document.getElementById('d-garansi-check');
+  garansiCheck.checked = false;
+  document.getElementById('garansi-options').classList.add('hidden');
+  document.querySelector('input[name="garansi-durasi"][value="30"]').checked = true; // default 30 hari
+  
+  recalcTotal();
+  document.getElementById('sub-diagnosa').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function addSparepartRow() {
+  const idx = tempSpareparts.length;
+  tempSpareparts.push({ stockId:'', qty:1 });
+  const opts = STOCK.map(s=>`<option value="${s.id}">${s.name} – ${fmtRp(s.price)} (stok: ${s.qty})</option>`).join('');
+  const row = document.createElement('div');
+  row.className = 'space-y-2';
+  row.id = 'sp-row-' + idx;
+  row.innerHTML = `
+    <select onchange="spChange(${idx},this)" class="inp w-full text-sm">
+      <option value="">-- Pilih Sparepart --</option>${opts}
+    </select>
+    <div class="flex gap-2 items-center">
+      <input type="number" min="1" value="1" onchange="spQtyChange(${idx},this)" class="inp flex-1 text-sm" placeholder="Jumlah"/>
+      <button onclick="removeSpRow(${idx})" class="text-red-400 hover:text-red-600 px-3 py-2 bg-red-50 rounded-lg hover:bg-red-100 flex-shrink-0">
+        <i class="fa-solid fa-trash text-sm"></i>
+      </button>
+    </div>
+  `;
+  document.getElementById('sparepart-rows').appendChild(row);
+}
+
+function spChange(idx, sel) {
+  tempSpareparts[idx].stockId = sel.value;
+  recalcTotal();
+}
+function spQtyChange(idx, inp) {
+  tempSpareparts[idx].qty = parseInt(inp.value)||1;
+  recalcTotal();
+}
+function removeSpRow(idx) {
+  const row = document.getElementById('sp-row-'+idx);
+  if (row) row.remove();
+  tempSpareparts[idx] = { stockId:'', qty:0 };
+  recalcTotal();
+}
+
+function recalcTotal() {
+  let total = parseInt(document.getElementById('d-jasa').value)||0;
+  tempSpareparts.forEach(sp => {
+    if (sp.stockId && sp.qty > 0) {
+      const s = STOCK.find(x=>x.id===sp.stockId);
+      if (s) total += s.price * sp.qty;
+    }
+  });
+  document.getElementById('d-total').textContent = fmtRp(total);
+}
+
+function submitDiagnosa() {
+  const diagText = document.getElementById('d-diagnosa').value.trim();
+  if (!diagText) { alert('Harap isi hasil diagnosa terlebih dahulu.'); return; }
+  const jasa = parseInt(document.getElementById('d-jasa').value)||0;
+  const job = jobs.find(j=>j.id===activeJobId);
+  if (!job) return;
+
+  job.diagnosa = diagText;
+  job.biayaJasa = jasa;
+  job.spareparts = tempSpareparts
+    .filter(sp=>sp.stockId && sp.qty>0)
+    .map(sp=>{ const s=STOCK.find(x=>x.id===sp.stockId); return { id:s.id, name:s.name, price:s.price, qty:sp.qty }; });
+  
+  // Proses data garansi
+  const isGaransiActive = document.getElementById('d-garansi-check').checked;
+  if (isGaransiActive) {
+    const durasi = document.querySelector('input[name="garansi-durasi"]:checked').value;
+    job.garansi = { aktif: true, durasi: parseInt(durasi) };
+  } else {
+    job.garansi = null;
+  }
+  
+  job.status = 'menunggu-persetujuan';
+
+  closeSub('sub-diagnosa');
+  closeModal();
+  
+  // Kirim ke WhatsApp
+  sendWaDiagnosa(job);
+  
+  showToast(`Laporan diagnosa dikirim via WhatsApp`, 'success');
+  refresh();
+}
+
+// ─── WHATSAPP TEMPLATES (DENGAN INFORMASI GARANSI) ────────────
+function sendWaDiagnosa(job) {
+  const spList = job.spareparts.length 
+    ? job.spareparts.map(s => `- ${s.name} (${s.qty}x): ${fmtRp(s.price * s.qty)}`).join('\n')
+    : '- Tidak ada penggantian sparepart';
+  
+  const total = totalBiaya(job);
+  let garansiText = '';
+  if (job.garansi && job.garansi.aktif) {
+    garansiText = `\n\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari (berlaku untuk kerusakan yang sama)`;
+  }
+  
+  const msg = `*[ServisHP Pro - Laporan Diagnosa]*
+
+Halo *${job.customer}*,
+
+Kami telah menyelesaikan diagnosa untuk perangkat Anda:
+
+📱 *Perangkat:* ${job.device}
+🆔 *No. Job:* ${job.id}
+🔍 *Hasil Diagnosa:*
+${job.diagnosa}
+
+*Detail Biaya:*
+${spList}
+- Biaya Jasa: ${fmtRp(job.biayaJasa)}
+━━━━━━━━━━━━━━━
+*Total Estimasi:* *${fmtRp(total)}*${garansiText}
+
+Mohon konfirmasi apakah Anda menyetujui perbaikan dengan biaya tersebut. Balas pesan ini atau hubungi kami.
+
+Terima kasih! 🙏`;
+
+  const phone = job.phone.replace(/^0/, '62').replace(/\D/g, '');
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// Template WA untuk berbagai status
+function sendWaTemplate(job, type) {
+  let msg = '';
+  const total = totalBiaya(job);
+  let garansiText = '';
+  if (job.garansi && job.garansi.aktif && (type === 'pengerjaan-dimulai' || type === 'dibatalkan' || type === 'selesai')) {
+    garansiText = `\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari`;
+  }
+  
+  switch(type) {
+    case 'pengerjaan-dimulai':
+      msg = `*[ServisHP Pro - Update Status]*
+
+Halo *${job.customer}*,
+
+Pekerjaan perbaikan perangkat Anda telah dimulai! ⚙️
+
+📱 *Perangkat:* ${job.device}
+🆔 *No. Job:* ${job.id}
+🔧 *Status:* Sedang dikerjakan${garansiText}
+
+Kami akan memberi tahu Anda saat pekerjaan selesai.
+
+Terima kasih! 🙏`;
+      break;
+      
+    case 'dibatalkan':
+      msg = `*[ServisHP Pro - Pembatalan]*
+
+Halo *${job.customer}*,
+
+Perbaikan untuk perangkat Anda dibatalkan sesuai permintaan.
+
+📱 *Perangkat:* ${job.device}
+🆔 *No. Job:* ${job.id}
+❌ *Status:* Dibatalkan
+📝 *Alasan:* ${job.cancelReason}
+
+Perangkat Anda dapat diambil kembali dalam kondisi semula. Terima kasih atas pengertiannya. 🙏`;
+      break;
+  }
+  
+  const phone = job.phone.replace(/^0/, '62').replace(/\D/g, '');
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// ─── APPROVAL MODAL ──────────────────────────────────
+function openApprovalModal(id) {
+  activeJobId = id;
+  document.getElementById('cancel-reason-input').value = '';
+  document.getElementById('sub-approval').classList.remove('hidden');
+}
+
+function customerApprove() {
+  const job = jobs.find(j=>j.id===activeJobId);
+  if (!job) return;
+  job.status = 'disetujui';
+  closeSub('sub-approval');
+  closeModal();
+  showToast(`Pelanggan menyetujui job #${job.id}`, 'success');
+  refresh();
+}
+
+function customerReject() {
+  const reason = document.getElementById('cancel-reason-input').value.trim();
+  const job = jobs.find(j=>j.id===activeJobId);
+  if (!job) return;
+  job.status = 'dibatalkan';
+  job.cancelReason = reason || 'Pelanggan tidak menyetujui estimasi biaya.';
+  
+  // Kirim notifikasi WA pembatalan
+  sendWaTemplate(job, 'dibatalkan');
+  
+  closeSub('sub-approval');
+  closeModal();
+  showToast(`Job #${job.id} dibatalkan. Notifikasi WA terkirim.`, 'warning');
+  refresh();
+}
+
+// ─── START WORK ──────────────────────────────────────
+function startWork(id) {
+  const job = jobs.find(j=>j.id===id);
+  if (!job) return;
+  
+  // Konfirmasi dan kirim WA
+  if (confirm(`Mulai pengerjaan job #${id}?\n\nNotifikasi akan dikirim ke pelanggan via WhatsApp.`)) {
+    job.status = 'pengerjaan';
+    sendWaTemplate(job, 'pengerjaan-dimulai');
+    showToast(`Pengerjaan #${job.id} dimulai! Notifikasi WA terkirim.`, 'success');
+    refresh();
+    if (activeJobId) openModal(id);
+  }
+}
+
+// ─── PROGRESS MODAL ──────────────────────────────────
+function openProgressModal(id) {
+  activeJobId = id;
+  document.getElementById('prog-note').value = '';
+  document.getElementById('sub-progress').classList.remove('hidden');
+}
+
+function saveProgress() {
+  const note = document.getElementById('prog-note').value.trim();
+  if (!note) { alert('Harap isi catatan pengerjaan terlebih dahulu.'); return; }
+  const job = jobs.find(j=>j.id===activeJobId);
+  if (!job) return;
+  job.notes.push(note);
+  closeSub('sub-progress');
+  showToast(`Catatan pengerjaan #${job.id} berhasil disimpan`, 'success');
+  refresh();
+  openModal(job.id);
+}
+
+function markSelesaiDikerjakan(id) {
+  const job = jobs.find(j=>j.id===id);
+  if (!job) return;
+  job.status = 'selesai-dikerjakan';
+  closeModal();
+  showToast(`Job #${id} selesai dikerjakan!`, 'success');
+  refresh();
+}
+
+// ─── NOTIF DONE MODAL ────────────────────────────────
+function openNotifDoneModal(id) {
+  activeJobId = id;
+  const job = jobs.find(j=>j.id===id);
+  const total = totalBiaya(job);
+  let garansiText = '';
+  if (job.garansi && job.garansi.aktif) {
+    garansiText = `\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari (berlaku untuk kerusakan yang sama)`;
+  }
+  
+  const msg = `*[ServisHP Pro - Pekerjaan Selesai]*
+
+Halo *${job.customer}*,
+
+Kabar gembira! 🎉
+
+📱 *Perangkat:* ${job.device}
+✅ *Status:* Perbaikan selesai, HP siap diambil
+
+*Total Biaya:* *${fmtRp(total)}*${garansiText}
+
+Silakan datang ke toko kami untuk pembayaran dan pengambilan perangkat.
+
+Terima kasih atas kepercayaan Anda! 🙏`;
+  
+  document.getElementById('nd-preview').textContent = msg;
+  document.getElementById('nd-note').value = '';
+  document.getElementById('sub-notif-done').classList.remove('hidden');
+}
+
+function sendWaNotifDone() {
+  const job = jobs.find(j=>j.id===activeJobId);
+  if (!job) return;
+  
+  const total = totalBiaya(job);
+  const extraNote = document.getElementById('nd-note').value.trim();
+  let garansiText = '';
+  if (job.garansi && job.garansi.aktif) {
+    garansiText = `\n🛡️ *Garansi Servis:* ${job.garansi.durasi} Hari (berlaku untuk kerusakan yang sama)`;
+  }
+  
+  let msg = `*[ServisHP Pro - Pekerjaan Selesai]*
+
+Halo *${job.customer}*,
+
+Kabar gembira! 🎉
+
+📱 *Perangkat:* ${job.device}
+✅ *Status:* Perbaikan selesai, HP siap diambil
+
+*Total Biaya:* *${fmtRp(total)}*${garansiText}`;
+
+  if (extraNote) {
+    msg += `\n\n📝 *Catatan:* ${extraNote}`;
+  }
+  
+  msg += `\n\nSilakan datang ke toko kami untuk pembayaran dan pengambilan perangkat.
+
+Terima kasih atas kepercayaan Anda! 🙏`;
+
+  const phone = job.phone.replace(/^0/, '62').replace(/\D/g, '');
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+  
+  // Update status
+  job.status = 'menunggu-bayar';
+  closeSub('sub-notif-done');
+  closeModal();
+  showToast(`Notifikasi WhatsApp dibuka. Job #${job.id} menunggu pembayaran di kasir.`, 'success');
+  addNotif(`HP ${job.device} (${job.customer}) siap diambil & menunggu pembayaran`, 'fa-cash-register', 'yellow');
+  refresh();
+}
+
+// ─── NOTIF ───────────────────────────────────────────
+let notifs = [
+  { msg:'Job #J-0042 prioritas tinggi masuk untuk diagnosa', icon:'fa-stethoscope', color:'purple', time:'5 mnt lalu' },
+  { msg:'Pelanggan Dewi Lestari menyetujui estimasi biaya', icon:'fa-thumbs-up', color:'green', time:'30 mnt lalu' },
+];
+
+function addNotif(msg, icon, color) {
+  notifs.unshift({ msg, icon: 'fa-solid '+icon, color, time:'Baru saja' });
+  buildNotifs();
+}
+
+function buildNotifs() {
+  document.getElementById('notif-count').textContent = notifs.length;
+  document.getElementById('notif-list').innerHTML = notifs.map(n => `
+    <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer">
+      <div class="flex gap-3 items-start">
+        <div class="w-8 h-8 bg-${n.color}-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid ${n.icon} text-${n.color}-500 text-sm"></i>
+        </div>
+        <div><div class="text-sm text-gray-700">${n.msg}</div><div class="text-xs text-gray-400 mt-0.5">${n.time}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleNotif() {
+  document.getElementById('notif-panel').classList.toggle('hidden');
+}
+
+// ─── HELPERS ─────────────────────────────────────────
+function totalBiaya(job) {
+  let t = job.biayaJasa || 0;
+  (job.spareparts||[]).forEach(s => t += s.price * s.qty);
+  return t;
+}
+
+function fmtDate(d) {
+  return new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function fmtRp(n) {
+  return 'Rp ' + Number(n).toLocaleString('id-ID');
+}
+
+function closeSub(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+
+function refresh() {
+  buildTabs();
+  render();
+  updateSummary();
+}
+
+// ─── TOAST ───────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  const i = document.getElementById('toast-icon');
+  document.getElementById('toast-msg').textContent = msg;
+  if (type==='success') { t.style.background='#1e293b'; i.className='fa-solid fa-circle-check text-green-400'; }
+  else if (type==='warning') { t.style.background='#7c2d12'; i.className='fa-solid fa-triangle-exclamation text-orange-300'; }
+  else { t.style.background='#1e293b'; i.className='fa-solid fa-info-circle text-blue-400'; }
+  t.classList.remove('hidden'); t.style.opacity='1';
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.classList.add('hidden'),300); },3500);
+}
+
+// ─── CLICK OUTSIDE ───────────────────────────────────
+document.getElementById('modal').addEventListener('click', e => { if(e.target===document.getElementById('modal')) closeModal(); });
+['sub-diagnosa','sub-approval','sub-progress','sub-notif-done'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if(e.target===document.getElementById(id)) closeSub(id); });
+});
+document.addEventListener('click', e => {
+  const panel = document.getElementById('notif-panel');
+  if (!panel.classList.contains('hidden') && !e.target.closest('#notif-panel') && !e.target.closest('[onclick="toggleNotif()"]')) {
+    panel.classList.add('hidden');
+  }
+});
+
+// ─── START ───────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
