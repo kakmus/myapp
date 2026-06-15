@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Doa Awal & Akhir Tahun Hijriyah | Islamic Supplication</title>
-    <!-- Google Fonts: Elegant and Readable -->
+    <title>Doa Awal & Akhir Tahun Hijriyah | Jarak Baris Renggang, Tanpa Alinea</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (Free) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -23,7 +23,6 @@
             color: #1e2f2c;
         }
 
-        /* container utama */
         .prayer-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -32,7 +31,6 @@
             gap: 2.5rem;
         }
 
-        /* Card styling */
         .card {
             background: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(2px);
@@ -48,7 +46,6 @@
             box-shadow: 0 32px 48px -16px rgba(0, 0, 0, 0.4);
         }
 
-        /* header gradient with arabesque motif */
         .card-header {
             background: linear-gradient(135deg, #1e4a3b, #0e3e32);
             padding: 1.5rem 2rem;
@@ -87,29 +84,42 @@
             letter-spacing: 0.5px;
         }
 
-        /* konten doa */
         .doa-content {
             padding: 2rem 2rem 2rem 2rem;
         }
 
-        /* arabic text */
+        /* Teks Arab: line-height super renggang, tanpa alinea berlebih (hanya 1 break setelah basmalah) */
         .arabic {
             font-family: 'Amiri', serif;
-            font-size: 1.5rem;
-            line-height: 2rem;
+            font-size: 1.55rem;
+            line-height: 3.6rem;           /* Jarak baris tetap sangat renggang */
             text-align: right;
             direction: rtl;
             background: #fef9ef;
-            padding: 1.5rem;
+            padding: 2rem 2rem;
             border-radius: 1.5rem;
-            margin-bottom: 1.8rem;
+            margin-bottom: 2rem;
             border-right: 5px solid #f7cf7c;
             color: #2c3a2b;
             font-weight: 500;
             box-shadow: inset 0 1px 3px #0001, 0 2px 3px #efe0c9;
+            letter-spacing: 0.2px;
         }
 
-        /* latin & terjemahan */
+        /* Hanya br tunggal untuk baris baru biasa, tanpa margin tambahan */
+        .arabic br {
+            display: block;
+            content: "";
+            margin-top: 0;
+            line-height: inherit;
+        }
+
+        /* Khusus untuk pemisah setelah basmalah (hanya satu alinea kecil) */
+        .arabic .basmalah-break {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
         .latin {
             font-size: 1rem;
             font-weight: 500;
@@ -121,6 +131,7 @@
             font-family: 'Poppins', monospace;
             letter-spacing: 0.3px;
             border-left: 4px solid #2b9b7a;
+            line-height: 1.7;
         }
 
         .translation {
@@ -128,14 +139,14 @@
             padding: 1.2rem 1.5rem;
             border-radius: 1rem;
             font-size: 0.98rem;
-            line-height: 1.65;
+            line-height: 1.7;
             color: #1f3d36;
             border: 1px solid #dee7e3;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
         .translation p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .translation i {
@@ -143,14 +154,6 @@
             margin-right: 6px;
         }
 
-        hr.divider {
-            margin: 1.5rem 0;
-            border: 0;
-            height: 2px;
-            background: linear-gradient(to right, #dfca9f, transparent);
-        }
-
-        /* footer dalam card */
         .card-footer {
             padding: 0.8rem 2rem 1.5rem 2rem;
             text-align: center;
@@ -160,7 +163,6 @@
             background: #fefaf2;
         }
 
-        /* responsive */
         @media (max-width: 680px) {
             body {
                 padding: 1rem;
@@ -169,9 +171,9 @@
                 padding: 1.2rem;
             }
             .arabic {
-                font-size: 1.2rem;
-                line-height: 1.7rem;
-                padding: 1rem;
+                font-size: 1.3rem;
+                line-height: 3rem;
+                padding: 1.3rem;
             }
             .card-header h2 {
                 font-size: 1.5rem;
@@ -181,20 +183,20 @@
             }
         }
 
-        /* ornament */
         .ornament {
             text-align: center;
             font-size: 1.3rem;
             letter-spacing: 6px;
             color: #e7bc7e;
-            margin: 5px 0;
+            margin: 25px 0 5px 0;
         }
+
         .btn-copy {
             background: none;
             border: 1px solid #c3b18b;
-            padding: 0.3rem 1rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 32px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 500;
             color: #5f6b47;
             cursor: pointer;
@@ -204,10 +206,12 @@
             align-items: center;
             gap: 6px;
         }
+
         .btn-copy:hover {
             background: #e3d8c2;
             border-color: #9f874f;
         }
+
         .toast-msg {
             position: fixed;
             bottom: 20px;
@@ -226,12 +230,19 @@
             font-family: monospace;
             box-shadow: 0 4px 12px black;
         }
+
+        .note-soft {
+            font-size: 0.75rem;
+            color: #8f9b7c;
+            text-align: center;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 
 <div class="prayer-container">
-    <!-- DOA AWAL TAHUN (Hijriyah/Baru) -->
+    <!-- DOA AWAL TAHUN -->
     <div class="card" id="doaAwalCard">
         <div class="card-header">
             <h2>
@@ -242,19 +253,17 @@
             <div class="badge-year">✨ Tahun Baru · Penuh Berkah ✨</div>
         </div>
         <div class="doa-content">
-            <!-- Teks Arab Doa Awal Tahun -->
+            <!-- Teks Arab: alinea/hanya satu baris kosong setelah Basmalah, sisanya rapat tanpa paragraf terpisah -->
             <div class="arabic">
                 بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ<br>
                 اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ صَلَاةٌ تَمْلأُ خَزَائِنَ اللَّهِ نُوراً، وَتَكُونُ لَنَا وَلِلْمُؤْمِنِينَ فَرَجًا وَفَرَحًا وَسُرُورًا، وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمْ تَسْلِيمًا كَثِيرًا.<br>
                 اللَّهُمَّ أَنْتَ الْأَبَدِيُّ الْقَدِيمُ الْأَوَّلُ، وَعَلَى فَضْلِكَ الْعَظِيمِ وَكَرِيمِ جُودِكَ الْعَمِيمِ الْمُعَوَّلُ، وَهَذَا عَامٌ جَدِيدٌ قَدْ أَقْبَلَ، أَسْأَلُكَ الْعِصْمَةَ فِيهِ مِنَ الشَّيْطَانِ وَأَوْلِيَائِهِ، وَالْعَوْنَ عَلَى هَذِهِ النَّفْسِ الْأَمَّارَةِ بِالسُّوءِ، وَالْإِشْتِغَالَ بِمَا يُقَرِّبُنِي إِلَيْكَ زُلْفَىٰ، يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.<br>
                 وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ
             </div>
-            <!-- Latin -->
             <div class="latin">
                 <i class="fas fa-language"></i> Bacaan Latin:<br>
                 Bismillāhir-Raḥmānir-Raḥīm. Allāhumma ṣalli ‘alā sayyidinā Muḥammadin shalātan tamla’u khazā’inallāhi nūran, wa takūnu lanā walil-mu’minīna farajan wa faraḥan wa surūran, wa ‘alā ālihī wa shaḥbihī wa sallim taslīman katsīrān. Allāhumma antal-abadiyyul-qadīmul-awwal, wa ‘alā fadllikal-‘adhīmi wa karīmi jūdikal-‘amīm al-mu’awwal, wa hādzā ‘āmun jadīdun qad aqbala. As’alukal-‘ishmata fīhi minasy-syaiṭāni wa auliyā’ihī, wal-‘auna ‘alā hādzihin-nafsil-ammārati bis-sū’, wal-isytighāla bimā yuqarribunī ilaika zulfā, yā Dzal-jalāli wal-ikrām. Wa shallallāhu ta‘ālā ‘alā sayyidinā Muḥammadin wa ‘alā ālihī wa shaḥbihī wa sallam.
             </div>
-            <!-- Terjemahan -->
             <div class="translation">
                 <p><i class="fas fa-book-open"></i> <strong>Artinya:</strong></p>
                 <p>“Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Ya Allah, limpahkanlah shalawat atas junjungan kami, Nabi Muhammad, shalawat yang memenuhi khazanah-Mu dengan cahaya, dan menjadi bagi kami dan kaum mukminin jalan keluar, kebahagiaan, dan kesenangan. Dan (limpahkan pula) kepada keluarganya dan para sahabatnya, serta berilah salam sebanyak-banyaknya. Ya Allah, Engkaulah Yang Abadi, Yang Dahulu, Yang Pertama. Kepada anugerah-Mu yang agung dan karunia-Mu yang luas tempat kami menggantungkan harapan. Tahun baru ini telah datang, maka aku memohon kepada-Mu penjagaan padanya dari setan dan para pengikutnya, bantuan untuk mengendalikan jiwa yang selalu memerintahkan kepada keburukan, dan kesibukan dengan hal-hal yang mendekatkan aku kepada-Mu dalam kedekatan. Wahai Dzat Yang Memiliki Keagungan dan Kemuliaan. Semoga shalawat Allah senantiasa tercurah kepada junjungan kami Nabi Muhammad, beserta keluarganya dan para sahabatnya, dan semoga keselamatan tercurah atas mereka.”</p>
@@ -265,6 +274,7 @@
         </div>
         <div class="card-footer">
             <button class="btn-copy" data-copy="doaAwalText"><i class="far fa-copy"></i> Salin Doa Awal Tahun</button>
+            <div class="note-soft"><i class="fas fa-arrows-alt-v"></i> Jarak baris super renggang | Tanpa alinea kecuali setelah Basmalah</div>
         </div>
     </div>
 
@@ -279,12 +289,13 @@
             <div class="badge-year">🤲 Mohon Ampunan & Rahmat 🤲</div>
         </div>
         <div class="doa-content">
+            <!-- Teks Arab: hanya baris baru biasa, tanpa paragraf ganda -->
             <div class="arabic">
                 بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ.<br>
                 اللَّهُمَّ مَا عَمِلْتُ مِنْ عَمَلٍ فِي السَّنَةِ الْمَاضِيَةِ مِمَّا نَهَيْتَنِي عَنْهُ فَلَمْ أَتُبْ مِنْهُ وَلَمْ تَرْضَهُ، وَنَسِيتُهُ وَلَمْ تَنْسَهُ، وَحَلُمْتَ عَنِّي مَعَ قُدْرَتِكَ عَلَى عُقُوبَتِي، وَدَعَوْتَنِي إِلَى التَّوْبَةِ بَعْدَ جَرَاءَتِي عَلَيْكَ.<br>
                 اللَّهُمَّ إِنِّي أَسْتَغْفِرُكَ مِنْهُ فَاغْفِرْ لِي.<br>
                 اللَّهُمَّ وَمَا عَمِلْتُ مِنْ عَمَلٍ تَرْضَاهُ وَوَعَدْتَنِي عَلَيْهِ الثَّوَابَ وَالْغُفْرَانَ فَتَقَبَّلْهُ مِنِّي، وَلَا تَقْطَعْ رَجَائِي مِنْكَ يَا كَرِيمُ يَا أَرْحَمَ الرَّاحِمِينَ.<br>
-                وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ
+                وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ
             </div>
             <div class="latin">
                 <i class="fas fa-language"></i> Bacaan Latin:<br>
@@ -300,45 +311,40 @@
         </div>
         <div class="card-footer">
             <button class="btn-copy" data-copy="doaAkhirText"><i class="far fa-copy"></i> Salin Doa Akhir Tahun</button>
+            <div class="note-soft"><i class="fas fa-arrows-alt-v"></i> Jarak baris super renggang | Tanpa alinea berlebih</div>
         </div>
     </div>
 
-    <!-- Keutamaan & Catatan kecil -->
+    <!-- Catatan Keutamaan dan Tata Cara -->
     <div class="card" style="background: #fef7e8;">
         <div class="doa-content" style="padding: 1.2rem 2rem;">
             <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center;">
                 <i class="fas fa-calendar-alt" style="font-size: 2rem; color: #cb7b3c;"></i>
-                <div><strong style="font-size: 1.1rem; color:#3a6a58;">Amalan sunnah di penghujung & awal tahun Hijriyah</strong><br>
-                <span style="font-size: 0.85rem;">Membaca doa akhir tahun setelah Ashar atau menjelang maghrib di akhir bulan Dzulhijjah, dan doa awal tahun setelah maghrib masuknya bulan Muharram. Semoga Allah menerima taubat dan memberikan keberkahan di tahun yang baru.</span></div>
+                <div><strong style="font-size: 1.1rem; color:#3a6a58;">Tata Cara Mengamalkan Doa Akhir & Awal Tahun</strong><br>
+                <span style="font-size: 0.85rem;">📌 <strong>Doa Akhir Tahun:</strong> Dibaca setelah Ashar di hari terakhir Dzulhijjah (sebelum Maghrib). <br>
+                📌 <strong>Doa Awal Tahun:</strong> Dibaca setelah Maghrib di tanggal 1 Muharram (saat tahun baru masuk). <br>
+                📌 Dianjurkan membaca 3 kali, disertai istighfar dan shalawat. Perbanyak muhasabah dan niat perbaikan diri di tahun baru.</span></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Toast Notification -->
-<div id="toastMsg" class="toast-msg">✏️ Teks disalin ke clipboard!</div>
+<div id="toastMsg" class="toast-msg">📋 Teks doa disalin ke clipboard!</div>
 
 <script>
     (function() {
-        // Teks lengkap doa awal tahun (arab + latin + arti tidak perlu, ambil arab saja sesuai kemauan user, lebih lengkap dengan arab & latin ? 
-        // untuk memudahkan, kita akan mengkopi teks arab + latin + arti secara ringkas? Tapi dari permintaan umum, yang disalin biasanya doa dalam arab atau latin?
-        // Lebih baik kita kopikan doa lengkap arab dan latinnya beserta arti? Agar memudahkan.
-        // Saya buat format: "Doa Awal Tahun (Arab + Latin + Arti)" namun mungkin user ingin teks doanya saja.
-        // Sesuai sunnah, kita buat tombol salin dengan doa arab plus latin.
-        const doaAwalFull = `Doa Awal Tahun Hijriyah:
-        
+        const doaAwalFull = `Doa Awal Tahun Hijriyah (Arab & Latin):
+
 بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ
 اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ صَلَاةٌ تَمْلأُ خَزَائِنَ اللَّهِ نُوراً، وَتَكُونُ لَنَا وَلِلْمُؤْمِنِينَ فَرَجًا وَفَرَحًا وَسُرُورًا، وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمْ تَسْلِيمًا كَثِيرًا.
 اللَّهُمَّ أَنْتَ الْأَبَدِيُّ الْقَدِيمُ الْأَوَّلُ، وَعَلَى فَضْلِكَ الْعَظِيمِ وَكَرِيمِ جُودِكَ الْعَمِيمِ الْمُعَوَّلُ، وَهَذَا عَامٌ جَدِيدٌ قَدْ أَقْبَلَ، أَسْأَلُكَ الْعِصْمَةَ فِيهِ مِنَ الشَّيْطَانِ وَأَوْلِيَائِهِ، وَالْعَوْنَ عَلَى هَذِهِ النَّفْسِ الْأَمَّارَةِ بِالسُّوءِ، وَالْإِشْتِغَالَ بِمَا يُقَرِّبُنِي إِلَيْكَ زُلْفَىٰ، يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.
 وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ
 
-Latin:
-Bismillāhir-Raḥmānir-Raḥīm. Allāhumma ṣalli ‘alā sayyidinā Muḥammadin shalātan tamla’u khazā’inallāhi nūran... (lengkap)
-Allāhumma antal-abadiyyul-qadīmul-awwal... wa hādzā ‘āmun jadīdun qad aqbala. As’alukal-‘ishmata... yā Dzal-jalāli wal-ikrām.
+Latin: Bismillahirrahmanirrahim. Allaahumma shalli 'ala sayyidina Muhammadin shalaatan tamla'u khazaa'inallaahi nuuran... (lengkap).
 
-Artinya: (Sebagaimana terjemahan di atas) — Semoga tahun baru penuh berkah.`;
+Artinya: Doa awal tahun memohon perlindungan dari setan, pertolongan melawan hawa nafsu, dan kesibukan dalam ketaatan.`;
 
-        const doaAkhirFull = `Doa Akhir Tahun Hijriyah:
+        const doaAkhirFull = `Doa Akhir Tahun Hijriyah (Arab & Latin):
 
 بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ.
 اللَّهُمَّ مَا عَمِلْتُ مِنْ عَمَلٍ فِي السَّنَةِ الْمَاضِيَةِ مِمَّا نَهَيْتَنِي عَنْهُ فَلَمْ أَتُبْ مِنْهُ وَلَمْ تَرْضَهُ، وَنَسِيتُهُ وَلَمْ تَنْسَهُ، وَحَلُمْتَ عَنِّي مَعَ قُدْرَتِكَ عَلَى عُقُوبَتِي، وَدَعَوْتَنِي إِلَى التَّوْبَةِ بَعْدَ جَرَاءَتِي عَلَيْكَ.
@@ -346,43 +352,27 @@ Artinya: (Sebagaimana terjemahan di atas) — Semoga tahun baru penuh berkah.`;
 اللَّهُمَّ وَمَا عَمِلْتُ مِنْ عَمَلٍ تَرْضَاهُ وَوَعَدْتَنِي عَلَيْهِ الثَّوَابَ وَالْغُفْرَانَ فَتَقَبَّلْهُ مِنِّي، وَلَا تَقْطَعْ رَجَائِي مِنْكَ يَا كَرِيمُ يَا أَرْحَمَ الرَّاحِمِينَ.
 وَصَلَّى اللَّهُ تَعَالَى عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ
 
-Latin: Bismillahirrahmanirrahim. Wa shallallahu ta'ala 'ala sayyidina Muhammad... Allāhumma mā ‘amiltu min ‘amalin fī as-sanah al-mādliyah... (lengkap)
+Latin: Bismillahirrahmanirrahim. Wa shallallaahu ta'ala 'ala sayyidina Muhammad... Allaahumma maa 'amiltu min 'amalin fis-sanatil maadliyah... (lengkap).
 
-Artinya: (Mohon ampunan dan penerimaan amal) — Semoga Allah mengampuni dosa-dosa kita di tahun lalu.`;
+Artinya: Doa akhir tahun untuk memohon ampunan Allah atas segala dosa dan kekhilafan selama setahun yang lalu.`;
 
-        // Fungsi copy
-        function copyToClipboard(text, event) {
+        function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById('toastMsg');
                 toast.style.opacity = '1';
                 setTimeout(() => {
                     toast.style.opacity = '0';
                 }, 1800);
-            }).catch(err => {
-                console.warn('Gagal copy: ', err);
+            }).catch(() => {
                 alert('Gagal menyalin, silakan copy manual.');
             });
         }
 
-        // Event listener untuk masing-masing tombol
         const btnAwal = document.querySelector('[data-copy="doaAwalText"]');
         const btnAkhir = document.querySelector('[data-copy="doaAkhirText"]');
         
-        if (btnAwal) {
-            btnAwal.addEventListener('click', (e) => {
-                copyToClipboard(doaAwalFull, e);
-            });
-        }
-        if (btnAkhir) {
-            btnAkhir.addEventListener('click', (e) => {
-                copyToClipboard(doaAkhirFull, e);
-            });
-        }
-
-        // Tambahan sedikit efek: tooltip style
-        const style = document.createElement('style');
-        style.innerHTML = `.btn-copy:active { transform: scale(0.96); }`;
-        document.head.appendChild(style);
+        if (btnAwal) btnAwal.addEventListener('click', () => copyToClipboard(doaAwalFull));
+        if (btnAkhir) btnAkhir.addEventListener('click', () => copyToClipboard(doaAkhirFull));
     })();
 </script>
 </body>
