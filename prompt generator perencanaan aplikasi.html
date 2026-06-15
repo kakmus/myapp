@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Generator Aplikasi HTML</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    padding:20px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+textarea{
+    min-height:100px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.generate{
+    background:#007bff;
+    color:white;
+}
+
+.copy{
+    background:#28a745;
+    color:white;
+    margin-left:10px;
+}
+
+.output{
+    margin-top:20px;
+}
+
+#result{
+    min-height:350px;
+    white-space:pre-wrap;
+    background:#222;
+    color:#00ff7f;
+    padding:15px;
+    border-radius:5px;
+    overflow:auto;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Prompt Generator Perencanaan Aplikasi</h1>
+
+    <div class="form-group">
+        <label>Nama Aplikasi</label>
+        <input type="text" id="nama">
+    </div>
+
+    <div class="form-group">
+        <label>Tujuan Aplikasi</label>
+        <textarea id="tujuan"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Fitur Utama</label>
+        <textarea id="fitur"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Target Pengguna</label>
+        <input type="text" id="target">
+    </div>
+
+    <div class="form-group">
+        <label>Database</label>
+        <select id="database">
+            <option>Tidak Perlu</option>
+            <option>LocalStorage</option>
+            <option>SQLite</option>
+            <option>MySQL</option>
+            <option>Firebase</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Login User</label>
+        <select id="login">
+            <option>Ya</option>
+            <option>Tidak</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Tema Tampilan</label>
+        <select id="tema">
+            <option>Minimalis</option>
+            <option>Modern</option>
+            <option>Dashboard</option>
+            <option>Professional</option>
+        </select>
+    </div>
+
+    <button class="generate" onclick="generatePrompt()">
+        Generate Prompt
+    </button>
+
+    <button class="copy" onclick="copyPrompt()">
+        Copy Prompt
+    </button>
+
+    <div class="output">
+        <h2>Hasil Prompt</h2>
+        <div id="result"></div>
+    </div>
+</div>
+
+<script>
+function generatePrompt(){
+
+    let nama = document.getElementById('nama').value;
+    let tujuan = document.getElementById('tujuan').value;
+    let fitur = document.getElementById('fitur').value;
+    let target = document.getElementById('target').value;
+    let database = document.getElementById('database').value;
+    let login = document.getElementById('login').value;
+    let tema = document.getElementById('tema').value;
+
+    let prompt = `
+
+Bertindaklah sebagai Software Architect, UI/UX Designer dan Senior Web Developer.
+
+Buatkan perencanaan lengkap aplikasi dengan spesifikasi berikut:
+
+NAMA APLIKASI
+${nama}
+
+TUJUAN APLIKASI
+${tujuan}
+
+FITUR UTAMA
+${fitur}
+
+TARGET PENGGUNA
+${target}
+
+DATABASE
+${database}
+
+LOGIN USER
+${login}
+
+TEMA TAMPILAN
+${tema}
+
+TUGAS ANDA:
+
+1. Analisis kebutuhan aplikasi.
+2. Buat daftar fitur lengkap.
+3. Buat struktur menu.
+4. Buat wireframe setiap halaman.
+5. Buat flowchart aplikasi.
+6. Buat struktur folder proyek.
+7. Buat desain database.
+8. Buat daftar file HTML.
+9. Buat daftar file CSS.
+10. Buat daftar file JavaScript.
+11. Buat roadmap pengembangan.
+12. Buat prompt lanjutan untuk menghasilkan source code.
+13. Buat spesifikasi API jika diperlukan.
+14. Buat desain responsive mobile dan desktop.
+15. Berikan rekomendasi teknologi terbaik.
+
+FORMAT OUTPUT:
+
+- Ringkasan Proyek
+- Analisis Sistem
+- Struktur Menu
+- Wireframe
+- Database
+- Struktur Folder
+- Roadmap
+- Prompt Pembuatan Kode
+
+`;
+
+    document.getElementById('result').textContent = prompt;
+}
+
+function copyPrompt(){
+
+    let text = document.getElementById('result').textContent;
+
+    if(!text){
+        alert('Generate prompt terlebih dahulu');
+        return;
+    }
+
+    navigator.clipboard.writeText(text);
+
+    alert('Prompt berhasil disalin');
+}
+</script>
+
+</body>
+</html>
